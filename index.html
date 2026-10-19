@@ -210,6 +210,12 @@
   .card .pill{ opacity:1; transform:none; padding:5px 11px; font-size:0.76rem; }
   .card-link{ font-size:0.86rem; font-weight:600; color:var(--heading); text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
   .card-link:hover{ color:var(--gold); }
+  .card-feature{ position:relative; border-color:rgba(211,166,86,0.35); }
+  .card-feature:hover{ border-color:var(--gold); }
+  .card-stretch{ color:var(--gold); }
+  .card-stretch::after{ content:''; position:absolute; inset:0; }
+  .card-feature:focus-within{ outline:2px solid var(--gold); outline-offset:3px; }
+  .card-stretch:focus{ outline:none; }
 
   /* contact */
   .contact-wrap{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
@@ -495,13 +501,14 @@
     <h2 data-en="Projects">Projetos</h2>
   </div>
   <div class="project-grid">
-    <div class="card reveal">
+    <div class="card card-feature reveal">
       <div class="card-top">
-        <h3>CTI Lab Manager</h3>
+        <h3>SystemManagerIT</h3>
         <span class="chip" data-en="Largest project">Maior projeto</span>
       </div>
-      <p data-en="Full-scale management system for the CTI computer labs at UNASP. A student or professor opens a ticket by scanning the QR code on the desk — the issue arrives already tied to that exact computer, row and room. Includes a lab layout editor, a seating map professors use to place their class, PDF reports (including which machine breaks down repeatedly), a software/script catalog, real-time notifications (SSE) and a system health dashboard. Admin, IT and professor roles, backed by 275 automated tests.">Sistema completo de gestão dos laboratórios de informática do CTI (UNASP). O aluno ou professor abre o chamado apontando o celular para o QR Code da bancada — o problema já chega ligado àquele computador, fileira e sala. Editor de plantas de laboratório, mapa de sala para o professor alocar a turma, relatórios em PDF (inclusive das máquinas reincidentes), catálogo de scripts/softwares, notificações em tempo real (SSE) e painel de saúde do sistema. Perfis de administrador, TI e professor, com 275 testes automatizados.</p>
-      <div class="pill-row"><span class="pill" data-en="Private repository">Repositório privado</span></div>
+      <p data-en="Ticketing and computer-lab management system, built to replace IT support requests sent over WhatsApp, where data and feedback for managers got lost. A student or professor opens a ticket by scanning the QR code on the desk — the issue arrives already tied to that exact computer, row and room. Includes a lab layout editor, a seating map professors use to place their class, PDF reports (including which machine breaks down repeatedly), a software/script catalog, real-time notifications (SSE) and a system health dashboard. Admin, IT and professor roles, backed by 403 automated tests.">Sistema de chamados e gestão de laboratórios de TI, criado para substituir os pedidos de suporte pelo WhatsApp, onde dados e feedback para a gestão se perdiam. O aluno ou professor abre o chamado apontando o celular para o QR Code da bancada — o problema já chega ligado àquele computador, fileira e sala. Editor de plantas de laboratório, mapa de sala para o professor alocar a turma, relatórios em PDF (inclusive das máquinas reincidentes), catálogo de scripts/softwares, notificações em tempo real (SSE) e painel de saúde do sistema. Perfis de administrador, TI e professor, com 403 testes automatizados.</p>
+      <div class="pill-row"><span class="pill" data-en="Private repository">Repositório privado</span><span class="pill" data-en="Video tour">Tour em vídeo</span></div>
+      <a class="card-link card-stretch" href="systemmanagerit/" data-en="▶ See how it works →">▶ Ver como funciona →</a>
     </div>
     <div class="card reveal">
       <div class="card-top">
@@ -655,9 +662,11 @@
     btnPt.classList.toggle('active', lang === 'pt');
     btnEn.classList.toggle('active', lang === 'en');
     htmlEl.setAttribute('lang', lang === 'en' ? 'en' : 'pt-BR');
+    try { localStorage.setItem('cv-lang', lang); } catch(e){}
   }
   btnPt.addEventListener('click', function(){ setLang('pt'); });
   btnEn.addEventListener('click', function(){ setLang('en'); });
+  try { if(localStorage.getItem('cv-lang') === 'en') setLang('en'); } catch(e){}
 
   // activity charts — real data from repository commit history
   if(window.Chart){

@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SystemManagerIT — Tour do projeto</title>
+<meta name="description" content="Tour pelas funcionalidades do SystemManagerIT, sistema de chamados e gestão de laboratórios de TI desenvolvido por Vitor Parra.">
+<meta property="og:title" content="SystemManagerIT — Tour do projeto">
+<meta property="og:description" content="Do chamado perdido no WhatsApp ao relatório para a gestão: veja como o sistema funciona.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0a1420; --navy-2:#070d16; --navy-soft:#24374c;
+    --surface:#121f31; --surface-2:#16263a;
+    --bg:#0a1420; --line:rgba(255,255,255,0.10);
+    --gold:#d3a656; --gold-soft:rgba(211,166,86,0.14);
+    --heading:#eef3f8; --ink:#c6d2de; --muted:#8697aa; --white:#ffffff;
+    --ok:#1f8a5b; --bad:#d64545; --warn:#e8962e;
+    --app-navy:#1e3a5f; --app-navy-2:#2d5a87; --app-bg:#f4f6f8; --app-line:rgba(15,23,42,.10);
+    --app-text:#1f2937; --app-soft:#5b6675; --app-blue:#0d6efd;
+    --ease:cubic-bezier(.22,1,.36,1);
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; scroll-padding-top:120px; }
+  body{ margin:0; background:var(--bg); color:var(--ink); font-family:'Manrope',sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  h1,h2,h3,.display{ font-family:'Fraunces',serif; font-weight:500; margin:0; }
+  a{ color:inherit; }
+  button{ font-family:inherit; }
+  :focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+
+  /* ---------------- topo ---------------- */
+  #progress-bar{ position:fixed; top:0; left:0; height:2px; width:0; background:var(--gold); z-index:60; }
+  header.nav{ position:sticky; top:0; z-index:50; background:rgba(10,20,32,.86); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .nav-inner{ max-width:1180px; margin:0 auto; padding:14px 24px; display:flex; align-items:center; gap:22px; }
+  .back{ display:inline-flex; align-items:center; gap:8px; text-decoration:none; color:var(--muted); font-size:.84rem; font-weight:600; white-space:nowrap; transition:color .2s; }
+  .back:hover{ color:var(--gold); }
+  .back svg{ width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:2; }
+  .brand{ font-family:'Fraunces',serif; font-size:1.05rem; font-weight:600; color:var(--heading); white-space:nowrap; }
+  .brand b{ color:var(--gold); font-weight:600; }
+  nav.links{ display:flex; gap:22px; margin-left:auto; }
+  nav.links a{ text-decoration:none; color:var(--muted); font-size:.85rem; font-weight:500; padding:6px 0; position:relative; white-space:nowrap; transition:color .2s; }
+  nav.links a:hover{ color:var(--heading); }
+  nav.links a.active{ color:var(--heading); }
+  nav.links a.active::after{ content:''; position:absolute; left:0; right:0; bottom:-2px; height:2px; background:var(--gold); }
+  .lang-toggle{ display:flex; border:1px solid var(--line); font-size:.72rem; font-weight:700; letter-spacing:.04em; background:var(--surface); flex-shrink:0; }
+  .lang-toggle button{ appearance:none; background:none; border:none; color:var(--muted); padding:7px 12px; cursor:pointer; font-size:inherit; font-weight:inherit; letter-spacing:inherit; transition:color .2s, background .2s; }
+  .lang-toggle button.active{ color:var(--navy); background:var(--gold); }
+  @media (max-width:1000px){
+    .nav-inner{ flex-wrap:wrap; row-gap:10px; padding:12px 16px 0; }
+    .lang-toggle{ margin-left:auto; }
+    nav.links{ order:3; width:100%; margin:0 -16px; padding:0 16px 10px; overflow-x:auto; gap:18px; scrollbar-width:none; }
+    nav.links::-webkit-scrollbar{ display:none; }
+    .brand{ display:none; }
+  }
+
+  /* ---------------- hero ---------------- */
+  .hero{ background:var(--navy-2); background-image:radial-gradient(1100px 520px at 85% -10%, rgba(211,166,86,.15), transparent 60%), radial-gradient(700px 420px at 0% 100%, rgba(255,255,255,.04), transparent 60%); padding:64px 24px 40px; }
+  .hero-inner{ max-width:1180px; margin:0 auto; }
+  .eyebrow{ color:var(--gold); font-size:.8rem; letter-spacing:.14em; font-weight:700; text-transform:uppercase; }
+  .hero h1{ font-size:clamp(2.3rem,6vw,3.8rem); line-height:1.04; color:var(--white); margin:14px 0 16px; }
+  .hero h1 em{ font-style:normal; color:var(--gold); }
+  .hero .lead{ font-size:clamp(1rem,1.6vw,1.15rem); line-height:1.65; color:rgba(255,255,255,.78); max-width:62ch; margin:0 0 26px; }
+  .hero-cta{ display:flex; flex-wrap:wrap; gap:12px; margin-bottom:40px; }
+  .btn{ display:inline-flex; align-items:center; gap:9px; padding:12px 20px; font-size:.92rem; font-weight:700; text-decoration:none; border:1px solid transparent; cursor:pointer; transition:transform .2s, background .2s, border-color .2s; background:none; color:inherit; }
+  .btn svg{ width:16px; height:16px; }
+  .btn-primary{ background:var(--gold); color:var(--navy); }
+  .btn-primary:hover{ transform:translateY(-2px); background:#c8973a; }
+  .btn-ghost{ border-color:rgba(255,255,255,.3); color:var(--white); }
+  .btn-ghost:hover{ transform:translateY(-2px); border-color:var(--white); }
+  .hero-stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-bottom:44px; }
+  .hero-stats div{ background:var(--navy-2); padding:16px 18px; }
+  .hero-stats b{ display:block; font-family:'Fraunces',serif; font-weight:500; font-size:1.7rem; color:var(--gold); line-height:1; }
+  .hero-stats span{ display:block; font-size:.78rem; color:var(--muted); margin-top:7px; }
+  @media (max-width:720px){ .hero{ padding:40px 16px 28px; } .hero-stats{ grid-template-columns:repeat(2,1fr); } }
+
+  /* ---------------- player ---------------- */
+  .player{ position:relative; background:#05090f; border:1px solid var(--line); box-shadow:0 40px 90px -40px rgba(0,0,0,.8), 0 0 0 1px rgba(211,166,86,.08); outline:none; }
+  .player:focus-visible{ outline:2px solid var(--gold); outline-offset:4px; }
+  .screen{ position:relative; aspect-ratio:16/9; overflow:hidden; background:#070d16; cursor:pointer; }
+  .stage{ position:absolute; left:0; top:0; width:960px; height:540px; transform-origin:0 0; overflow:hidden; font-family:'Manrope',sans-serif; color:var(--ink);
+    background:radial-gradient(700px 380px at 80% 0%, rgba(211,166,86,.10), transparent 60%), radial-gradient(600px 400px at 0% 100%, rgba(45,90,135,.22), transparent 60%), linear-gradient(160deg,#0b1626,#070d16); }
+  .stage::before{ content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px); background-size:40px 40px; }
+  .stage *{ animation-fill-mode:both; }
+  .demo-tag{ position:absolute; right:14px; top:12px; z-index:30; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.4); border:1px solid rgba(255,255,255,.14); padding:3px 8px; }
+  .player:fullscreen{ display:flex; flex-direction:column; justify-content:center; background:#000; }
+  .player:fullscreen .screen{ aspect-ratio:auto; flex:1; }
+  .player:-webkit-full-screen .screen{ aspect-ratio:auto; flex:1; }
+
+  /* legenda */
+  .cc{ position:absolute; left:50%; bottom:78px; transform:translateX(-50%); z-index:5; width:max-content; max-width:86%; text-align:center; pointer-events:none; }
+  .cc span{ display:inline; background:rgba(5,9,15,.82); color:#fff; font-size:clamp(12px,1.55vw,18px); line-height:1.6; font-weight:600; padding:4px 12px; box-decoration-break:clone; -webkit-box-decoration-break:clone; border-left:2px solid var(--gold); transition:opacity .3s; }
+  .cc.off span{ opacity:0; }
+  @media (max-width:640px){
+    .cc{ position:static; transform:none; width:auto; max-width:none; text-align:left; min-height:64px; padding:11px 14px; background:#0a121d; border-top:1px solid var(--line); display:flex; align-items:center; }
+    .cc span{ background:none; padding:0 0 0 10px; font-size:13px; line-height:1.5; }
+  }
+  .player.no-cc .cc{ display:none; }
+
+  /* capa e fim */
+  .overlay{ position:absolute; inset:0; z-index:8; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; background:radial-gradient(circle at center, rgba(7,13,22,.45), rgba(7,13,22,.86)); transition:opacity .45s var(--ease), visibility .45s; text-align:center; padding:16px; }
+  .overlay.hide{ opacity:0; visibility:hidden; pointer-events:none; }
+  .big-play{ width:clamp(58px,9vw,92px); height:clamp(58px,9vw,92px); border-radius:50%; border:none; background:var(--gold); color:var(--navy); display:flex; align-items:center; justify-content:center; cursor:pointer; position:relative; transition:transform .25s var(--ease); }
+  .big-play:hover{ transform:scale(1.07); }
+  .big-play svg{ width:38%; height:38%; margin-left:7%; }
+  .big-play::before, .big-play::after{ content:''; position:absolute; inset:0; border-radius:50%; border:2px solid var(--gold); animation:ring 2.4s ease-out infinite; }
+  .big-play::after{ animation-delay:1.2s; }
+  @keyframes ring{ from{ transform:scale(1); opacity:.7; } to{ transform:scale(1.9); opacity:0; } }
+  .overlay p{ margin:0; color:#fff; font-weight:700; font-size:clamp(.85rem,1.6vw,1.05rem); }
+  .overlay small{ color:rgba(255,255,255,.65); font-size:clamp(.72rem,1.2vw,.85rem); }
+  .end-actions{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+
+  /* controles */
+  .controls{ display:flex; align-items:center; gap:14px; padding:10px 14px; border-top:1px solid var(--line); background:#0a121d; }
+  .ctl{ appearance:none; border:none; background:none; color:var(--heading); width:34px; height:34px; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; border-radius:4px; transition:background .2s, color .2s; }
+  .ctl:hover{ background:rgba(255,255,255,.07); color:var(--gold); }
+  .ctl svg{ width:18px; height:18px; }
+  .ctl.cc-btn{ font-size:.68rem; font-weight:800; letter-spacing:.04em; width:auto; padding:0 8px; border:1px solid var(--line); height:24px; }
+  .player.no-cc .ctl.cc-btn{ color:var(--muted); text-decoration:line-through; }
+  .time{ font-variant-numeric:tabular-nums; font-size:.78rem; color:var(--muted); white-space:nowrap; flex-shrink:0; }
+  .track{ position:relative; flex:1; height:28px; cursor:pointer; touch-action:none; }
+  .track-bar{ position:absolute; left:0; right:0; top:50%; height:4px; margin-top:-2px; background:rgba(255,255,255,.12); }
+  .track-fill{ position:absolute; left:0; top:0; bottom:0; width:0; background:var(--gold); }
+  .track-tick{ position:absolute; top:-2px; width:2px; height:8px; background:#0a121d; }
+  .track-knob{ position:absolute; top:50%; width:12px; height:12px; margin:-6px 0 0 -6px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 4px rgba(211,166,86,.2); left:0; transition:transform .15s; }
+  .track:hover .track-knob{ transform:scale(1.2); }
+  .track-tip{ position:absolute; bottom:30px; transform:translateX(-50%); background:var(--surface-2); border:1px solid var(--line); color:var(--heading); font-size:.72rem; font-weight:700; padding:4px 8px; white-space:nowrap; pointer-events:none; opacity:0; transition:opacity .15s; }
+  .track:hover .track-tip{ opacity:1; }
+  .chapter-now{ font-size:.78rem; color:var(--heading); font-weight:700; white-space:nowrap; flex-shrink:0; max-width:180px; overflow:hidden; text-overflow:ellipsis; }
+  @media (max-width:640px){ .chapter-now{ display:none; } .controls{ gap:8px; padding:8px 10px; } }
+
+  .chapters{ display:grid; grid-template-columns:repeat(8,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-top:none; }
+  .chap{ position:relative; appearance:none; border:none; background:#0a121d; color:var(--muted); text-align:left; padding:12px 12px 14px; cursor:pointer; overflow:hidden; transition:background .2s, color .2s; }
+  .chap:hover{ background:#0f1a29; color:var(--heading); }
+  .chap .n{ display:block; font-size:.66rem; letter-spacing:.08em; font-weight:800; color:var(--gold); opacity:.8; }
+  .chap .t{ display:block; font-size:.8rem; font-weight:700; margin-top:4px; line-height:1.3; }
+  .chap .bar{ position:absolute; left:0; bottom:0; height:2px; width:0; background:var(--gold); }
+  .chap.on{ color:var(--heading); background:#0f1a29; }
+  @media (max-width:900px){ .chapters{ grid-template-columns:repeat(4,1fr); } }
+  @media (max-width:520px){ .chapters{ grid-template-columns:repeat(2,1fr); } }
+
+  /* ---------------- seções ---------------- */
+  section.block{ max-width:1180px; margin:0 auto; padding:84px 24px; }
+  section.block + section.block{ border-top:1px solid var(--line); }
+  @media (max-width:720px){ section.block{ padding:60px 16px; } }
+  .section-head{ margin-bottom:40px; max-width:760px; }
+  .section-num{ color:var(--gold); font-size:.8rem; font-weight:700; letter-spacing:.1em; margin:0; }
+  .section-head h2{ font-size:clamp(1.6rem,3.4vw,2.3rem); margin-top:8px; color:var(--heading); line-height:1.15; }
+  .section-head p{ font-size:1.02rem; line-height:1.7; color:var(--ink); margin:14px 0 0; }
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+  .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion:reduce){ html{ scroll-behavior:auto; } .reveal{ opacity:1; transform:none; transition:none; } .big-play::before,.big-play::after{ animation:none; } }
+
+  /* problema */
+  .story{ display:grid; grid-template-columns:1.05fr 1fr; gap:56px; align-items:start; }
+  .story-text p{ font-size:1.04rem; line-height:1.8; margin:0 0 18px; }
+  .story-text p strong{ color:var(--heading); }
+  .quote{ border-left:2px solid var(--gold); padding:4px 0 4px 18px; margin:26px 0 0; font-family:'Fraunces',serif; font-size:1.25rem; line-height:1.5; color:var(--heading); }
+  .pains{ display:grid; gap:14px; }
+  .pain{ display:flex; gap:16px; padding:18px 20px; background:var(--surface); border:1px solid var(--line); transition:border-color .25s, transform .25s; }
+  .pain:hover{ border-color:var(--navy-soft); transform:translateX(4px); }
+  .pain-ic{ width:38px; height:38px; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:rgba(214,69,69,.12); border:1px solid rgba(214,69,69,.35); color:#f08a8a; }
+  .pain-ic svg{ width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; }
+  .pain h3{ font-family:'Manrope',sans-serif; font-weight:700; font-size:.98rem; color:var(--heading); }
+  .pain p{ margin:5px 0 0; font-size:.9rem; line-height:1.55; color:var(--muted); }
+  @media (max-width:860px){ .story{ grid-template-columns:1fr; gap:36px; } }
+
+  /* como funciona */
+  .flow{ position:relative; display:grid; grid-template-columns:repeat(5,1fr); gap:22px; counter-reset:step; }
+  .flow-line{ position:absolute; left:10%; right:10%; top:27px; height:2px; background:var(--line); }
+  .flow-line i{ position:absolute; left:0; top:0; bottom:0; width:100%; background:var(--gold); transform-origin:left; transform:scaleX(0); transition:transform 1.8s var(--ease); }
+  .flow.in .flow-line i{ transform:scaleX(1); }
+  .step{ position:relative; text-align:center; }
+  .step-dot{ width:56px; height:56px; margin:0 auto 18px; border-radius:50%; background:var(--bg); border:2px solid var(--line); display:flex; align-items:center; justify-content:center; color:var(--muted); position:relative; z-index:1; transition:border-color .5s, color .5s, background .5s, transform .5s var(--ease); }
+  .step-dot svg{ width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:1.8; }
+  .flow.in .step-dot{ border-color:var(--gold); color:var(--gold); background:var(--surface); }
+  .flow.in .step:nth-child(2) .step-dot{ transition-delay:.0s; } .flow.in .step:nth-child(3) .step-dot{ transition-delay:.4s; } .flow.in .step:nth-child(4) .step-dot{ transition-delay:.8s; } .flow.in .step:nth-child(5) .step-dot{ transition-delay:1.2s; } .flow.in .step:nth-child(6) .step-dot{ transition-delay:1.6s; }
+  .step-k{ font-size:.7rem; font-weight:800; letter-spacing:.1em; color:var(--gold); }
+  .step h3{ font-family:'Manrope',sans-serif; font-size:1rem; font-weight:700; color:var(--heading); margin:6px 0 8px; }
+  .step p{ margin:0; font-size:.88rem; line-height:1.55; color:var(--muted); }
+  @media (max-width:860px){
+    .flow{ grid-template-columns:1fr; gap:0; }
+    .flow-line{ left:27px; right:auto; top:28px; bottom:28px; width:2px; height:auto; }
+    .flow-line i{ transform-origin:top; transform:scaleY(0); }
+    .flow.in .flow-line i{ transform:scaleY(1); }
+    .step{ text-align:left; display:grid; grid-template-columns:56px 1fr; column-gap:18px; padding-bottom:28px; }
+    .step-dot{ margin:0; grid-row:span 3; }
+  }
+
+  /* funcionalidades */
+  .explorer{ display:grid; grid-template-columns:270px 1fr; gap:28px; align-items:start; }
+  .tabs{ display:flex; flex-direction:column; gap:4px; position:sticky; top:96px; }
+  .tab{ appearance:none; border:none; border-left:2px solid var(--line); background:none; color:var(--muted); text-align:left; padding:12px 16px; cursor:pointer; display:flex; align-items:center; gap:12px; font-size:.92rem; font-weight:600; transition:color .2s, background .2s, border-color .2s; }
+  .tab svg{ width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:1.8; flex-shrink:0; }
+  .tab:hover{ color:var(--heading); background:rgba(255,255,255,.03); }
+  .tab[aria-selected="true"]{ color:var(--heading); border-left-color:var(--gold); background:var(--gold-soft); }
+  .tab[aria-selected="true"] svg{ color:var(--gold); }
+  .panels{ position:relative; min-height:520px; }
+  .panel{ display:grid; grid-template-columns:1.1fr 1fr; gap:30px; background:var(--surface); border:1px solid var(--line); padding:28px; }
+  .panel[hidden]{ display:none; }
+  .panel.enter{ animation:panelIn .5s var(--ease) both; }
+  @keyframes panelIn{ from{ opacity:0; transform:translateY(12px); } to{ opacity:1; transform:none; } }
+  .panel-visual{ background:var(--app-bg); border-radius:12px; min-height:300px; position:relative; overflow:hidden; font-family:'Inter',sans-serif; color:var(--app-text); display:flex; align-items:center; justify-content:center; padding:18px; }
+  .panel-text h3{ font-size:1.5rem; color:var(--heading); line-height:1.2; }
+  .panel-text .kicker{ font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); font-weight:800; margin:0 0 10px; }
+  .panel-text > p{ font-size:.98rem; line-height:1.7; margin:14px 0 18px; }
+  .checks{ list-style:none; margin:0 0 22px; padding:0; display:grid; gap:10px; }
+  .checks li{ display:flex; gap:10px; font-size:.92rem; line-height:1.5; }
+  .checks li::before{ content:''; flex-shrink:0; width:16px; height:16px; margin-top:3px; background:var(--gold) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.6 2.5L12 5.5' fill='none' stroke='%230a1420' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat; border:none; }
+  .seek-btn{ appearance:none; border:1px solid var(--line); background:none; color:var(--heading); font-size:.84rem; font-weight:700; padding:9px 14px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:border-color .2s, color .2s; }
+  .seek-btn:hover{ border-color:var(--gold); color:var(--gold); }
+  .seek-btn svg{ width:12px; height:12px; }
+  @media (max-width:1000px){ .panel{ grid-template-columns:1fr; } }
+  @media (max-width:860px){
+    .explorer{ grid-template-columns:1fr; }
+    .tabs{ position:static; flex-direction:row; overflow-x:auto; gap:6px; scrollbar-width:none; margin:0 -16px; padding:0 16px 4px; }
+    .tabs::-webkit-scrollbar{ display:none; }
+    .tab{ border-left:none; border-bottom:2px solid var(--line); white-space:nowrap; padding:10px 12px; }
+    .tab[aria-selected="true"]{ border-bottom-color:var(--gold); }
+    .panel{ padding:18px; }
+    .panels{ min-height:0; }
+  }
+
+  /* mini telas do explorador (estilo do sistema) */
+  .mini{ width:100%; max-width:380px; background:#fff; border-radius:12px; box-shadow:0 10px 30px rgba(15,23,42,.14); overflow:hidden; font-size:12px; }
+  .mini-head{ background:linear-gradient(135deg,var(--app-navy),var(--app-navy-2)); color:#fff; padding:10px 14px; font-weight:700; font-size:12.5px; display:flex; align-items:center; gap:8px; }
+  .mini-head .live{ margin-left:auto; font-size:10px; font-weight:600; display:flex; align-items:center; gap:5px; opacity:.9; }
+  .live-dot{ width:7px; height:7px; border-radius:50%; background:#3ddc84; box-shadow:0 0 0 0 rgba(61,220,132,.6); animation:live 1.8s infinite; }
+  @keyframes live{ 0%{ box-shadow:0 0 0 0 rgba(61,220,132,.55); } 100%{ box-shadow:0 0 0 7px rgba(61,220,132,0); } }
+  .mini-body{ padding:12px 14px; display:grid; gap:9px; }
+  .fld label{ display:block; font-size:10px; font-weight:700; color:var(--app-soft); margin-bottom:3px; }
+  .fld div{ border:1px solid var(--app-line); border-radius:7px; padding:7px 9px; font-size:11.5px; display:flex; align-items:center; gap:6px; }
+  .fld .qr-fill{ border-color:rgba(211,166,86,.8); background:rgba(211,166,86,.10); }
+  .badge{ display:inline-flex; align-items:center; gap:4px; font-size:9.5px; font-weight:700; padding:2px 7px; border-radius:999px; }
+  .b-gold{ background:rgba(211,166,86,.18); color:#8a6420; } .b-red{ background:#fde2e2; color:#b42323; } .b-orange{ background:#fff0dc; color:#a65c00; } .b-green{ background:#dcf5e8; color:#11714a; } .b-blue{ background:#e3edff; color:#1d4fb8; } .b-gray{ background:#eef0f3; color:#5b6675; }
+  .mbtn{ background:var(--app-blue); color:#fff; border-radius:8px; text-align:center; padding:8px; font-weight:700; font-size:11.5px; }
+  .kpis{ display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
+  .kpi{ border:1px solid var(--app-line); border-radius:9px; padding:8px 10px; }
+  .kpi small{ display:block; font-size:9.5px; color:var(--app-soft); font-weight:600; }
+  .kpi b{ font-size:17px; color:var(--app-text); }
+  .row{ display:flex; align-items:center; gap:8px; border:1px solid var(--app-line); border-radius:8px; padding:7px 9px; font-size:11px; }
+  .row .grow{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .row.new{ border-color:rgba(211,166,86,.9); background:rgba(211,166,86,.08); }
+  .bays{ display:flex; gap:12px; justify-content:center; }
+  .bay-grid{ display:grid; grid-template-columns:repeat(4,26px); gap:4px; }
+  .bay{ height:22px; border-radius:4px; background:var(--ok); color:#fff; font-size:9px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+  .bay.r{ background:var(--bad); } .bay.o{ background:var(--warn); } .bay.g{ background:#8a94a3; }
+  .bay.pulse{ animation:bayPulse 1.6s infinite; }
+  @keyframes bayPulse{ 0%{ box-shadow:0 0 0 0 rgba(214,69,69,.6); } 100%{ box-shadow:0 0 0 8px rgba(214,69,69,0); } }
+  .desk{ margin:10px auto 0; width:60%; background:var(--app-navy); color:#fff; border-radius:6px; text-align:center; font-size:9.5px; font-weight:700; padding:6px; }
+  .legend{ display:flex; gap:10px; flex-wrap:wrap; font-size:9.5px; color:var(--app-soft); }
+  .legend i{ display:inline-block; width:8px; height:8px; border-radius:2px; margin-right:4px; vertical-align:-1px; }
+  .seat-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
+  .seat{ border:1.5px dashed #c9d1dc; border-radius:7px; height:34px; display:flex; align-items:center; justify-content:center; font-size:10px; color:#a1aab6; }
+  .seat.f{ border:none; background:#e3edff; color:#1d4fb8; font-weight:700; }
+  .seat.f2{ border:none; background:#fff0dc; color:#a65c00; font-weight:700; font-size:9px; line-height:1.1; text-align:center; }
+  .bars{ display:flex; align-items:flex-end; gap:8px; height:110px; padding-top:6px; border-bottom:1px solid var(--app-line); }
+  .bars span{ flex:1; background:#c7d4e4; border-radius:4px 4px 0 0; transform-origin:bottom; }
+  .bars span.top{ background:var(--gold); }
+  .panel:not([hidden]) .bars span{ animation:grow .9s var(--ease) both; }
+  .bars span:nth-child(2){ animation-delay:.08s !important; } .bars span:nth-child(3){ animation-delay:.16s !important; } .bars span:nth-child(4){ animation-delay:.24s !important; } .bars span:nth-child(5){ animation-delay:.32s !important; } .bars span:nth-child(6){ animation-delay:.4s !important; }
+  @keyframes grow{ from{ transform:scaleY(0); } to{ transform:scaleY(1); } }
+  .bar-labels{ display:flex; gap:8px; font-size:8.5px; color:var(--app-soft); } .bar-labels span{ flex:1; text-align:center; }
+  .alert{ border-left:3px solid var(--bad); background:#fff5f5; border-radius:6px; padding:8px 10px; font-size:11px; }
+  .alert b{ display:block; color:#b42323; font-size:10px; text-transform:uppercase; letter-spacing:.04em; }
+  .item{ display:flex; align-items:center; gap:9px; border:1px solid var(--app-line); border-radius:8px; padding:8px 10px; }
+  .item .ic{ width:26px; height:26px; border-radius:6px; background:#e3edff; display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; }
+  .item .grow{ flex:1; } .item .grow small{ display:block; color:var(--app-soft); font-size:9.5px; }
+  .chk{ display:flex; align-items:center; gap:8px; font-size:11px; padding:6px 2px; border-bottom:1px solid var(--app-line); }
+  .chk:last-child{ border-bottom:none; }
+  .chk .d{ width:8px; height:8px; border-radius:50%; background:#22b573; flex-shrink:0; }
+  .chk .grow{ flex:1; } .chk small{ color:var(--app-soft); }
+  .msg{ max-width:80%; padding:6px 9px; border-radius:9px; font-size:11px; line-height:1.4; }
+  .msg.in{ background:#eef0f3; } .msg.out{ background:#e3edff; margin-left:auto; }
+
+  /* perfis */
+  .roles{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  .role{ background:var(--surface); border:1px solid var(--line); padding:26px; transition:transform .25s, border-color .25s, box-shadow .25s; }
+  .role:hover{ transform:translateY(-5px); border-color:var(--navy-soft); box-shadow:0 22px 40px -22px rgba(0,0,0,.6); }
+  .role-ic{ width:44px; height:44px; display:flex; align-items:center; justify-content:center; border:1px solid var(--gold); background:var(--gold-soft); color:var(--gold); margin-bottom:18px; }
+  .role-ic svg{ width:21px; height:21px; stroke:currentColor; fill:none; stroke-width:1.8; }
+  .role h3{ font-family:'Manrope',sans-serif; font-weight:700; font-size:1.08rem; color:var(--heading); }
+  .role > p{ font-size:.9rem; color:var(--muted); line-height:1.55; margin:6px 0 16px; }
+  .role ul{ margin:0; padding:0; list-style:none; display:grid; gap:9px; }
+  .role li{ font-size:.9rem; display:flex; gap:10px; line-height:1.45; }
+  .role li::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--gold); margin-top:7px; flex-shrink:0; }
+  @media (max-width:860px){ .roles{ grid-template-columns:1fr; } }
+
+  /* antes x depois */
+  .compare{ border:1px solid var(--line); }
+  .cmp-head, .cmp-row{ display:grid; grid-template-columns:1fr 1fr; }
+  .cmp-head div{ padding:14px 22px; font-size:.75rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; }
+  .cmp-head div:first-child{ color:#f08a8a; background:rgba(214,69,69,.06); }
+  .cmp-head div:last-child{ color:var(--gold); background:var(--gold-soft); }
+  .cmp-row{ border-top:1px solid var(--line); }
+  .cmp-row div{ padding:16px 22px; font-size:.95rem; line-height:1.5; display:flex; gap:12px; align-items:flex-start; }
+  .cmp-row div:first-child{ color:var(--muted); border-right:1px solid var(--line); }
+  .cmp-row div:last-child{ color:var(--heading); }
+  .cmp-row svg{ width:16px; height:16px; flex-shrink:0; margin-top:3px; fill:none; stroke-width:2.4; stroke-linecap:round; }
+  .cmp-row div:first-child svg{ stroke:#e06b6b; } .cmp-row div:last-child svg{ stroke:var(--gold); }
+  .cmp-row.reveal{ transform:translateX(-14px); }
+  .cmp-row.reveal.in{ transform:none; }
+  @media (max-width:640px){ .cmp-head div, .cmp-row div{ padding:12px 14px; font-size:.86rem; } }
+
+  /* bastidores */
+  .tech{ display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
+  .numbers{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .num{ background:var(--surface); border:1px solid var(--line); padding:20px; }
+  .num b{ display:block; font-family:'Fraunces',serif; font-weight:500; font-size:2rem; color:var(--gold); line-height:1; }
+  .num span{ display:block; font-size:.85rem; color:var(--muted); margin-top:9px; line-height:1.45; }
+  .pill-row{ display:flex; flex-wrap:wrap; gap:10px; }
+  .pill{ padding:9px 16px; border:1px solid var(--line); background:var(--surface); font-size:.88rem; font-weight:600; color:var(--ink); transition:border-color .2s, color .2s; }
+  .pill:hover{ border-color:var(--gold); color:var(--gold); }
+  .tech-note{ font-size:.95rem; line-height:1.7; margin:0 0 20px; }
+  @media (max-width:860px){ .tech{ grid-template-columns:1fr; } }
+
+  /* fim */
+  .final{ text-align:center; max-width:760px; margin:0 auto; padding:90px 24px 100px; }
+  .final h2{ font-size:clamp(1.7rem,4vw,2.6rem); color:var(--heading); line-height:1.15; }
+  .final h2 em{ font-style:normal; color:var(--gold); }
+  .final p{ font-size:1.02rem; line-height:1.7; margin:18px auto 28px; max-width:56ch; }
+  .final .hero-cta{ justify-content:center; margin:0; }
+  footer{ text-align:center; padding:28px 24px 44px; color:var(--muted); font-size:.8rem; border-top:1px solid var(--line); }
+
+  /* =====================================================================
+     VÍDEO — cenas
+     Todo movimento é animação CSS com atraso absoluto (var(--s) = início
+     da cena). O JavaScript pausa todas e dirige o tempo, então dá para
+     pausar, voltar e pular de capítulo.
+     ===================================================================== */
+  .scene{ position:absolute; inset:0; opacity:0; animation:sceneLife var(--d) linear var(--s) both; }
+  .scene.last{ animation-name:sceneLast; }
+  @keyframes sceneLife{ 0%{ opacity:0; transform:scale(1.035); } 6%{ opacity:1; transform:none; } 94%{ opacity:1; transform:none; } 100%{ opacity:0; transform:scale(.985); } }
+  @keyframes sceneLast{ 0%{ opacity:0; transform:scale(1.035); } 8%,100%{ opacity:1; transform:none; } }
+  .a{ animation-name:var(--an,fadeUp); animation-duration:var(--ad,.6s); animation-delay:calc(var(--s) + var(--at,0s)); animation-timing-function:var(--ae,cubic-bezier(.22,1,.36,1)); animation-iteration-count:var(--ai,1); animation-direction:var(--adir,normal); animation-fill-mode:both; }
+  @keyframes fadeUp{ from{ opacity:0; transform:translateY(16px); } to{ opacity:1; transform:none; } }
+  @keyframes fadeIn{ from{ opacity:0; } to{ opacity:1; } }
+  @keyframes fadeOut{ from{ opacity:1; } to{ opacity:0; } }
+  @keyframes popIn{ 0%{ opacity:0; transform:scale(.5); } 65%{ opacity:1; transform:scale(1.08); } 100%{ opacity:1; transform:scale(1); } }
+  @keyframes slideL{ from{ opacity:0; transform:translateX(46px); } to{ opacity:1; transform:none; } }
+  @keyframes slideD{ from{ opacity:0; transform:translateY(-18px); } to{ opacity:1; transform:none; } }
+  @keyframes riseIn{ from{ opacity:0; transform:translateY(90px); } to{ opacity:1; transform:none; } }
+  @keyframes blurAway{ from{ opacity:1; filter:blur(0); transform:none; } to{ opacity:.12; filter:blur(3px); transform:translateY(-8px) scale(.97); } }
+  @keyframes stamp{ 0%{ opacity:0; transform:rotate(-12deg) scale(2); } 60%{ opacity:1; transform:rotate(-12deg) scale(.94); } 100%{ opacity:1; transform:rotate(-12deg) scale(1); } }
+  @keyframes press{ 0%,100%{ transform:scale(1); filter:none; } 45%{ transform:scale(.93); filter:brightness(.85); } }
+  @keyframes ripple{ from{ opacity:.7; transform:scale(0); } to{ opacity:0; transform:scale(2.6); } }
+  @keyframes flash{ 0%{ opacity:0; } 30%{ opacity:.95; } 100%{ opacity:0; } }
+  @keyframes scan{ from{ transform:translateY(0); } to{ transform:translateY(150px); } }
+  @keyframes shake{ 0%,100%{ transform:rotate(0); } 20%{ transform:rotate(-16deg); } 40%{ transform:rotate(13deg); } 60%{ transform:rotate(-9deg); } 80%{ transform:rotate(5deg); } }
+  @keyframes expand{ from{ height:0; opacity:0; margin-bottom:0; } to{ height:46px; opacity:1; margin-bottom:8px; } }
+  @keyframes glowOff{ from{ background:rgba(211,166,86,.22); border-color:rgba(211,166,86,1); } to{ background:#fff; border-color:rgba(15,23,42,.10); } }
+  @keyframes pulseRed{ 0%{ box-shadow:0 0 0 0 rgba(214,69,69,.75); } 100%{ box-shadow:0 0 0 12px rgba(214,69,69,0); } }
+  @keyframes growY{ from{ transform:scaleY(0); } to{ transform:scaleY(1); } }
+  @keyframes ringGrow{ from{ opacity:0; transform:scale(.2); } to{ opacity:1; transform:scale(1); } }
+  @keyframes clipR{ from{ clip-path:inset(0 100% 0 0); } to{ clip-path:inset(0 0 0 0); } }
+  @keyframes fly{ from{ transform:translate(var(--fx),var(--fy)); } to{ transform:translate(0,0); } }
+  @keyframes swap{ 0%{ transform:translate(0,0) scale(1); box-shadow:none; } 15%{ transform:translate(0,-4px) scale(1.1); box-shadow:0 14px 26px rgba(15,23,42,.3); } 85%{ transform:translate(var(--sx),calc(var(--sy) - 4px)) scale(1.1); box-shadow:0 14px 26px rgba(15,23,42,.3); } 100%{ transform:translate(var(--sx),var(--sy)) scale(1); box-shadow:none; } }
+  @keyframes swapB{ from{ transform:translate(0,0); } to{ transform:translate(var(--sx),var(--sy)); } }
+  @keyframes sheetFly{ 0%{ opacity:0; transform:translate(-150px,40px) scale(.3) rotate(0); } 60%{ opacity:1; } 100%{ opacity:1; transform:translate(0,0) scale(1) rotate(4deg); } }
+  @keyframes typingDots{ 0%,100%{ opacity:.25; } 50%{ opacity:1; } }
+
+  .s-eyebrow{ font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); font-weight:800; }
+  .s-title{ font-family:'Fraunces',serif; font-size:44px; line-height:1.08; color:#fff; font-weight:500; }
+  .s-line{ display:flex; align-items:center; gap:12px; font-size:19px; color:var(--ink); font-weight:600; }
+  .s-x{ width:26px; height:26px; border-radius:50%; background:rgba(214,69,69,.15); border:1px solid rgba(214,69,69,.5); color:#f08a8a; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; flex-shrink:0; }
+  .abs{ position:absolute; }
+
+  /* cena 1: WhatsApp */
+  .wa{ left:90px; top:36px; width:250px; height:468px; border-radius:32px; background:#0b0f15; border:2px solid #2b3a4d; padding:9px; box-shadow:0 30px 60px rgba(0,0,0,.5); }
+  .wa-scr{ height:100%; border-radius:24px; overflow:hidden; background:#efeae2; display:flex; flex-direction:column; font-family:'Inter',sans-serif; }
+  .wa-top{ background:#008069; color:#fff; padding:28px 14px 10px; display:flex; gap:9px; align-items:center; }
+  .wa-av{ width:30px; height:30px; border-radius:50%; background:#d9fdd3; color:#008069; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:12px; }
+  .wa-top b{ display:block; font-size:13px; } .wa-top small{ font-size:9.5px; opacity:.8; }
+  .wa-chat{ flex:1; padding:10px 9px; display:flex; flex-direction:column; gap:7px; background-image:radial-gradient(rgba(0,0,0,.035) 1px, transparent 1px); background-size:12px 12px; }
+  .bub{ max-width:84%; background:#fff; border-radius:8px; padding:5px 8px 4px; font-size:11px; line-height:1.35; color:#111b21; box-shadow:0 1px 0 rgba(0,0,0,.08); }
+  .bub i{ display:block; font-style:normal; font-size:9.5px; font-weight:700; margin-bottom:1px; }
+  .bub s{ display:block; text-decoration:none; text-align:right; font-size:8.5px; color:#667781; }
+  .bub.me{ background:#d9fdd3; margin-left:auto; }
+  .lost{ left:112px; top:228px; width:206px; text-align:center; border:3px solid #e04848; color:#e04848; background:rgba(255,255,255,.92); font-weight:900; font-size:17px; letter-spacing:.06em; text-transform:uppercase; padding:8px 4px; border-radius:6px; }
+
+  /* cena 2: logo */
+  .logo-ring{ left:405px; top:120px; width:150px; height:150px; border-radius:50%; border:2px solid var(--gold); box-shadow:0 0 60px rgba(211,166,86,.25), inset 0 0 40px rgba(211,166,86,.12); }
+  .logo-ic{ left:405px; top:120px; width:150px; height:150px; display:flex; align-items:center; justify-content:center; color:var(--gold); }
+  .logo-ic svg{ width:64px; height:64px; stroke:currentColor; fill:none; stroke-width:1.6; }
+  .logo-name{ left:0; right:0; top:298px; text-align:center; font-family:'Fraunces',serif; font-size:58px; color:#fff; letter-spacing:.01em; }
+  .logo-name b{ color:var(--gold); font-weight:500; }
+  .logo-tag{ left:0; right:0; top:378px; text-align:center; font-size:18px; color:var(--ink); font-weight:600; }
+
+  /* cena 3: QR */
+  .label{ left:60px; top:96px; width:260px; height:330px; background:#fff; border-radius:16px; box-shadow:0 30px 60px rgba(0,0,0,.45); padding:18px; text-align:center; font-family:'Inter',sans-serif; color:var(--app-text); }
+  .label-top{ background:linear-gradient(135deg,var(--app-navy),var(--app-navy-2)); color:#fff; border-radius:9px; padding:8px; font-size:12px; font-weight:700; }
+  .label svg.qr{ width:170px; height:170px; margin:16px auto 10px; display:block; }
+  .label b{ display:block; font-size:15px; } .label small{ display:block; font-size:10.5px; color:var(--app-soft); margin-top:3px; }
+  .phone{ left:372px; top:36px; width:226px; height:468px; border-radius:32px; background:#0b0f15; border:2px solid #2b3a4d; padding:9px; box-shadow:0 30px 70px rgba(0,0,0,.55); }
+  .phone-scr{ position:relative; height:100%; border-radius:24px; overflow:hidden; background:#000; font-family:'Inter',sans-serif; color:var(--app-text); }
+  .layer{ position:absolute; inset:0; }
+  .vf{ background:#1b232e; display:flex; align-items:center; justify-content:center; }
+  .vf-box{ position:relative; width:160px; height:160px; }
+  .vf-box svg{ width:100%; height:100%; opacity:.9; }
+  .vf-c{ position:absolute; width:26px; height:26px; border:3px solid var(--gold); }
+  .vf-c.tl{ left:-12px; top:-12px; border-right:none; border-bottom:none; } .vf-c.tr{ right:-12px; top:-12px; border-left:none; border-bottom:none; }
+  .vf-c.bl{ left:-12px; bottom:-12px; border-right:none; border-top:none; } .vf-c.br{ right:-12px; bottom:-12px; border-left:none; border-top:none; }
+  .vf-line{ position:absolute; left:-6px; right:-6px; top:4px; height:2px; background:var(--gold); box-shadow:0 0 14px 3px rgba(211,166,86,.7); }
+  .vf-hint{ position:absolute; left:0; right:0; bottom:34px; text-align:center; color:#fff; font-size:11px; font-weight:600; opacity:.85; }
+  .ph-form{ background:var(--app-bg); }
+  .ph-head{ background:linear-gradient(135deg,var(--app-navy),var(--app-navy-2)); color:#fff; padding:30px 14px 12px; font-size:13px; font-weight:700; }
+  .ph-head small{ display:block; font-weight:500; font-size:9.5px; opacity:.8; margin-top:2px; }
+  .ph-body{ padding:12px; display:grid; gap:9px; }
+  .ph-body .fld div{ background:#fff; font-size:11px; }
+  .ta{ min-height:62px; align-items:flex-start !important; line-height:1.4; }
+  .caret::after{ content:''; display:inline-block; width:1.5px; height:12px; background:var(--app-blue); margin-left:1px; vertical-align:-2px; }
+  .ph-ok{ background:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:20px; }
+  .ok-ic{ width:74px; height:74px; border-radius:50%; background:#dcf5e8; color:#11714a; display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+  .ok-ic svg{ width:36px; height:36px; stroke:currentColor; fill:none; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+  .ph-ok b{ font-size:15px; } .ph-ok small{ font-size:11px; color:var(--app-soft); margin-top:6px; display:block; }
+  .flashl{ background:#fff; }
+  .callouts{ left:640px; top:110px; width:290px; display:grid; gap:18px; }
+  .callout{ display:flex; gap:14px; align-items:flex-start; }
+  .callout .n{ width:30px; height:30px; border-radius:50%; border:1.5px solid var(--gold); color:var(--gold); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; flex-shrink:0; background:rgba(211,166,86,.08); }
+  .callout p{ margin:4px 0 0; font-size:16px; line-height:1.4; color:#fff; font-weight:600; }
+
+  /* janela de navegador com o sistema */
+  .win{ background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 30px 70px rgba(0,0,0,.5); font-family:'Inter',sans-serif; color:var(--app-text); }
+  .win-bar{ height:30px; background:#e9edf2; display:flex; align-items:center; gap:6px; padding:0 12px; }
+  .win-bar i{ width:9px; height:9px; border-radius:50%; background:#cfd6df; }
+  .win-bar i:nth-child(1){ background:#ff6b5f; } .win-bar i:nth-child(2){ background:#ffbd2e; } .win-bar i:nth-child(3){ background:#28c940; }
+  .win-url{ margin-left:14px; flex:1; max-width:340px; background:#fff; border-radius:6px; height:19px; font-size:10px; color:var(--app-soft); display:flex; align-items:center; padding:0 9px; }
+  .app{ display:flex; height:calc(100% - 30px); }
+  .side{ width:150px; background:linear-gradient(180deg,var(--app-navy),var(--app-navy-2)); color:rgba(255,255,255,.85); padding:14px 10px; font-size:10.5px; display:flex; flex-direction:column; gap:3px; }
+  .side-brand{ font-weight:800; color:#fff; font-size:12px; padding:0 6px 12px; display:flex; align-items:center; gap:6px; }
+  .side-brand svg{ width:16px; height:16px; stroke:#fff; fill:none; stroke-width:1.8; }
+  .side span{ padding:6px 8px; border-radius:6px; }
+  .side span.on{ background:rgba(255,255,255,.16); color:#fff; font-weight:700; }
+  .main{ flex:1; background:var(--app-bg); padding:16px; position:relative; overflow:hidden; }
+  .m-head{ display:flex; align-items:center; gap:10px; background:#fff; border-radius:10px; padding:10px 14px; box-shadow:0 1px 2px rgba(15,23,42,.06); margin-bottom:12px; }
+  .m-head b{ font-size:15px; }
+  .m-head .live{ display:flex; align-items:center; gap:5px; font-size:10px; color:#11714a; font-weight:700; }
+  .bell{ margin-left:auto; position:relative; width:26px; height:26px; display:flex; align-items:center; justify-content:center; color:var(--app-soft); }
+  .bell svg{ width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:1.8; }
+  .bell em{ position:absolute; right:-3px; top:-3px; background:#e04848; color:#fff; font-style:normal; font-size:9px; font-weight:800; min-width:15px; height:15px; border-radius:8px; display:flex; align-items:center; justify-content:center; padding:0 3px; }
+  .kgrid{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:12px; }
+  .k{ background:#fff; border-radius:10px; padding:10px 12px; box-shadow:0 1px 2px rgba(15,23,42,.06); }
+  .k small{ display:block; font-size:9.5px; color:var(--app-soft); font-weight:600; }
+  .k b{ font-size:22px; }
+  .list{ background:#fff; border-radius:10px; padding:12px; box-shadow:0 1px 2px rgba(15,23,42,.06); }
+  .list-h{ font-size:11.5px; font-weight:700; margin-bottom:10px; display:flex; justify-content:space-between; }
+  .ticket{ height:46px; display:flex; align-items:center; gap:10px; border:1px solid var(--app-line); border-radius:9px; padding:0 12px; margin-bottom:8px; font-size:11px; overflow:visible; position:relative; }
+  .ticket .id{ font-weight:800; color:var(--app-navy); width:34px; }
+  .ticket .grow{ flex:1; min-width:0; } .ticket .grow b{ display:block; font-size:11px; } .ticket .grow small{ color:var(--app-soft); font-size:9.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block; }
+  .tk-act{ position:relative; width:144px; height:26px; flex-shrink:0; }
+  .tk-act > *{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; border-radius:7px; font-size:10px; font-weight:700; white-space:nowrap; }
+  .assumir{ background:var(--app-blue); color:#fff; overflow:hidden; }
+  .assumir .rp{ position:absolute; left:50%; top:50%; width:30px; height:30px; margin:-15px 0 0 -15px; border-radius:50%; background:rgba(255,255,255,.6); }
+  .emat{ background:#fff0dc; color:#a65c00; }
+  .toast{ position:absolute; right:16px; top:58px; width:240px; background:#fff; border-radius:10px; box-shadow:0 14px 34px rgba(15,23,42,.22); padding:10px 12px; display:flex; gap:10px; z-index:3; border-left:3px solid var(--gold); }
+  .toast .ti{ width:28px; height:28px; border-radius:7px; background:rgba(211,166,86,.18); color:#8a6420; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .toast .ti svg{ width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:2; }
+  .toast b{ display:block; font-size:11px; } .toast small{ font-size:9.5px; color:var(--app-soft); }
+  .cursor{ position:absolute; left:0; top:0; width:22px; height:22px; z-index:6; pointer-events:none; filter:drop-shadow(0 3px 4px rgba(0,0,0,.35)); }
+
+  /* cena 5: planta + chat */
+  .card-w{ background:#fff; border-radius:14px; box-shadow:0 30px 70px rgba(0,0,0,.45); font-family:'Inter',sans-serif; color:var(--app-text); }
+  .plan{ left:40px; top:40px; width:480px; height:460px; padding:18px; }
+  .plan-h{ display:flex; align-items:center; gap:10px; }
+  .plan-h b{ font-size:15px; }
+  .st-chips{ position:relative; margin-left:auto; width:200px; height:22px; }
+  .st-chips .badge{ position:absolute; right:0; top:0; font-size:10px; padding:4px 9px; white-space:nowrap; }
+  .plan .legend{ margin:10px 0 12px; font-size:10px; }
+  .blocks{ display:flex; justify-content:center; gap:34px; }
+  .blk small{ display:block; text-align:center; font-size:9px; font-weight:700; color:var(--app-soft); letter-spacing:.06em; margin-bottom:6px; }
+  .blk-g{ display:grid; grid-template-columns:repeat(4,42px); gap:7px; }
+  .bb{ position:relative; height:38px; border-radius:6px; background:var(--ok); color:#fff; font-size:11px; font-weight:800; display:flex; align-items:center; justify-content:center; }
+  .bb .st{ position:absolute; inset:0; border-radius:6px; display:flex; align-items:center; justify-content:center; }
+  .bb .st.r{ background:var(--bad); } .bb .st.o{ background:var(--warn); } .bb .st.g{ background:var(--ok); }
+  .bb.focus{ z-index:2; }
+  .bb .halo{ position:absolute; inset:-1px; border-radius:7px; }
+  .rows-lbl{ display:grid; gap:7px; margin-right:6px; font-size:9px; color:var(--app-soft); font-weight:700; }
+  .rows-lbl span{ height:38px; display:flex; align-items:center; }
+  .plan .desk{ width:62%; font-size:10.5px; padding:9px; margin-top:20px; border-radius:8px; }
+  .chat{ left:545px; top:40px; width:375px; height:460px; display:flex; flex-direction:column; overflow:hidden; }
+  .chat-h{ padding:14px 16px; border-bottom:1px solid var(--app-line); }
+  .chat-h b{ font-size:13.5px; display:block; } .chat-h small{ font-size:10px; color:var(--app-soft); }
+  .chat-b{ flex:1; padding:14px; display:flex; flex-direction:column; gap:10px; background:#fafbfc; }
+  .cm{ max-width:82%; padding:8px 11px; border-radius:12px; font-size:11.5px; line-height:1.4; }
+  .cm i{ display:block; font-style:normal; font-size:9.5px; font-weight:700; color:var(--app-soft); margin-bottom:2px; }
+  .cm.tec{ background:#e3edff; align-self:flex-end; border-bottom-right-radius:4px; }
+  .cm.prof{ background:#eef0f3; align-self:flex-start; border-bottom-left-radius:4px; }
+  .typing{ align-self:flex-end; background:#e3edff; border-radius:12px; padding:9px 12px; display:flex; gap:4px; }
+  .typing span{ width:6px; height:6px; border-radius:50%; background:#5b7fbf; animation:typingDots 1s infinite; }
+  .typing span:nth-child(2){ animation-delay:.2s; } .typing span:nth-child(3){ animation-delay:.4s; }
+  .sysmsg{ align-self:center; background:#dcf5e8; color:#11714a; font-size:11px; font-weight:700; padding:7px 12px; border-radius:999px; display:flex; align-items:center; gap:6px; }
+  .chat-in{ border-top:1px solid var(--app-line); padding:10px 14px; font-size:11px; color:#a1aab6; display:flex; justify-content:space-between; }
+
+  /* cena 6: mapa de sala */
+  .mh{ left:40px; top:36px; width:880px; height:62px; padding:0 18px; display:flex; align-items:center; gap:12px; }
+  .mh b{ font-size:15px; } .mh small{ font-size:10.5px; color:var(--app-soft); display:block; }
+  .mh .acts{ margin-left:auto; display:flex; gap:8px; }
+  .mh .acts span{ font-size:10.5px; font-weight:700; border:1px solid var(--app-line); border-radius:7px; padding:6px 10px; color:var(--app-navy); }
+  .roster{ left:36px; top:118px; width:132px; height:390px; padding:12px 10px; }
+  .roster small{ font-size:9.5px; font-weight:800; color:var(--app-soft); letter-spacing:.06em; }
+  .slot{ position:absolute; left:20px; width:88px; height:44px; border:1.5px dashed #d3dae3; border-radius:9px; }
+  .room{ left:280px; top:118px; width:640px; height:390px; }
+  .seat2{ position:absolute; width:88px; height:44px; border:1.5px dashed #c9d1dc; border-radius:9px; background:#fff; }
+  .stu{ position:absolute; width:88px; height:44px; border-radius:9px; background:#e3edff; color:#1d4fb8; font-family:'Inter',sans-serif; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; gap:6px; z-index:3; }
+  .stu::before{ content:''; width:16px; height:16px; border-radius:50%; background:#b9cdf5; flex-shrink:0; }
+  .room-desk{ left:490px; top:420px; width:212px; height:36px; background:var(--app-navy); color:#fff; border-radius:8px; font-family:'Inter',sans-serif; font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; z-index:1; }
+  .swap-tag{ left:500px; top:228px; background:var(--gold); color:var(--navy); font-weight:800; font-size:13px; padding:7px 13px; border-radius:999px; z-index:5; box-shadow:0 10px 24px rgba(0,0,0,.3); }
+
+  /* cena 7: relatórios */
+  .rep-h{ left:60px; top:30px; display:flex; align-items:center; gap:12px; }
+  .rep-h b{ font-family:'Fraunces',serif; font-weight:500; font-size:28px; color:#fff; }
+  .rep-h span{ font-size:12px; color:var(--muted); font-weight:600; }
+  .rk{ top:88px; width:268px; height:90px; padding:14px 16px; }
+  .rk small{ display:block; font-size:10.5px; color:var(--app-soft); font-weight:700; text-transform:uppercase; letter-spacing:.05em; }
+  .rk b{ display:block; font-size:32px; margin-top:6px; font-variant-numeric:tabular-nums; }
+  .chartc{ left:60px; top:198px; width:510px; height:300px; padding:16px 18px; }
+  .chartc > b{ font-size:12.5px; }
+  .cbars{ position:absolute; left:18px; right:18px; bottom:44px; height:190px; display:flex; align-items:flex-end; gap:16px; border-bottom:1px solid var(--app-line); }
+  .cbars span{ flex:1; background:#c7d4e4; border-radius:5px 5px 0 0; transform-origin:bottom; position:relative; }
+  .cbars span.top{ background:var(--gold); }
+  .cbars span em{ position:absolute; left:0; right:0; top:-17px; text-align:center; font-style:normal; font-size:10px; font-weight:700; color:var(--app-soft); }
+  .clabels{ position:absolute; left:18px; right:18px; bottom:20px; display:flex; gap:16px; font-size:9.5px; color:var(--app-soft); font-weight:600; }
+  .clabels span{ flex:1; text-align:center; }
+  .reinc{ left:592px; top:198px; width:308px; height:132px; padding:16px 18px; border-left:4px solid var(--bad); }
+  .reinc small{ font-size:10px; font-weight:800; letter-spacing:.06em; color:#b42323; text-transform:uppercase; }
+  .reinc b{ display:block; font-size:19px; margin:6px 0 4px; }
+  .reinc span{ font-size:12px; color:var(--app-soft); }
+  .reinc .big{ position:absolute; right:18px; bottom:14px; font-size:40px; font-weight:800; color:var(--bad); line-height:1; }
+  .pdfbtn{ left:592px; top:352px; width:150px; height:42px; background:#e04848; color:#fff; border-radius:9px; font-family:'Inter',sans-serif; font-weight:800; font-size:12px; display:flex; align-items:center; justify-content:center; gap:7px; }
+  .pdfbtn svg{ width:15px; height:15px; stroke:#fff; fill:none; stroke-width:2; }
+  .sheet{ left:768px; top:342px; width:132px; height:172px; background:#fff; border-radius:4px; box-shadow:0 20px 40px rgba(0,0,0,.45); padding:12px 11px; font-family:'Inter',sans-serif; }
+  .sheet i{ display:block; height:5px; border-radius:3px; background:#e3e8ef; margin-bottom:6px; }
+  .sheet i.h{ height:8px; width:70%; background:var(--app-navy); }
+  .sheet .sb{ display:flex; align-items:flex-end; gap:4px; height:50px; margin:10px 0; }
+  .sheet .sb span{ flex:1; background:#c7d4e4; } .sheet .sb span:first-child{ background:var(--gold); }
+  .sheet em{ position:absolute; right:-8px; top:-8px; background:#e04848; color:#fff; font-style:normal; font-size:9px; font-weight:800; padding:3px 6px; border-radius:4px; }
+
+  /* cena 8 */
+  .outro{ left:0; right:0; text-align:center; }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="back" href="../#projetos"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg><span data-en="Résumé">Currículo</span></a>
+    <span class="brand">System<b>Manager</b>IT</span>
+    <nav class="links" id="navlinks" aria-label="Seções">
+      <a href="#tour" data-target="tour" data-en="Video tour">Tour em vídeo</a>
+      <a href="#problema" data-target="problema" data-en="The problem">O problema</a>
+      <a href="#como-funciona" data-target="como-funciona" data-en="How it works">Como funciona</a>
+      <a href="#funcionalidades" data-target="funcionalidades" data-en="Features">Funcionalidades</a>
+      <a href="#perfis" data-target="perfis" data-en="Roles">Perfis</a>
+      <a href="#antes-depois" data-target="antes-depois" data-en="Before × After">Antes × Depois</a>
+      <a href="#bastidores" data-target="bastidores" data-en="Under the hood">Bastidores</a>
+    </nav>
+    <div class="lang-toggle" role="group" aria-label="Idioma / Language">
+      <button type="button" id="btn-pt" class="active">PT</button>
+      <button type="button" id="btn-en">EN</button>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow" data-en="Project · Web system">Projeto · Sistema web</p>
+    <h1>System<em>Manager</em>IT</h1>
+    <p class="lead" data-en="An IT ticketing and computer-lab management system. It replaced support requests sent over WhatsApp: every ticket now becomes a record, tied to the exact computer, and that record turns into reports for the people who make decisions.">Sistema de chamados e gestão de laboratórios de TI. Nasceu para substituir os pedidos de suporte feitos pelo WhatsApp: agora todo chamado vira registro, amarrado ao computador exato, e esse registro vira relatório para quem decide.</p>
+    <div class="hero-cta">
+      <button type="button" class="btn btn-primary" data-play><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg><span data-en="Watch the tour (1 min)">Assistir ao tour (1 min)</span></button>
+      <a class="btn btn-ghost" href="#funcionalidades" data-en="Explore the features">Explorar funcionalidades</a>
+    </div>
+    <div class="hero-stats">
+      <div><b>403</b><span data-en="automated tests">testes automatizados</span></div>
+      <div><b>80+</b><span data-en="rooms and labs with a QR code">salas e laboratórios com QR Code</span></div>
+      <div><b>3</b><span data-en="access roles">perfis de acesso</span></div>
+      <div><b>~20 ms</b><span data-en="for a ticket to reach the IT team">para o chamado chegar à TI</span></div>
+    </div>
+
+    <!-- ================= PLAYER ================= -->
+    <section id="tour" aria-label="Tour em vídeo">
+      <div class="player" id="player" tabindex="0" aria-label="Tour em vídeo do SystemManagerIT. Espaço para reproduzir ou pausar, setas para avançar e voltar.">
+        <div class="screen" id="screen">
+          <div class="stage" id="stage" aria-hidden="true">
+            <span class="demo-tag" data-en="Illustrative data">Dados ilustrativos</span>
+
+            <!-- 1 · Antes: WhatsApp -->
+            <div class="scene" style="--s:0s; --d:8s;">
+              <div class="abs wa a" style="--an:slideL; --at:.1s; --ad:.8s;">
+                <div class="wa-scr">
+                  <div class="wa-top"><div class="wa-av">TI</div><div><b data-en="IT Support 💬">Suporte TI 💬</b><small data-en="Ana, Carlos, Tech, +14">Ana, Carlos, Técnico, +14</small></div></div>
+                  <div class="wa-chat">
+                    <div class="bub a" style="--at:.5s; animation:fadeUp .5s var(--ease) calc(var(--s) + .5s) both, blurAway .7s ease calc(var(--s) + 5.2s) forwards;"><i style="color:#c2185b">Prof. Ana</i><span data-en="The computer in the corner won't turn on 😩">O computador do canto não liga 😩</span><s>10:02</s></div>
+                    <div class="bub me" style="animation:fadeUp .5s var(--ease) calc(var(--s) + 1.3s) both, blurAway .7s ease calc(var(--s) + 5.3s) forwards;"><span data-en="Which room? Which computer?">Qual sala? Qual computador?</span><s>10:09</s></div>
+                    <div class="bub" style="animation:fadeUp .5s var(--ease) calc(var(--s) + 2.1s) both, blurAway .7s ease calc(var(--s) + 5.4s) forwards;"><i style="color:#c2185b">Prof. Ana</i><span data-en="The one in the corner, downstairs lab">Aquele do canto, no laboratório de baixo</span><s>10:31</s></div>
+                    <div class="bub" style="animation:fadeUp .5s var(--ease) calc(var(--s) + 2.9s) both, blurAway .7s ease calc(var(--s) + 5.5s) forwards;"><i style="color:#1565c0">Prof. Carlos</i><span data-en="Room 204 projector has no image again">Projetor da 204 sem imagem de novo</span><s>10:40</s></div>
+                    <div class="bub" style="animation:fadeUp .5s var(--ease) calc(var(--s) + 3.7s) both, blurAway .7s ease calc(var(--s) + 5.6s) forwards;"><i style="color:#c2185b">Prof. Ana</i><span data-en="Did anyone see my message?">Alguém viu minha mensagem?</span><s>11:15</s></div>
+                    <div class="bub me" style="animation:fadeUp .5s var(--ease) calc(var(--s) + 4.5s) both, blurAway .7s ease calc(var(--s) + 5.7s) forwards;"><span data-en="Was Ana's issue fixed already?">Já resolveram o da Ana?</span><s>14:50</s></div>
+                  </div>
+                </div>
+              </div>
+              <div class="abs lost a" style="--an:stamp; --at:6s; --ad:.5s;" data-en="History lost">Histórico perdido</div>
+              <div class="abs" style="left:410px; top:110px; width:500px; display:grid; gap:16px;">
+                <span class="s-eyebrow a" style="--at:.3s;" data-en="Before">Antes</span>
+                <span class="s-title a" style="--at:.6s;" data-en="Support tickets over WhatsApp">Chamados pelo WhatsApp</span>
+                <div style="display:grid; gap:14px; margin-top:12px;">
+                  <span class="s-line a" style="--at:2.2s;"><span class="s-x">✕</span><span data-en="Messages that get lost">Mensagens que se perdem</span></span>
+                  <span class="s-line a" style="--at:3s;"><span class="s-x">✕</span><span data-en="No history per computer">Nenhum histórico por computador</span></span>
+                  <span class="s-line a" style="--at:3.8s;"><span class="s-x">✕</span><span data-en="Managers with no numbers to decide on">Gestão sem números para decidir</span></span>
+                </div>
+                <span class="a" style="--at:6.2s; font-size:21px; font-weight:800; color:var(--gold); margin-top:8px;" data-en="The feedback was lost along the way.">O feedback se perdia no caminho.</span>
+              </div>
+            </div>
+
+            <!-- 2 · A ideia -->
+            <div class="scene" style="--s:8s; --d:5s;">
+              <div class="abs logo-ring a" style="--an:ringGrow; --at:.2s; --ad:.9s;"></div>
+              <div class="abs logo-ic a" style="--an:popIn; --at:.55s; --ad:.7s;"><svg viewBox="0 0 24 24"><rect x="2.5" y="3.5" width="19" height="13" rx="2"/><path d="M8 20.5h8M12 16.5v4"/><path d="M9 10l2 2 4-4"/></svg></div>
+              <div class="abs logo-name a" style="--an:clipR; --at:1s; --ad:1s; --ae:cubic-bezier(.65,0,.35,1);">System<b>Manager</b>IT</div>
+              <div class="abs logo-tag a" style="--at:1.8s;" data-en="IT tickets and computer labs, under control.">Chamados e laboratórios de TI, sob controle.</div>
+            </div>
+
+            <!-- 3 · Chamado por QR Code -->
+            <div class="scene" style="--s:13s; --d:10s;">
+              <div class="abs label a" style="--at:.15s;">
+                <div class="label-top" data-en="IT Support · open a ticket">Suporte de TI · abrir chamado</div>
+                <svg class="qr" data-qr viewBox="0 0 25 25"></svg>
+                <b data-en="Lab 1 · Station 12">Laboratório 1 · Baia 12</b>
+                <small data-en="Point your camera to report a problem">Aponte a câmera para relatar um problema</small>
+              </div>
+              <div class="abs phone a" style="--an:riseIn; --at:.4s; --ad:.9s;">
+                <div class="phone-scr">
+                  <div class="layer vf">
+                    <div class="vf-box"><svg data-qr viewBox="0 0 25 25"></svg><i class="vf-c tl"></i><i class="vf-c tr"></i><i class="vf-c bl"></i><i class="vf-c br"></i><i class="vf-line a" style="--an:scan; --at:1.1s; --ad:.9s; --ai:2; --adir:alternate; --ae:ease-in-out;"></i></div>
+                    <div class="vf-hint" data-en="Reading QR code…">Lendo QR Code…</div>
+                  </div>
+                  <div class="layer flashl a" style="--an:flash; --at:3s; --ad:.5s; opacity:0;"></div>
+                  <div class="layer ph-form a" style="--an:fadeIn; --at:3.15s; --ad:.35s;">
+                    <div class="ph-head"><span data-en="Open ticket">Abrir chamado</span><small data-en="Location identified by the QR code">Local identificado pelo QR Code</small></div>
+                    <div class="ph-body">
+                      <div class="fld"><label data-en="Location">Local</label><div class="qr-fill"><span data-en="Lab 1 — Computing">Laboratório 1 — Informática</span></div></div>
+                      <div class="fld"><label data-en="Workstation">Baia</label><div class="qr-fill"><span data-en="Station 12 · Row 2">Baia 12 · Fileira 2</span></div></div>
+                      <div class="fld"><label data-en="Priority">Prioridade</label><div><span class="badge b-orange" data-en="Medium">Média</span></div></div>
+                      <div class="fld"><label data-en="What is happening?">O que está acontecendo?</label><div class="ta"><span data-type data-pt="O monitor não liga, já testei a tomada." data-en="The monitor won't turn on, I already checked the outlet." data-ts="16.9" data-cps="16"></span></div></div>
+                      <div class="mbtn a" style="--an:press; --at:6.8s; --ad:.35s; --ae:ease;" data-en="Send ticket">Enviar chamado</div>
+                    </div>
+                  </div>
+                  <div class="layer ph-ok a" style="--an:fadeIn; --at:7.3s; --ad:.4s;">
+                    <div class="ok-ic a" style="--an:popIn; --at:7.45s; --ad:.6s;"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+                    <b data-en="Ticket #128 created">Chamado #128 registrado</b>
+                    <small data-en="The IT team has already been notified.">A TI já foi avisada.</small>
+                  </div>
+                </div>
+              </div>
+              <div class="abs callouts">
+                <div class="callout a" style="--an:slideL; --at:1s;"><span class="n">1</span><p data-en="Point the phone at the QR code on the desk">Aponta o celular para o QR Code da bancada</p></div>
+                <div class="callout a" style="--an:slideL; --at:3.4s;"><span class="n">2</span><p data-en="Room and computer come pre-filled">Sala e computador já vêm preenchidos</p></div>
+                <div class="callout a" style="--an:slideL; --at:4.6s;"><span class="n">3</span><p data-en="Describe the problem (photo optional)">Descreve o problema (foto opcional)</p></div>
+                <div class="callout a" style="--an:slideL; --at:7.5s;"><span class="n">4</span><p data-en="Done: the ticket is on record">Pronto: o chamado está registrado</p></div>
+              </div>
+            </div>
+
+            <!-- 4 · Painel da TI -->
+            <div class="scene" style="--s:23s; --d:8s;">
+              <div class="abs win a" style="left:40px; top:28px; width:880px; height:484px; --at:.05s;">
+                <div class="win-bar"><i></i><i></i><i></i><span class="win-url">systemmanagerit / painel-ti</span></div>
+                <div class="app">
+                  <div class="side">
+                    <div class="side-brand"><svg viewBox="0 0 24 24"><rect x="2.5" y="3.5" width="19" height="13" rx="2"/><path d="M8 20.5h8M12 16.5v4"/></svg>SystemManagerIT</div>
+                    <span data-en="Tickets">Chamados</span><span data-en="Open ticket">Abrir chamado</span><span data-en="Labs">Laboratórios</span><span data-en="Classrooms">Salas de aula</span><span data-en="Seating map">Mapa de sala</span><span class="on" data-en="IT dashboard">Painel TI</span><span data-en="Reports">Relatórios</span>
+                  </div>
+                  <div class="main">
+                    <div class="m-head"><b data-en="IT dashboard">Painel TI</b><span class="live"><i class="live-dot"></i><span data-en="Real time">Tempo real</span></span>
+                      <span class="bell a" style="--an:shake; --at:1.3s; --ad:.7s; --ae:ease;"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 003.4 0"/></svg><em data-count data-from="2" data-to="3" data-ts="24.3" data-dur="0">2</em></span>
+                    </div>
+                    <div class="kgrid">
+                      <div class="k"><small data-en="Open">Abertos</small><b data-count data-from="3" data-to="4" data-ts="24.5" data-dur="0">3</b></div>
+                      <div class="k"><small data-en="In progress">Em atendimento</small><b data-count data-from="2" data-to="3" data-ts="28.05" data-dur="0">2</b></div>
+                      <div class="k"><small data-en="Resolved today">Resolvidos hoje</small><b>11</b></div>
+                      <div class="k"><small data-en="Average time">Tempo médio</small><b>24 min</b></div>
+                    </div>
+                    <div class="list">
+                      <div class="list-h"><span data-en="Open tickets">Chamados abertos</span><span style="color:var(--app-soft); font-weight:600;" data-en="updates by itself">atualiza sozinho</span></div>
+                      <div class="ticket a" style="animation:expand .55s var(--ease) calc(var(--s) + 1.5s) both, glowOff 3s ease calc(var(--s) + 2.1s) both;">
+                        <span class="id">#128</span>
+                        <span class="grow"><b data-en="Lab 1 · Station 12">Laboratório 1 · Baia 12</b><small data-en="The monitor won't turn on, I already checked the outlet.">O monitor não liga, já testei a tomada.</small></span>
+                        <span class="badge b-gold" data-en="QR code · now">QR Code · agora</span>
+                        <span class="tk-act">
+                          <span class="assumir a" style="--an:press; --at:4.75s; --ad:.35s; --ae:ease;"><span data-en="Take ticket">Assumir</span><i class="rp a" style="--an:ripple; --at:4.8s; --ad:.6s; opacity:0;"></i></span>
+                          <span class="emat a" style="--an:fadeIn; --at:5.05s; --ad:.3s;" data-en="In progress · you">Em atendimento · você</span>
+                        </span>
+                        <svg class="cursor a" style="left:auto; right:52px; top:16px; --an:cur4; --at:2.9s; --ad:2.7s;" viewBox="0 0 24 24"><path d="M4 2.5l15 9.2-6.6 1.4-3.3 6.4z" fill="#fff" stroke="#0a1420" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                      </div>
+                      <div class="ticket"><span class="id">#127</span><span class="grow"><b data-en="Room 204">Sala 204</b><small data-en="Projector has no image">Projetor sem imagem</small></span><span class="badge b-red" data-en="High">Alta</span><span class="tk-act"><span class="emat" data-en="In progress · Bruno">Em atendimento · Bruno</span></span></div>
+                      <div class="ticket"><span class="id">#126</span><span class="grow"><b data-en="Lab 3 · Station 7">Laboratório 3 · Baia 7</b><small data-en="Software missing for class">Falta software para a aula</small></span><span class="badge b-blue" data-en="Low">Baixa</span><span class="tk-act"><span class="assumir" data-en="Take ticket">Assumir</span></span></div>
+                      <div class="ticket"><span class="id">#125</span><span class="grow"><b data-en="Lab 5 · Station 21">Laboratório 5 · Baia 21</b><small data-en="Mouse not working">Mouse não funciona</small></span><span class="badge b-orange" data-en="Medium">Média</span><span class="tk-act"><span class="assumir" data-en="Take ticket">Assumir</span></span></div>
+                    </div>
+                    <div class="toast a" style="animation:slideL .5s var(--ease) calc(var(--s) + 1.3s) both, fadeOut .4s ease calc(var(--s) + 4.4s) forwards;">
+                      <span class="ti"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1112 0c0 7 3 9 3 9H3s3-2 3-9"/></svg></span>
+                      <span><b data-en="New ticket #128">Novo chamado #128</b><small data-en="Lab 1 · Station 12 — via QR code">Laboratório 1 · Baia 12 — via QR Code</small></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5 · Atendimento -->
+            <div class="scene" style="--s:31s; --d:10s;">
+              <div class="abs card-w plan a" style="--at:.05s;">
+                <div class="plan-h"><b data-en="Lab 1 — Computing">Laboratório 1 — Informática</b>
+                  <span class="st-chips">
+                    <span class="badge b-red a" style="animation:fadeIn .3s ease calc(var(--s) + .6s) both, fadeOut .3s ease calc(var(--s) + 2.2s) forwards;" data-en="Station 12 · problem">Baia 12 · com problema</span>
+                    <span class="badge b-orange a" style="animation:fadeIn .3s ease calc(var(--s) + 2.3s) both, fadeOut .3s ease calc(var(--s) + 7.5s) forwards;" data-en="Station 12 · in progress">Baia 12 · em atendimento</span>
+                    <span class="badge b-green a" style="--an:fadeIn; --at:7.6s; --ad:.3s;" data-en="Station 12 · resolved">Baia 12 · resolvida</span>
+                  </span>
+                </div>
+                <div class="legend"><span><i style="background:var(--ok)"></i><span data-en="Working">Funcionando</span></span><span><i style="background:var(--bad)"></i><span data-en="Problem">Com problema</span></span><span><i style="background:var(--warn)"></i><span data-en="In progress">Em atendimento</span></span><span><i style="background:#8a94a3"></i><span data-en="Maintenance">Manutenção</span></span></div>
+                <div class="blocks" id="plan-blocks"></div>
+                <div class="desk" data-en="Teacher's desk">Mesa do professor</div>
+              </div>
+              <div class="abs card-w chat a" style="--an:slideL; --at:.3s;">
+                <div class="chat-h"><b data-en="Ticket #128 · Lab 1 · Station 12">Chamado #128 · Laboratório 1 · Baia 12</b><small data-en="Prof. Ana ↔ Tech Bruno">Prof. Ana ↔ Técnico Bruno</small></div>
+                <div class="chat-b">
+                  <div class="cm prof"><i>Prof. Ana</i><span data-en="The monitor won't turn on, I already checked the outlet.">O monitor não liga, já testei a tomada.</span></div>
+                  <div class="cm tec a" style="--at:2.4s;"><i data-en="Tech Bruno">Técnico Bruno</i><span data-en="On my way to station 12 👋">Estou a caminho da baia 12 👋</span></div>
+                  <div class="cm prof a" style="--at:3.9s;"><i>Prof. Ana</i><span data-en="Thanks! The student moved to the next seat.">Obrigada! O aluno já mudou de lugar.</span></div>
+                  <div class="typing a" style="animation:fadeIn .25s ease calc(var(--s) + 5s) both, fadeOut .2s ease calc(var(--s) + 5.8s) forwards;"><span></span><span></span><span></span></div>
+                  <div class="cm tec a" style="--at:6s; margin-top:-36px;"><i data-en="Tech Bruno">Técnico Bruno</i><span data-en="It was the video cable. Replaced ✅">Era o cabo de vídeo. Trocado ✅</span></div>
+                  <div class="sysmsg a" style="--an:popIn; --at:7.7s;"><span data-en="Ticket closed · solved in 18 min">Chamado finalizado · resolvido em 18 min</span></div>
+                </div>
+                <div class="chat-in"><span data-en="Type a message…">Escreva uma mensagem…</span><span>➤</span></div>
+              </div>
+            </div>
+
+            <!-- 6 · Mapa de sala -->
+            <div class="scene" style="--s:41s; --d:7s;">
+              <div class="abs card-w mh a" style="--at:.05s;"><div><b data-en="Seating map · Class 2A">Mapa de sala · Turma 2º A</b><small data-en="Lab 1 — teacher's view">Laboratório 1 — visão do professor</small></div><div class="acts"><span data-en="Import roll call (PDF)">Importar chamada (PDF)</span><span data-en="Print PDF">Imprimir PDF</span></div></div>
+              <div class="abs card-w roster a" style="--at:.15s;"><small data-en="STUDENTS">ALUNOS</small></div>
+              <div class="abs card-w room a" style="--at:.15s;"></div>
+              <div id="seats"></div>
+              <div class="abs room-desk a" style="--at:.2s;" data-en="Teacher's desk">Mesa do professor</div>
+              <div class="stu" style="left:396px; top:170px; --fx:-340px; --fy:-10px; animation:fadeIn .4s ease calc(var(--s) + .2s) both, fly .7s cubic-bezier(.65,0,.35,1) calc(var(--s) + .7s) both;">Ana</div>
+              <div class="stu" style="left:708px; top:230px; --fx:-652px; --fy:-18px; --sx:-312px; --sy:60px; animation:fadeIn .4s ease calc(var(--s) + .2s) both, fly .7s cubic-bezier(.65,0,.35,1) calc(var(--s) + 1.05s) both, swap 1.2s cubic-bezier(.65,0,.35,1) calc(var(--s) + 4.18s) forwards;">Bruno</div>
+              <div class="stu" style="left:396px; top:290px; --fx:-340px; --fy:-26px; --sx:312px; --sy:-60px; animation:fadeIn .4s ease calc(var(--s) + .2s) both, fly .7s cubic-bezier(.65,0,.35,1) calc(var(--s) + 1.4s) both, swapB .8s cubic-bezier(.65,0,.35,1) calc(var(--s) + 5.05s) forwards;">Carla</div>
+              <div class="stu" style="left:708px; top:170px; --fx:-652px; --fy:146px; animation:fadeIn .4s ease calc(var(--s) + .2s) both, fly .7s cubic-bezier(.65,0,.35,1) calc(var(--s) + 1.75s) both;">Diego</div>
+              <div class="stu" style="left:492px; top:350px; --fx:-436px; --fy:18px; animation:fadeIn .4s ease calc(var(--s) + .2s) both, fly .7s cubic-bezier(.65,0,.35,1) calc(var(--s) + 2.1s) both;">Eva</div>
+              <div class="stu" style="left:804px; top:290px; --fx:-748px; --fy:130px; animation:fadeIn .4s ease calc(var(--s) + .2s) both, fly .7s cubic-bezier(.65,0,.35,1) calc(var(--s) + 2.45s) both;">Felipe</div>
+              <svg class="cursor a" style="--an:cur6; --at:3.4s; --ad:2.6s; --ae:linear;" viewBox="0 0 24 24"><path d="M4 2.5l15 9.2-6.6 1.4-3.3 6.4z" fill="#fff" stroke="#0a1420" stroke-width="1.6" stroke-linejoin="round"/></svg>
+              <div class="abs swap-tag a" style="--an:popIn; --at:5.9s;" data-en="⇄ They swapped seats">⇄ Trocaram de lugar</div>
+            </div>
+
+            <!-- 7 · Relatórios -->
+            <div class="scene" style="--s:48s; --d:9s;">
+              <div class="abs rep-h a" style="--at:.05s;"><b data-en="Reports">Relatórios</b><span data-en="last period · PDF for management">último período · PDF para a gestão</span></div>
+              <div class="abs card-w rk a" style="left:60px; --at:.2s;"><small data-en="Tickets in the period">Chamados no período</small><b data-count data-from="0" data-to="342" data-ts="48.6" data-dur="1.6">0</b></div>
+              <div class="abs card-w rk a" style="left:346px; --at:.32s;"><small data-en="Resolved">Resolvidos</small><b><span data-count data-from="0" data-to="97" data-ts="48.7" data-dur="1.6">0</span>%</b></div>
+              <div class="abs card-w rk a" style="left:632px; --at:.44s;"><small data-en="Average response time">Tempo médio de atendimento</small><b><span data-count data-from="0" data-to="21" data-ts="48.8" data-dur="1.6">0</span> min</b></div>
+              <div class="abs card-w chartc a" style="--at:.6s;">
+                <b data-en="Tickets by location">Chamados por ambiente</b>
+                <div class="cbars">
+                  <span class="top a" style="height:92%; --an:growY; --at:1.4s; --ad:.9s;"><em>58</em></span>
+                  <span class="a" style="height:66%; --an:growY; --at:1.5s; --ad:.9s;"><em>41</em></span>
+                  <span class="a" style="height:55%; --an:growY; --at:1.6s; --ad:.9s;"><em>34</em></span>
+                  <span class="a" style="height:44%; --an:growY; --at:1.7s; --ad:.9s;"><em>27</em></span>
+                  <span class="a" style="height:33%; --an:growY; --at:1.8s; --ad:.9s;"><em>20</em></span>
+                  <span class="a" style="height:21%; --an:growY; --at:1.9s; --ad:.9s;"><em>13</em></span>
+                </div>
+                <div class="clabels"><span data-en="Lab 1">Lab. 1</span><span data-en="Lab 3">Lab. 3</span><span data-en="Room 204">Sala 204</span><span data-en="Lab 5">Lab. 5</span><span data-en="Room 101">Sala 101</span><span data-en="Lab 2">Lab. 2</span></div>
+              </div>
+              <div class="abs card-w reinc a" style="--an:slideL; --at:3.8s;">
+                <small data-en="Repeat-offender workstation">Posto reincidente</small>
+                <b data-en="Lab 1 · Station 12">Laboratório 1 · Baia 12</b>
+                <span data-en="tickets in the period">chamados no período</span>
+                <span class="big">7</span>
+              </div>
+              <div class="abs pdfbtn a" style="animation:fadeUp .5s var(--ease) calc(var(--s) + 4.6s) both, press .35s ease calc(var(--s) + 5.6s) both;"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span data-en="Export PDF">Exportar PDF</span></div>
+              <div class="abs sheet a" style="--an:sheetFly; --at:5.85s; --ad:1s;"><em>PDF</em><i class="h"></i><i></i><i style="width:80%"></i><div class="sb"><span style="height:100%"></span><span style="height:70%"></span><span style="height:58%"></span><span style="height:45%"></span><span style="height:30%"></span></div><i></i><i style="width:60%"></i></div>
+            </div>
+
+            <!-- 8 · Resultado -->
+            <div class="scene last" style="--s:57s; --d:6s;">
+              <div class="abs outro s-title a" style="top:150px; font-size:46px; --at:.3s;" data-en="Every ticket becomes a record.">Todo chamado vira registro.</div>
+              <div class="abs outro s-title a" style="top:212px; font-size:46px; color:var(--gold); --at:1.1s;" data-en="Every record becomes a decision.">Todo registro vira decisão.</div>
+              <div class="abs outro a" style="top:304px; font-size:16px; font-weight:700; color:var(--ink); letter-spacing:.02em; --at:2.1s;" data-en="403 automated tests · 3 access roles · real-time updates">403 testes automatizados · 3 perfis de acesso · tempo real</div>
+              <div class="abs outro a" style="top:372px; --at:3s;"><span style="display:inline-block; border-top:1px solid rgba(211,166,86,.5); padding-top:14px; font-size:14px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:800;" data-en="Designed and built by Vitor Parra">Idealizado e desenvolvido por Vitor Parra</span></div>
+            </div>
+          </div>
+
+          <div class="overlay" id="poster">
+            <button type="button" class="big-play" data-play aria-label="Reproduzir o tour"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4v16l14-8z"/></svg></button>
+            <p data-en="Video tour · 1 minute">Tour em vídeo · 1 minuto</p>
+            <small data-en="From the lost WhatsApp message to the management report">Do chamado perdido no WhatsApp ao relatório da gestão</small>
+          </div>
+          <div class="overlay hide" id="endcard">
+            <p data-en="That's how SystemManagerIT works.">É assim que o SystemManagerIT funciona.</p>
+            <div class="end-actions">
+              <button type="button" class="btn btn-primary" id="replay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg><span data-en="Watch again">Assistir de novo</span></button>
+              <a class="btn btn-ghost" href="#funcionalidades" data-en="Explore each feature">Explorar cada funcionalidade</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cc" id="cc" aria-live="off"><span id="cc-text"></span></div>
+
+        <div class="controls">
+          <button type="button" class="ctl" id="pp" aria-label="Reproduzir"><svg id="ic-play" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg><svg id="ic-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4.5" width="4" height="15" rx="1"/><rect x="14" y="4.5" width="4" height="15" rx="1"/></svg></button>
+          <span class="time" id="time">0:00 / 1:03</span>
+          <div class="track" id="track" role="slider" aria-label="Posição do vídeo" aria-valuemin="0" aria-valuemax="63" aria-valuenow="0" tabindex="-1">
+            <div class="track-bar"><div class="track-fill" id="fill"></div></div>
+            <div class="track-knob" id="knob"></div>
+            <div class="track-tip" id="tip"></div>
+          </div>
+          <span class="chapter-now" id="chapter-now"></span>
+          <button type="button" class="ctl cc-btn" id="ccbtn" aria-label="Legendas" title="Legendas">CC</button>
+          <button type="button" class="ctl" id="fs" aria-label="Tela cheia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+        </div>
+      </div>
+      <div class="chapters" id="chapters"></div>
+    </section>
+  </div>
+</div>
+
+<!-- ================= O PROBLEMA ================= -->
+<section class="block" id="problema">
+  <div class="section-head reveal">
+    <p class="section-num">01</p>
+    <h2 data-en="It started with a problem I saw up close">Começou com um problema que eu via de perto</h2>
+  </div>
+  <div class="story">
+    <div class="story-text reveal">
+      <p data-en="Working in the IT department of an educational institution, I looked closely at how support actually happened day to day: tickets arrived over WhatsApp. A teacher sent a message, a technician answered, the problem was fixed — and everything stayed scattered across private chats and crowded groups.">Trabalhando no setor de TI de uma instituição de ensino, observei de perto como o suporte acontecia no dia a dia: os chamados chegavam pelo WhatsApp. O professor mandava uma mensagem, um técnico respondia, o problema era resolvido — e tudo ficava espalhado em conversas individuais e em grupos cheios.</p>
+      <p data-en="When I analyzed that routine, it became clear how much was being lost: messages, history and, above all, feedback. Without data, managers couldn't see the department's demand, justify replacing equipment or spot the problems that kept coming back.">Ao analisar essa rotina, ficou claro o quanto se perdia: mensagens, histórico e, principalmente, feedback. Sem dados, a gestão não conseguia enxergar a demanda do setor, justificar a troca de equipamentos nem perceber os problemas que se repetiam.</p>
+      <p data-en="So I designed and built SystemManagerIT: every ticket is recorded and tied to the exact place of the problem, and that record turns into information for the people who make decisions.">Então idealizei e desenvolvi o SystemManagerIT: cada chamado é registrado e amarrado ao lugar exato do problema, e esse registro vira informação para quem decide.</p>
+      <p class="quote" data-en="“The report no longer says just ‘there were 40 tickets’. It says which machine broke down seven times.”">“O relatório não diz apenas ‘houve 40 chamados’. Diz qual máquina deu problema sete vezes.”</p>
+    </div>
+    <div class="pains">
+      <div class="pain reveal"><div class="pain-ic"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 01-12.2 7.5L3 21l2-5.6A8.4 8.4 0 1121 11.5z"/><path d="M9 9l6 6M15 9l-6 6"/></svg></div><div><h3 data-en="Lost data">Dados perdidos</h3><p data-en="Messages got buried in chats, phone swaps and busy groups. There was no single record of how many tickets existed or how they ended.">Mensagens sumiam entre conversas, trocas de celular e grupos cheios. Não havia registro único de quantos chamados existiram nem de como terminaram.</p></div></div>
+      <div class="pain reveal"><div class="pain-ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/><path d="M12 8v3M12 13.5v.01"/></svg></div><div><h3 data-en="No history per computer">Sem histórico por equipamento</h3><p data-en="“The computer in the corner won't turn on” doesn't say which machine or which room. The same defect came back without anyone noticing.">“O computador do canto não liga” não diz qual máquina nem qual sala. O mesmo defeito voltava sem ninguém perceber.</p></div></div>
+      <div class="pain reveal"><div class="pain-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></div><div><h3 data-en="No service metrics">Sem medida de atendimento</h3><p data-en="Nobody knew how long a ticket took, who handled it or what was still pending.">Não dava para saber quanto tempo um chamado levava, quem atendeu nem o que ficou pendente.</p></div></div>
+      <div class="pain reveal"><div class="pain-ic"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/><path d="M15 5l5 5M20 5l-5 5"/></svg></div><div><h3 data-en="Managers without feedback">Gestão sem feedback</h3><p data-en="Decisions about equipment and staffing depended on memory and impressions, not on numbers.">Decisões sobre equipamentos e equipe dependiam de memória e impressão, não de números.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COMO FUNCIONA ================= -->
+<section class="block" id="como-funciona">
+  <div class="section-head reveal">
+    <p class="section-num">02</p>
+    <h2 data-en="How a ticket travels through the system">O caminho de um chamado</h2>
+    <p data-en="From the phone pointed at the desk to the number in the report — five steps, with nothing lost along the way.">Do celular apontado para a bancada até o número no relatório — cinco passos, sem nada se perder no caminho.</p>
+  </div>
+  <div class="flow" id="flow">
+    <div class="flow-line"><i></i></div>
+    <div class="step"><div class="step-dot"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M21 14v7h-7"/></svg></div><span class="step-k" data-en="STEP 1">PASSO 1</span><h3 data-en="Scans the QR code">Escaneia o QR Code</h3><p data-en="Every desk and room has its own label. The camera opens the ticket form.">Cada bancada e sala tem sua etiqueta. A câmera abre o formulário do chamado.</p></div>
+    <div class="step"><div class="step-dot"><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg></div><span class="step-k" data-en="STEP 2">PASSO 2</span><h3 data-en="Describes the problem">Descreve o problema</h3><p data-en="Room and computer are already filled in. Just say what happened and, if useful, attach a photo.">Sala e computador já vêm preenchidos. Basta dizer o que houve e, se ajudar, anexar uma foto.</p></div>
+    <div class="step"><div class="step-dot"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 003.4 0"/></svg></div><span class="step-k" data-en="STEP 3">PASSO 3</span><h3 data-en="IT gets it instantly">A TI recebe na hora</h3><p data-en="The ticket shows up on the IT dashboard and in the notification bell, without reloading the page.">O chamado aparece no painel da TI e no sino de notificações, sem recarregar a página.</p></div>
+    <div class="step"><div class="step-dot"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><span class="step-k" data-en="STEP 4">PASSO 4</span><h3 data-en="Handled with a chat">Atendimento com chat</h3><p data-en="Requester and technician talk inside the ticket itself. Everything is recorded.">Quem pediu e quem atende conversam dentro do próprio chamado. Tudo fica registrado.</p></div>
+    <div class="step"><div class="step-dot"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><span class="step-k" data-en="STEP 5">PASSO 5</span><h3 data-en="Becomes a number">Vira número</h3><p data-en="Response time, location and recurrence go into the PDF reports for management.">Tempo de atendimento, local e reincidência entram nos relatórios em PDF para a gestão.</p></div>
+  </div>
+</section>
+
+<!-- ================= FUNCIONALIDADES ================= -->
+<section class="block" id="funcionalidades">
+  <div class="section-head reveal">
+    <p class="section-num">03</p>
+    <h2 data-en="Features, one by one">Funcionalidades, uma a uma</h2>
+    <p data-en="Pick a module to see what it does. Where it appears in the video, you can jump straight to that moment.">Escolha um módulo para ver o que ele faz. Onde ele aparece no vídeo, dá para pular direto para aquele momento.</p>
+  </div>
+  <div class="explorer reveal">
+    <div class="tabs" role="tablist" aria-label="Funcionalidades">
+      <button class="tab" role="tab" id="t-qr" aria-controls="p-qr" aria-selected="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M21 14v7h-7"/></svg><span data-en="QR code tickets">Chamados por QR Code</span></button>
+      <button class="tab" role="tab" id="t-ti" aria-controls="p-ti" aria-selected="false" tabindex="-1"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg><span data-en="Real-time IT dashboard">Painel da TI em tempo real</span></button>
+      <button class="tab" role="tab" id="t-lab" aria-controls="p-lab" aria-selected="false" tabindex="-1"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg><span data-en="Lab floor plan & editor">Planta e editor de laboratório</span></button>
+      <button class="tab" role="tab" id="t-map" aria-controls="p-map" aria-selected="false" tabindex="-1"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2M16 3.13a4 4 0 010 7.75M21 21v-2a4 4 0 00-3-3.85"/></svg><span data-en="Seating map">Mapa de sala</span></button>
+      <button class="tab" role="tab" id="t-rep" aria-controls="p-rep" aria-selected="false" tabindex="-1"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M8 17v-3M12 17v-6M16 17v-2"/></svg><span data-en="Reports for management">Relatórios para a gestão</span></button>
+      <button class="tab" role="tab" id="t-cat" aria-controls="p-cat" aria-selected="false" tabindex="-1"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><path d="M3.3 7L12 12l8.7-5M12 22V12"/></svg><span data-en="Scripts & software catalog">Catálogo de scripts e softwares</span></button>
+      <button class="tab" role="tab" id="t-sys" aria-controls="p-sys" aria-selected="false" tabindex="-1"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg><span data-en="Status, backup & security">Status, backup e segurança</span></button>
+    </div>
+
+    <div class="panels">
+      <div class="panel" role="tabpanel" id="p-qr" aria-labelledby="t-qr">
+        <div class="panel-text">
+          <p class="kicker" data-en="Where it all begins">Onde tudo começa</p>
+          <h3 data-en="The ticket is born where the problem is">O chamado nasce onde o problema está</h3>
+          <p data-en="Each desk has a QR code. Scanning it opens the form with room and computer already filled in, so the technician knows exactly where to go.">Cada bancada tem um QR Code. Ao escanear, o formulário abre com a sala e o computador preenchidos — o técnico sabe exatamente para onde ir.</p>
+          <ul class="checks">
+            <li data-en="Room, row and workstation identified automatically">Sala, fileira e posto identificados automaticamente</li>
+            <li data-en="Priority, description and optional photo">Prioridade, descrição e foto opcional</li>
+            <li data-en="Full history kept per workstation">Histórico completo guardado por posto de trabalho</li>
+            <li data-en="QR labels printed in batches by the system itself">Etiquetas impressas em lote pelo próprio sistema</li>
+          </ul>
+          <button type="button" class="seek-btn" data-seek="13"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4v16l14-8z"/></svg><span data-en="See it in the video · 0:13">Ver no vídeo · 0:13</span></button>
+        </div>
+        <div class="panel-visual">
+          <div class="mini" style="max-width:300px;">
+            <div class="mini-head" data-en="Open ticket">Abrir chamado</div>
+            <div class="mini-body">
+              <div class="fld"><label data-en="Location">Local</label><div class="qr-fill"><span data-en="Lab 1 — Computing">Laboratório 1 — Informática</span><span class="badge b-gold" style="margin-left:auto" data-en="via QR">via QR</span></div></div>
+              <div class="fld"><label data-en="Workstation">Baia</label><div class="qr-fill"><span data-en="Station 12 · Row 2">Baia 12 · Fileira 2</span></div></div>
+              <div class="fld"><label data-en="Priority">Prioridade</label><div><span class="badge b-orange" data-en="Medium — gets in the way">Média — atrapalha, mas dá para seguir</span></div></div>
+              <div class="fld"><label data-en="What is happening?">O que está acontecendo?</label><div style="min-height:44px; align-items:flex-start;"><span data-en="The monitor won't turn on, I already checked the outlet.">O monitor não liga, já testei a tomada.</span></div></div>
+              <div class="mbtn" data-en="Send ticket">Enviar chamado</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" role="tabpanel" id="p-ti" aria-labelledby="t-ti" hidden>
+        <div class="panel-text">
+          <p class="kicker" data-en="For the IT team">Para a equipe de TI</p>
+          <h3 data-en="The queue updates itself">A fila se atualiza sozinha</h3>
+          <p data-en="New tickets, replies and status changes reach every IT screen at once, with no page reloads. The technician takes a ticket with one click.">Chamados novos, respostas e mudanças de status chegam a todas as telas da TI ao mesmo tempo, sem recarregar a página. O técnico assume o chamado com um clique.</p>
+          <ul class="checks">
+            <li data-en="Counters for open, in-progress and resolved tickets">Contadores de abertos, em atendimento e resolvidos</li>
+            <li data-en="Notification bell for what is pending">Sino de notificações com o que está pendente</li>
+            <li data-en="Chat between requester and technician inside the ticket">Chat entre solicitante e técnico dentro do chamado</li>
+            <li data-en="Falls back to periodic refresh if the connection is limited — it never breaks">Se a conexão for limitada, passa a atualizar a cada poucos segundos — nunca quebra</li>
+          </ul>
+          <button type="button" class="seek-btn" data-seek="23"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4v16l14-8z"/></svg><span data-en="See it in the video · 0:23">Ver no vídeo · 0:23</span></button>
+        </div>
+        <div class="panel-visual">
+          <div class="mini">
+            <div class="mini-head"><span data-en="IT dashboard">Painel TI</span><span class="live"><i class="live-dot"></i><span data-en="Real time">Tempo real</span></span></div>
+            <div class="mini-body">
+              <div class="kpis"><div class="kpi"><small data-en="Open">Abertos</small><b>4</b></div><div class="kpi"><small data-en="In progress">Em atendimento</small><b>3</b></div></div>
+              <div class="row new"><b>#128</b><span class="grow" data-en="Lab 1 · Station 12 — monitor won't turn on">Laboratório 1 · Baia 12 — monitor não liga</span><span class="badge b-gold" data-en="now">agora</span></div>
+              <div class="row"><b>#127</b><span class="grow" data-en="Room 204 — projector has no image">Sala 204 — projetor sem imagem</span><span class="badge b-orange" data-en="in progress">em atendimento</span></div>
+              <div class="msg in" data-en="On my way to station 12 👋">Estou a caminho da baia 12 👋</div>
+              <div class="msg out" data-en="Thanks! The student moved seats.">Obrigada! O aluno já mudou de lugar.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" role="tabpanel" id="p-lab" aria-labelledby="t-lab" hidden>
+        <div class="panel-text">
+          <p class="kicker" data-en="See the room as it is">Veja a sala como ela é</p>
+          <h3 data-en="Every workstation, on the floor plan">Cada posto na planta</h3>
+          <p data-en="Each lab has a floor plan with its workstations, colored by status. It opens from the teacher's point of view, and the plan can be rearranged by dragging — with undo and restore.">Cada laboratório tem sua planta de baias, colorida pelo estado de cada uma. Abre na visão do professor, e a planta pode ser remontada arrastando — com desfazer e restaurar.</p>
+          <ul class="checks">
+            <li data-en="Working, problem, in progress or under maintenance at a glance">Funcionando, com problema, em atendimento ou em manutenção, num olhar</li>
+            <li data-en="Rotate to other points of view of the room">Giro para as outras visões da sala</li>
+            <li data-en="Editor: drag or use the keyboard, no database work needed">Editor: arraste ou use o teclado, sem mexer no banco</li>
+            <li data-en="Each change is a version: undo the last one or restore the original">Cada mudança vira versão: desfazer a última ou restaurar a original</li>
+          </ul>
+          <button type="button" class="seek-btn" data-seek="31"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4v16l14-8z"/></svg><span data-en="See it in the video · 0:31">Ver no vídeo · 0:31</span></button>
+        </div>
+        <div class="panel-visual" style="flex-direction:column; gap:12px;">
+          <div class="mini" style="max-width:340px;">
+            <div class="mini-head" data-en="Lab 1 — Computing">Laboratório 1 — Informática</div>
+            <div class="mini-body">
+              <div class="legend"><span><i style="background:var(--ok)"></i><span data-en="Working">Funcionando</span></span><span><i style="background:var(--bad)"></i><span data-en="Problem">Problema</span></span><span><i style="background:var(--warn)"></i><span data-en="In progress">Atendimento</span></span><span><i style="background:#8a94a3"></i><span data-en="Maintenance">Manutenção</span></span></div>
+              <div class="bays" id="mini-bays"></div>
+              <div class="desk" data-en="Teacher's desk">Mesa do professor</div>
+              <div style="display:flex; gap:6px; justify-content:center;"><span class="badge b-gray" data-en="↶ Undo">↶ Desfazer</span><span class="badge b-gray" data-en="⟲ Restore original">⟲ Restaurar original</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" role="tabpanel" id="p-map" aria-labelledby="t-map" hidden>
+        <div class="panel-text">
+          <p class="kicker" data-en="For teachers">Para o professor</p>
+          <h3 data-en="Who sits where, in every class">Quem senta onde, em cada turma</h3>
+          <p data-en="Teachers build the seating map of their class on the plan of the lab or classroom, dragging students into seats. Dropping one student onto another swaps them.">O professor monta o mapa da turma sobre a planta do laboratório ou da sala de aula, arrastando os alunos para os lugares. Soltar um aluno sobre outro troca os dois.</p>
+          <ul class="checks">
+            <li data-en="Imports the whole class from the registrar's roll-call PDF">Importa a turma inteira a partir do PDF da chamada da secretaria</li>
+            <li data-en="Two people per seat when the class doesn't fit">Duas pessoas por lugar quando a turma não cabe</li>
+            <li data-en="Export and import as CSV">Exporta e importa em CSV</li>
+            <li data-en="Prints as PDF to leave in the room">Imprime em PDF para deixar na sala</li>
+          </ul>
+          <button type="button" class="seek-btn" data-seek="41"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4v16l14-8z"/></svg><span data-en="See it in the video · 0:41">Ver no vídeo · 0:41</span></button>
+        </div>
+        <div class="panel-visual">
+          <div class="mini" style="max-width:340px;">
+            <div class="mini-head" data-en="Seating map · Class 2A">Mapa de sala · Turma 2º A</div>
+            <div class="mini-body">
+              <div class="seat-grid">
+                <div class="seat f">Ana</div><div class="seat"></div><div class="seat f">Diego</div><div class="seat f">Gabi</div>
+                <div class="seat f">Carla</div><div class="seat f2">Hugo<br>Íris</div><div class="seat"></div><div class="seat f">Bruno</div>
+                <div class="seat"></div><div class="seat f">Eva</div><div class="seat f">Felipe</div><div class="seat"></div>
+              </div>
+              <div class="desk" data-en="Teacher's desk">Mesa do professor</div>
+              <div style="display:flex; gap:6px; justify-content:center; flex-wrap:wrap;"><span class="badge b-blue" data-en="Import roll call (PDF)">Importar chamada (PDF)</span><span class="badge b-gray">CSV</span><span class="badge b-red" data-en="Print PDF">Imprimir PDF</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" role="tabpanel" id="p-rep" aria-labelledby="t-rep" hidden>
+        <div class="panel-text">
+          <p class="kicker" data-en="For management">Para a gestão</p>
+          <h3 data-en="Feedback that finally arrives">O feedback que finalmente chega</h3>
+          <p data-en="Period numbers in PDF: tickets by location and by technician, response time and the workstation that keeps failing. The numbers come from a single source, so two screens never disagree.">Números do período em PDF: chamados por ambiente e por técnico, tempo de atendimento e o posto que mais dá problema. Os números vêm de uma fonte única — duas telas nunca discordam.</p>
+          <ul class="checks">
+            <li data-en="Average time split between labs and classrooms">Tempo médio separado por laboratório e por sala</li>
+            <li data-en="Reopened tickets count only the time they were open">Chamado reaberto conta só o tempo em que ficou aberto</li>
+            <li data-en="Test tickets are left out of every statistic">Chamados de teste ficam fora de toda estatística</li>
+            <li data-en="Repeat-offender workstation highlighted">Posto reincidente em destaque</li>
+          </ul>
+          <button type="button" class="seek-btn" data-seek="48"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4v16l14-8z"/></svg><span data-en="See it in the video · 0:48">Ver no vídeo · 0:48</span></button>
+        </div>
+        <div class="panel-visual">
+          <div class="mini" style="max-width:330px;">
+            <div class="mini-head" data-en="Reports · last period">Relatórios · último período</div>
+            <div class="mini-body">
+              <div class="kpis"><div class="kpi"><small data-en="Tickets">Chamados</small><b>342</b></div><div class="kpi"><small data-en="Average time">Tempo médio</small><b>21 min</b></div></div>
+              <div class="bars"><span class="top" style="height:92%"></span><span style="height:66%"></span><span style="height:55%"></span><span style="height:44%"></span><span style="height:33%"></span><span style="height:21%"></span></div>
+              <div class="bar-labels"><span data-en="Lab 1">Lab. 1</span><span data-en="Lab 3">Lab. 3</span><span data-en="R. 204">S. 204</span><span data-en="Lab 5">Lab. 5</span><span data-en="R. 101">S. 101</span><span data-en="Lab 2">Lab. 2</span></div>
+              <div class="alert"><b data-en="Repeat offender">Posto reincidente</b><span data-en="Lab 1 · Station 12 — 7 tickets">Laboratório 1 · Baia 12 — 7 chamados</span></div>
+              <p style="margin:0; font-size:9.5px; color:var(--app-soft); text-align:center;" data-en="Illustrative data">Dados ilustrativos</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" role="tabpanel" id="p-cat" aria-labelledby="t-cat" hidden>
+        <div class="panel-text">
+          <p class="kicker" data-en="Self-service">Autoatendimento</p>
+          <h3 data-en="The right tool for the right person">A ferramenta certa para a pessoa certa</h3>
+          <p data-en="IT publishes scripts and software in a catalog. Each item can be visible to everyone, restricted to some roles or hidden, so teachers find what they need without asking.">A TI publica scripts e softwares num catálogo. Cada item pode ser visível para todos, restrito a alguns perfis ou oculto — o professor encontra o que precisa sem precisar pedir.</p>
+          <ul class="checks">
+            <li data-en="Control over who sees what">Controle de quem vê o quê</li>
+            <li data-en="Audit trail of catalog changes">Trilha de auditoria das mudanças no catálogo</li>
+            <li data-en="Fewer tickets for simple, repeated requests">Menos chamados para pedidos simples e repetidos</li>
+          </ul>
+        </div>
+        <div class="panel-visual">
+          <div class="mini" style="max-width:320px;">
+            <div class="mini-head" data-en="Scripts & software">Scripts e softwares</div>
+            <div class="mini-body">
+              <div class="item"><span class="ic">🖥️</span><span class="grow"><b data-en="Projector setup">Configurar projetor</b><small data-en="Script · everyone">Script · todos</small></span><span class="badge b-green" data-en="visible">visível</span></div>
+              <div class="item"><span class="ic">📦</span><span class="grow"><b data-en="Programming IDE">IDE de programação</b><small data-en="Installer · teachers">Instalador · professores</small></span><span class="badge b-orange" data-en="restricted">restrito</span></div>
+              <div class="item"><span class="ic">🧹</span><span class="grow"><b data-en="Clean user profiles">Limpar perfis de usuário</b><small data-en="Script · IT only">Script · só TI</small></span><span class="badge b-gray" data-en="hidden">oculto</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" role="tabpanel" id="p-sys" aria-labelledby="t-sys" hidden>
+        <div class="panel-text">
+          <p class="kicker" data-en="Built to be trusted">Feito para ser confiável</p>
+          <h3 data-en="History that doesn't disappear">Histórico que não some</h3>
+          <p data-en="The whole point was to stop losing data — so the system takes care of itself: it checks its own health, backs up automatically and protects every write.">O objetivo era parar de perder dados — então o sistema cuida de si mesmo: verifica a própria saúde, faz backup sozinho e protege cada gravação.</p>
+          <ul class="checks">
+            <li data-en="Daily automatic backup, with a copy outside the server">Backup automático diário, com cópia fora do servidor</li>
+            <li data-en="Status panel with health checks and incident history">Painel de status com verificações de saúde e histórico de incidentes</li>
+            <li data-en="Protection against forged requests and request limits per account">Proteção contra requisições forjadas e limite de requisições por conta</li>
+            <li data-en="Admin, IT and teacher roles, with permission per module">Perfis de administrador, TI e professor, com permissão por módulo</li>
+          </ul>
+        </div>
+        <div class="panel-visual">
+          <div class="mini" style="max-width:320px;">
+            <div class="mini-head"><span data-en="System status">Status do sistema</span><span class="live"><i class="live-dot"></i><span data-en="all OK">tudo OK</span></span></div>
+            <div class="mini-body" style="gap:0;">
+              <div class="chk"><i class="d"></i><span class="grow" data-en="Database">Banco de dados</span><small data-en="OK · 4 ms">OK · 4 ms</small></div>
+              <div class="chk"><i class="d"></i><span class="grow" data-en="Real-time channel">Canal de tempo real</span><small data-en="12 connections">12 conexões</small></div>
+              <div class="chk"><i class="d"></i><span class="grow" data-en="Last backup">Último backup</span><small data-en="today, 03:00">hoje, 03:00</small></div>
+              <div class="chk"><i class="d"></i><span class="grow" data-en="External copy">Cópia externa</span><small data-en="up to date">em dia</small></div>
+              <div class="chk"><i class="d" style="background:#e8962e"></i><span class="grow" data-en="Disk space">Espaço em disco</span><small data-en="68% used">68% usado</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PERFIS ================= -->
+<section class="block" id="perfis">
+  <div class="section-head reveal">
+    <p class="section-num">04</p>
+    <h2 data-en="Each person sees what they need">Cada pessoa vê o que precisa</h2>
+    <p data-en="Three access roles, with permission per module granted by the administrator.">Três perfis de acesso, com permissão por módulo concedida pelo administrador.</p>
+  </div>
+  <div class="roles">
+    <div class="role reveal"><div class="role-ic"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3 data-en="Administrator">Administrador</h3><p data-en="Runs the system and receives the numbers.">Comanda o sistema e recebe os números.</p><ul><li data-en="Users and permissions per module">Usuários e permissões por módulo</li><li data-en="Reports in PDF">Relatórios em PDF</li><li data-en="Room and lab registry">Cadastro de salas e laboratórios</li><li data-en="Backup and system status">Backup e status do sistema</li></ul></div>
+    <div class="role reveal"><div class="role-ic"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94z"/></svg></div><h3 data-en="IT">TI</h3><p data-en="Handles the tickets day to day.">Atende os chamados no dia a dia.</p><ul><li data-en="Real-time ticket queue">Fila de chamados em tempo real</li><li data-en="Takes, chats and closes tickets">Assume, conversa e finaliza</li><li data-en="Floor plans and lab editor">Plantas e editor de laboratório</li><li data-en="Publishes the catalog">Publica o catálogo</li></ul></div>
+    <div class="role reveal"><div class="role-ic"><svg viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><h3 data-en="Teacher">Professor</h3><p data-en="Reports problems and organizes the class.">Relata problemas e organiza a turma.</p><ul><li data-en="Opens tickets by QR code or screen">Abre chamados por QR Code ou pela tela</li><li data-en="Follows the ticket through the chat">Acompanha o atendimento pelo chat</li><li data-en="Seating map of each class">Mapa de sala de cada turma</li><li data-en="Scripts and software released to them">Scripts e softwares liberados para ele</li></ul></div>
+  </div>
+</section>
+
+<!-- ================= ANTES x DEPOIS ================= -->
+<section class="block" id="antes-depois">
+  <div class="section-head reveal">
+    <p class="section-num">05</p>
+    <h2 data-en="Before and after">Antes e depois</h2>
+  </div>
+  <div class="compare">
+    <div class="cmp-head"><div data-en="Before (WhatsApp)">Antes (WhatsApp)</div><div>SystemManagerIT</div></div>
+    <div class="cmp-row reveal"><div><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg><span data-en="Request in a loose chat, no record">Pedido em conversa solta, sem registro</span></div><div><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5"/></svg><span data-en="Every ticket is stored with author, date and status">Todo chamado gravado, com autor, data e status</span></div></div>
+    <div class="cmp-row reveal"><div><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg><span data-en="“The computer in the corner won't turn on”">“O computador do canto não liga”</span></div><div><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5"/></svg><span data-en="The QR code identifies room, row and computer">O QR Code identifica sala, fileira e computador</span></div></div>
+    <div class="cmp-row reveal"><div><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg><span data-en="History vanishes with the chat">Histórico some com a conversa</span></div><div><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5"/></svg><span data-en="Full history per workstation, for good">Histórico completo por posto de trabalho, para sempre</span></div></div>
+    <div class="cmp-row reveal"><div><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg><span data-en="Nobody knows how long it took">Ninguém sabe quanto tempo levou</span></div><div><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5"/></svg><span data-en="Response time measured from start to finish">Tempo de atendimento medido do início ao fim</span></div></div>
+    <div class="cmp-row reveal"><div><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg><span data-en="Photos and files on someone's phone">Fotos e arquivos no celular de alguém</span></div><div><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5"/></svg><span data-en="Photo attached to the ticket, chat inside it">Foto anexada ao chamado, chat dentro dele</span></div></div>
+    <div class="cmp-row reveal"><div><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg><span data-en="Managers without numbers">Gestor sem números</span></div><div><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5"/></svg><span data-en="PDF reports by location, technician, time and recurrence">Relatórios em PDF por ambiente, técnico, tempo e reincidência</span></div></div>
+  </div>
+</section>
+
+<!-- ================= BASTIDORES ================= -->
+<section class="block" id="bastidores">
+  <div class="section-head reveal">
+    <p class="section-num">06</p>
+    <h2 data-en="Under the hood">Bastidores</h2>
+    <p data-en="What keeps the system running, without the code: built to install and run on any school computer, with no extra infrastructure.">O que sustenta o sistema, sem o código: feito para instalar e rodar em qualquer computador de escola, sem infraestrutura extra.</p>
+  </div>
+  <div class="tech">
+    <div class="numbers">
+      <div class="num reveal"><b>403</b><span data-en="automated tests protecting the business rules">testes automatizados protegendo as regras do sistema</span></div>
+      <div class="num reveal"><b data-en="Daily">Diário</b><span data-en="automatic backup, with a copy outside the server">backup automático, com cópia fora do servidor</span></div>
+      <div class="num reveal"><b>~20 ms</b><span data-en="for an update to reach the screens on the local network">para uma atualização chegar às telas na rede local</span></div>
+      <div class="num reveal"><b>1</b><span data-en="single source for every report number">fonte única para cada número dos relatórios</span></div>
+    </div>
+    <div class="reveal">
+      <p class="tech-note" data-en="Developed from end to end by me: requirements gathering in the IT department, architecture, interface, automated tests and deployment.">Desenvolvido de ponta a ponta por mim: levantamento de requisitos no setor de TI, arquitetura, interface, testes automatizados e implantação.</p>
+      <div class="pill-row">
+        <span class="pill">Python</span><span class="pill">Flask</span><span class="pill">SQLite</span><span class="pill">Server-Sent Events</span><span class="pill">JavaScript</span><span class="pill">HTML &amp; CSS</span><span class="pill">Jinja2</span><span class="pill">ReportLab (PDF)</span><span class="pill">Chart.js</span><span class="pill">Waitress</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="final reveal">
+  <h2><span data-en="The feedback that used to get lost">O feedback que antes se perdia</span> <em data-en="now reaches the people who decide.">agora chega a quem decide.</em></h2>
+  <p data-en="SystemManagerIT is my largest project: I saw a problem in my own work routine and turned it into a system that is used every day.">O SystemManagerIT é o meu maior projeto: vi um problema na minha própria rotina de trabalho e transformei em um sistema usado todos os dias.</p>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="../#projetos" data-en="Back to the résumé">Voltar ao currículo</a>
+    <a class="btn btn-ghost" href="mailto:vitorb.oliveira14@gmail.com" data-en="Get in touch">Entrar em contato</a>
+  </div>
+</div>
+
+<footer data-en="Vitor Parra — SystemManagerIT · data shown in the tour is illustrative">Vitor Parra — SystemManagerIT · os dados mostrados no tour são ilustrativos</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- QR Code decorativo (padrão fixo, não aponta para nada) ---------- */
+  function drawQR(svg){
+    var N = 25, seed = 7, cells = '';
+    function rnd(){ seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+    function finder(x, y){
+      cells += '<rect x="'+x+'" y="'+y+'" width="7" height="7" fill="#0a1420"/><rect x="'+(x+1)+'" y="'+(y+1)+'" width="5" height="5" fill="#fff"/><rect x="'+(x+2)+'" y="'+(y+2)+'" width="3" height="3" fill="#0a1420"/>';
+    }
+    for(var y = 0; y < N; y++) for(var x = 0; x < N; x++){
+      var inFinder = (x < 8 && y < 8) || (x > N-9 && y < 8) || (x < 8 && y > N-9);
+      if(!inFinder && rnd() > 0.52) cells += '<rect x="'+x+'" y="'+y+'" width="1" height="1" fill="#0a1420"/>';
+    }
+    finder(0,0); finder(N-7,0); finder(0,N-7);
+    svg.innerHTML = '<rect width="25" height="25" fill="#fff"/>' + cells;
+  }
+  document.querySelectorAll('svg[data-qr]').forEach(drawQR);
+
+  /* ---------- planta do laboratório (numeração fileira a fileira) ---------- */
+  function planHTML(rows, focus, mini){
+    var html = '', blocks = [[], []];
+    for(var f = rows; f >= 1; f--){
+      blocks[0].push([8*f, 8*f-1, 8*f-2, 8*f-3]);
+      blocks[1].push([8*f-4, 8*f-5, 8*f-6, 8*f-7]);
+    }
+    if(mini){
+      var states = { 12:'r pulse', 27:'o', 6:'g', 19:'r' };
+      blocks.forEach(function(b){
+        html += '<div class="bay-grid">';
+        b.forEach(function(r){ r.forEach(function(n){ html += '<div class="bay '+(states[n]||'')+'">'+n+'</div>'; }); });
+        html += '</div>';
+      });
+      return html;
+    }
+    var names = document.documentElement.lang === 'en' ? ['LEFT BLOCK','RIGHT BLOCK'] : ['BLOCO DA ESQUERDA','BLOCO DA DIREITA'];
+    html += '<div class="rows-lbl" style="padding-top:17px">';
+    for(var g = rows; g >= 1; g--) html += '<span>F'+g+'</span>';
+    html += '</div>';
+    blocks.forEach(function(b, i){
+      html += '<div class="blk"><small data-blk="'+i+'">'+names[i]+'</small><div class="blk-g">';
+      b.forEach(function(r){ r.forEach(function(n){
+        if(n === focus){
+          html += '<div class="bb focus"><span class="st r a" style="--an:fadeIn; --at:.6s; --ad:.3s;"></span><span class="halo a" style="--an:pulseRed; --at:.6s; --ad:1.1s; --ai:6; --ae:ease-out;"></span><span class="st o a" style="--an:fadeIn; --at:2.25s; --ad:.35s;"></span><span class="st g a" style="--an:popIn; --at:7.6s; --ad:.5s;"></span><span style="position:relative">'+n+'</span></div>';
+        } else if(n === 27){
+          html += '<div class="bb" style="background:#8a94a3">'+n+'</div>';
+        } else {
+          html += '<div class="bb">'+n+'</div>';
+        }
+      }); });
+      html += '</div></div>';
+    });
+    return html;
+  }
+  document.getElementById('plan-blocks').innerHTML = planHTML(5, 12, false);
+  document.getElementById('mini-bays').innerHTML = planHTML(4, 12, true);
+
+  /* assentos da cena do mapa de sala */
+  (function(){
+    var cols = [300,396,492,612,708,804], rows = [170,230,290,350], h = '';
+    rows.forEach(function(y){ cols.forEach(function(x){ h += '<div class="seat2 a" style="left:'+x+'px; top:'+y+'px; --an:fadeIn; --at:.3s;"></div>'; }); });
+    [160,212,264,316,368,420].forEach(function(y){ h += '<div class="slot a" style="left:56px; top:'+y+'px; position:absolute; --an:fadeIn; --at:.3s;"></div>'; });
+    document.getElementById('seats').outerHTML = h;
+  })();
+
+  /* trajetos do cursor (cenas 4 e 6) */
+  var cs = document.createElement('style');
+  cs.textContent =
+    '@keyframes cur4{0%{opacity:0;transform:translate(-260px,150px)}10%{opacity:1}55%{transform:translate(0,0)}78%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(6px,8px)}}' +
+    '@keyframes cur6{0%{opacity:0;transform:translate(820px,430px)}20%{opacity:1;transform:translate(752px,252px)}30%{transform:translate(752px,252px)}76%{transform:translate(440px,312px)}86%{opacity:1;transform:translate(440px,312px)}100%{opacity:0;transform:translate(440px,312px)}}';
+  document.head.appendChild(cs);
+
+  /* ---------- idioma ---------- */
+  var LANG_KEY = 'cv-lang';
+  var lang = 'pt';
+  try { lang = localStorage.getItem(LANG_KEY) || 'pt'; } catch(e){}
+  var q = new URLSearchParams(location.search).get('lang');
+  if(q === 'en' || q === 'pt') lang = q;
+  var btnPt = document.getElementById('btn-pt'), btnEn = document.getElementById('btn-en');
+  function setLang(l){
+    lang = l;
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      if(el.dataset.pt === undefined) el.dataset.pt = el.textContent;
+      el.textContent = l === 'en' ? el.dataset.en : el.dataset.pt;
+    });
+    document.querySelectorAll('[data-blk]').forEach(function(el){
+      el.textContent = l === 'en' ? ['LEFT BLOCK','RIGHT BLOCK'][el.dataset.blk] : ['BLOCO DA ESQUERDA','BLOCO DA DIREITA'][el.dataset.blk];
+    });
+    btnPt.classList.toggle('active', l === 'pt'); btnEn.classList.toggle('active', l === 'en');
+    document.documentElement.lang = l === 'en' ? 'en' : 'pt-BR';
+    document.title = l === 'en' ? 'SystemManagerIT — Project tour' : 'SystemManagerIT — Tour do projeto';
+    try { localStorage.setItem(LANG_KEY, l); } catch(e){}
+    buildChapters(); render();
+  }
+  btnPt.addEventListener('click', function(){ setLang('pt'); });
+  btnEn.addEventListener('click', function(){ setLang('en'); });
+
+  /* ---------- vídeo ---------- */
+  var TOTAL = 63;
+  var CHAPTERS = [
+    { t:0,  pt:'Antes: WhatsApp',     en:'Before: WhatsApp' },
+    { t:8,  pt:'A ideia',             en:'The idea' },
+    { t:13, pt:'Chamado por QR Code', en:'QR code ticket' },
+    { t:23, pt:'Painel da TI',        en:'IT dashboard' },
+    { t:31, pt:'Atendimento',         en:'Handling the ticket' },
+    { t:41, pt:'Mapa de sala',        en:'Seating map' },
+    { t:48, pt:'Relatórios',          en:'Reports' },
+    { t:57, pt:'Resultado',           en:'The result' }
+  ];
+  var CAPTIONS = [
+    { a:.3,  b:7.7,  pt:'Antes, os chamados chegavam pelo WhatsApp — e se perdiam no meio da conversa.', en:'Before, support tickets arrived over WhatsApp — and got lost in the conversation.' },
+    { a:8.3, b:12.8, pt:'Para resolver isso, eu desenvolvi o SystemManagerIT.', en:'To solve that, I built SystemManagerIT.' },
+    { a:13.3,b:16.9, pt:'O aluno ou o professor aponta o celular para o QR Code colado na bancada…', en:'A student or teacher points their phone at the QR code on the desk…' },
+    { a:16.9,b:22.7, pt:'…e o chamado já nasce amarrado àquele computador, naquela sala.', en:'…and the ticket is born already tied to that computer, in that room.' },
+    { a:23.3,b:27.4, pt:'No mesmo instante, o chamado aparece no painel da TI — sem recarregar a página.', en:'At that very moment, it shows up on the IT dashboard — no page reload.' },
+    { a:27.4,b:30.8, pt:'O técnico assume com um clique.', en:'The technician takes it with one click.' },
+    { a:31.3,b:34.6, pt:'Na planta do laboratório, cada baia mostra o seu estado.', en:'On the lab floor plan, every workstation shows its status.' },
+    { a:34.6,b:38.4, pt:'Quem pediu e quem atende conversam dentro do próprio chamado.', en:'Requester and technician talk inside the ticket itself.' },
+    { a:38.4,b:40.8, pt:'Resolvido — e o tempo de atendimento fica registrado.', en:'Solved — and the response time is on record.' },
+    { a:41.3,b:44.6, pt:'O professor monta o mapa da turma arrastando os alunos para os lugares.', en:'Teachers build the class seating map by dragging students into seats.' },
+    { a:44.6,b:47.8, pt:'Arrastou um aluno para cima de outro? Os dois trocam de lugar.', en:'Drop one student onto another? They swap seats.' },
+    { a:48.3,b:51.8, pt:'No fim do período, os números chegam à gestão em PDF…', en:'At the end of the period, the numbers reach management as a PDF…' },
+    { a:51.8,b:56.8, pt:'…inclusive qual computador deu problema sete vezes.', en:'…including which computer broke down seven times.' },
+    { a:57.3,b:63.1, pt:'O feedback que antes se perdia agora chega a quem decide.', en:'The feedback that used to get lost now reaches the people who decide.' }
+  ];
+
+  var player = document.getElementById('player');
+  var screenEl = document.getElementById('screen');
+  var stage = document.getElementById('stage');
+  var poster = document.getElementById('poster');
+  var endcard = document.getElementById('endcard');
+  var ppBtn = document.getElementById('pp');
+  var icPlay = document.getElementById('ic-play'), icPause = document.getElementById('ic-pause');
+  var timeEl = document.getElementById('time');
+  var track = document.getElementById('track'), fill = document.getElementById('fill'), knob = document.getElementById('knob'), tip = document.getElementById('tip');
+  var ccEl = document.getElementById('cc'), ccText = document.getElementById('cc-text');
+  var chapNow = document.getElementById('chapter-now');
+  var chaptersEl = document.getElementById('chapters');
+  var typed = Array.prototype.slice.call(stage.querySelectorAll('[data-type]'));
+  var counters = Array.prototype.slice.call(stage.querySelectorAll('[data-count]'));
+
+  var t = 0, playing = false, last = null, started = false, autoPaused = false, anims = [];
+
+  function collect(){
+    anims = stage.getAnimations ? stage.getAnimations({ subtree:true }) : [];
+    anims.forEach(function(a){ a.pause(); });
+  }
+  function fmt(s){ s = Math.max(0, Math.floor(s)); return Math.floor(s/60) + ':' + ('0' + (s % 60)).slice(-2); }
+  function chapterAt(s){ var i = 0; CHAPTERS.forEach(function(c, k){ if(s >= c.t) i = k; }); return i; }
+
+  function buildChapters(){
+    var cur = chaptersEl.querySelector('.chap.on');
+    chaptersEl.innerHTML = '';
+    CHAPTERS.forEach(function(c, i){
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'chap';
+      b.innerHTML = '<span class="n">' + ('0' + (i+1)).slice(-2) + ' · ' + fmt(c.t) + '</span><span class="t"></span><span class="bar"></span>';
+      b.querySelector('.t').textContent = c[lang];
+      b.addEventListener('click', function(){ seek(c.t + 0.01); play(); });
+      chaptersEl.appendChild(b);
+    });
+    track.querySelectorAll('.track-tick').forEach(function(n){ n.remove(); });
+    CHAPTERS.forEach(function(c, i){
+      if(!i) return;
+      var tk = document.createElement('i'); tk.className = 'track-tick'; tk.style.left = (c.t / TOTAL * 100) + '%';
+      track.querySelector('.track-bar').appendChild(tk);
+    });
+  }
+
+  function render(){
+    var ms = t * 1000;
+    for(var i = 0; i < anims.length; i++){ try { anims[i].currentTime = ms; } catch(e){} }
+    typed.forEach(function(el){
+      var full = el.dataset[lang === 'en' ? 'en' : 'pt'] || '';
+      var n = Math.floor((t - parseFloat(el.dataset.ts)) * parseFloat(el.dataset.cps));
+      n = Math.max(0, Math.min(full.length, n));
+      el.textContent = full.slice(0, n);
+      el.classList.toggle('caret', n > 0 && n < full.length);
+    });
+    counters.forEach(function(el){
+      var a = parseFloat(el.dataset.from), b = parseFloat(el.dataset.to), ts = parseFloat(el.dataset.ts), d = parseFloat(el.dataset.dur);
+      var p = d > 0 ? Math.max(0, Math.min(1, (t - ts) / d)) : (t >= ts ? 1 : 0);
+      p = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(a + (b - a) * p);
+    });
+    var cap = null;
+    for(var k = 0; k < CAPTIONS.length; k++){ if(t >= CAPTIONS[k].a && t < CAPTIONS[k].b){ cap = CAPTIONS[k]; break; } }
+    if(cap){ ccText.textContent = cap[lang]; ccEl.classList.remove('off'); } else { ccEl.classList.add('off'); }
+    var pct = t / TOTAL * 100;
+    fill.style.width = pct + '%'; knob.style.left = pct + '%';
+    timeEl.textContent = fmt(t) + ' / ' + fmt(TOTAL);
+    track.setAttribute('aria-valuenow', Math.round(t));
+    var ci = chapterAt(t);
+    chapNow.textContent = CHAPTERS[ci][lang];
+    Array.prototype.forEach.call(chaptersEl.children, function(b, i){
+      b.classList.toggle('on', i === ci);
+      var c0 = CHAPTERS[i].t, c1 = i < CHAPTERS.length - 1 ? CHAPTERS[i+1].t : TOTAL;
+      var p2 = Math.max(0, Math.min(1, (t - c0) / (c1 - c0)));
+      b.querySelector('.bar').style.width = (started ? p2 * 100 : 0) + '%';
+    });
+  }
+
+  function loop(now){
+    if(!playing) return;
+    if(last !== null) t += Math.min(0.1, (now - last) / 1000);
+    last = now;
+    if(t >= TOTAL){ t = TOTAL; render(); pause(); endcard.classList.remove('hide'); return; }
+    render();
+    requestAnimationFrame(loop);
+  }
+  function setIcons(){ icPlay.style.display = playing ? 'none' : ''; icPause.style.display = playing ? '' : 'none'; ppBtn.setAttribute('aria-label', playing ? 'Pausar' : 'Reproduzir'); }
+  function play(){
+    if(!started){ started = true; if(t > 9 && t < 12) t = 0; }
+    if(t >= TOTAL) t = 0;
+    poster.classList.add('hide'); endcard.classList.add('hide');
+    if(playing) return;
+    playing = true; last = null; setIcons(); requestAnimationFrame(loop);
+  }
+  function pause(){ playing = false; setIcons(); }
+  function toggle(){ playing ? pause() : play(); }
+  function seek(s){
+    if(!started){ started = true; poster.classList.add('hide'); }
+    t = Math.max(0, Math.min(TOTAL - 0.01, s)); endcard.classList.add('hide'); render();
+  }
+
+  ppBtn.addEventListener('click', function(e){ e.stopPropagation(); toggle(); });
+  screenEl.addEventListener('click', function(e){ if(e.target.closest('a, .end-actions')) return; toggle(); });
+  document.getElementById('replay').addEventListener('click', function(e){ e.stopPropagation(); t = 0; play(); });
+  document.querySelectorAll('[data-play]').forEach(function(b){
+    b.addEventListener('click', function(e){
+      e.stopPropagation();
+      if(!b.closest('#player')) player.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block:'center' });
+      if(t >= TOTAL || !started) t = 0;
+      play(); player.focus({ preventScroll:true });
+    });
+  });
+  document.getElementById('ccbtn').addEventListener('click', function(e){ e.stopPropagation(); player.classList.toggle('no-cc'); });
+  document.getElementById('fs').addEventListener('click', function(e){
+    e.stopPropagation();
+    var d = document;
+    if(d.fullscreenElement || d.webkitFullscreenElement){ (d.exitFullscreen || d.webkitExitFullscreen).call(d); }
+    else { var r = player.requestFullscreen || player.webkitRequestFullscreen; if(r) r.call(player); }
+  });
+  player.addEventListener('keydown', function(e){
+    if(e.key === ' ' || e.key === 'k'){ e.preventDefault(); toggle(); }
+    else if(e.key === 'ArrowRight'){ e.preventDefault(); seek(t + 5); }
+    else if(e.key === 'ArrowLeft'){ e.preventDefault(); seek(t - 5); }
+    else if(e.key === 'f'){ document.getElementById('fs').click(); }
+  });
+
+  /* barra de progresso: clicar, arrastar e dica com o capítulo */
+  function posToTime(clientX){ var r = track.getBoundingClientRect(); return Math.max(0, Math.min(1, (clientX - r.left) / r.width)) * TOTAL; }
+  var dragging = false, wasPlaying = false;
+  track.addEventListener('pointerdown', function(e){ e.stopPropagation(); dragging = true; wasPlaying = playing; pause(); try { track.setPointerCapture(e.pointerId); } catch(err){} seek(posToTime(e.clientX)); });
+  track.addEventListener('pointermove', function(e){
+    var s = posToTime(e.clientX);
+    tip.textContent = fmt(s) + ' · ' + CHAPTERS[chapterAt(s)][lang];
+    tip.style.left = (s / TOTAL * 100) + '%';
+    if(dragging) seek(s);
+  });
+  track.addEventListener('pointerup', function(){ if(!dragging) return; dragging = false; if(wasPlaying) play(); });
+
+  /* encaixa o palco de 960×540 no espaço disponível */
+  function fit(){
+    var w = screenEl.clientWidth, h = screenEl.clientHeight;
+    var s = Math.min(w / 960, h / 540);
+    stage.style.transform = 'translate(' + ((w - 960 * s) / 2) + 'px,' + ((h - 540 * s) / 2) + 'px) scale(' + s + ')';
+  }
+  if(window.ResizeObserver) new ResizeObserver(fit).observe(screenEl); else window.addEventListener('resize', fit);
+  document.addEventListener('fullscreenchange', fit);
+  fit();
+
+  /* começa sozinho quando o vídeo aparece; pausa quando sai da tela */
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.intersectionRatio >= 0.6 && !started && !reduceMotion){ t = 0; play(); }
+        else if(en.intersectionRatio >= 0.6 && autoPaused){ autoPaused = false; play(); }
+        else if(en.intersectionRatio < 0.2 && playing){ autoPaused = true; pause(); }
+      });
+    }, { threshold:[0, 0.2, 0.6] }).observe(player);
+  }
+
+  /* botões "ver no vídeo" do explorador */
+  document.querySelectorAll('[data-seek]').forEach(function(b){
+    b.addEventListener('click', function(){
+      player.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block:'center' });
+      seek(parseFloat(b.dataset.seek) + 0.01); play(); autoPaused = false;
+    });
+  });
+
+  /* ---------- explorador de funcionalidades ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  function selectTab(tab, focus){
+    tabs.forEach(function(tb){
+      var on = tb === tab;
+      tb.setAttribute('aria-selected', on ? 'true' : 'false');
+      tb.tabIndex = on ? 0 : -1;
+      var p = document.getElementById(tb.getAttribute('aria-controls'));
+      if(on){ p.hidden = false; p.classList.remove('enter'); void p.offsetWidth; p.classList.add('enter'); } else { p.hidden = true; }
+    });
+    if(focus) tab.focus();
+    if(window.innerWidth <= 860) tab.scrollIntoView({ block:'nearest', inline:'center', behavior: reduceMotion ? 'auto' : 'smooth' });
+  }
+  tabs.forEach(function(tb, i){
+    tb.addEventListener('click', function(){ selectTab(tb); });
+    tb.addEventListener('keydown', function(e){
+      var k = e.key, n = null;
+      if(k === 'ArrowDown' || k === 'ArrowRight') n = tabs[(i + 1) % tabs.length];
+      if(k === 'ArrowUp' || k === 'ArrowLeft') n = tabs[(i - 1 + tabs.length) % tabs.length];
+      if(n){ e.preventDefault(); selectTab(n, true); }
+    });
+  });
+
+  /* ---------- aparecer ao rolar, navegação e barra de leitura ---------- */
+  var reveals = document.querySelectorAll('.reveal, .flow');
+  if(reduceMotion || !('IntersectionObserver' in window)){
+    reveals.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold:0.15 });
+    reveals.forEach(function(el){ io.observe(el); });
+  }
+  var links = Array.prototype.slice.call(document.querySelectorAll('#navlinks a'));
+  var sections = links.map(function(l){ return document.getElementById(l.dataset.target); });
+  var bar = document.getElementById('progress-bar');
+  var lastActive = null;
+  function onScroll(){
+    var pos = window.scrollY + 160, cur = null;
+    sections.forEach(function(s){ if(s && pos >= s.getBoundingClientRect().top + window.scrollY) cur = s.id; });
+    links.forEach(function(l){ l.classList.toggle('active', l.dataset.target === cur); });
+    if(cur !== lastActive){
+      lastActive = cur;
+      var al = links.filter(function(l){ return l.dataset.target === cur; })[0];
+      var nav = document.getElementById('navlinks');
+      if(al && nav.scrollWidth > nav.clientWidth) nav.scrollTo({ left: al.offsetLeft - nav.clientWidth / 2 + al.clientWidth / 2, behavior:'smooth' });
+    }
+    var dh = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (dh > 0 ? window.scrollY / dh * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+
+  /* ---------- início ---------- */
+  collect();
+  buildChapters();
+  if(lang === 'en') setLang('en');
+  t = 10.6; render();           /* capa: o quadro do logotipo */
+  t = 10.6;
+  onScroll();
+})();
+</script>
+</body>
+</html>
