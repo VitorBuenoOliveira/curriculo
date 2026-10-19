@@ -372,7 +372,7 @@
   .wa-top{ background:#008069; color:#fff; padding:28px 14px 10px; display:flex; gap:9px; align-items:center; }
   .wa-av{ width:30px; height:30px; border-radius:50%; background:#d9fdd3; color:#008069; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:12px; }
   .wa-top b{ display:block; font-size:13px; } .wa-top small{ font-size:9.5px; opacity:.8; }
-  .wa-chat{ flex:1; padding:10px 9px; display:flex; flex-direction:column; gap:7px; background-image:radial-gradient(rgba(0,0,0,.035) 1px, transparent 1px); background-size:12px 12px; }
+  .wa-chat{ flex:1; padding:9px 9px; display:flex; flex-direction:column; gap:6px; overflow:hidden; background-image:radial-gradient(rgba(0,0,0,.035) 1px, transparent 1px); background-size:12px 12px; }
   .bub{ max-width:84%; background:#fff; border-radius:8px; padding:5px 8px 4px; font-size:11px; line-height:1.35; color:#111b21; box-shadow:0 1px 0 rgba(0,0,0,.08); }
   .bub i{ display:block; font-style:normal; font-size:9.5px; font-weight:700; margin-bottom:1px; }
   .bub s{ display:block; text-decoration:none; text-align:right; font-size:8.5px; color:#667781; }
@@ -546,7 +546,7 @@
 
 <header class="nav">
   <div class="nav-inner">
-    <a class="back" href="../#projetos"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg><span data-en="Résumé">Currículo</span></a>
+    <a class="back" href="../#projetos"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg><span data-en="CV">Currículo</span></a>
     <span class="brand">System<b>Manager</b>IT</span>
     <nav class="links" id="navlinks" aria-label="Seções">
       <a href="#tour" data-target="tour" data-en="Video tour">Tour em vídeo</a>
@@ -575,7 +575,7 @@
     </div>
     <div class="hero-stats">
       <div><b>403</b><span data-en="automated tests">testes automatizados</span></div>
-      <div><b>80+</b><span data-en="rooms and labs with a QR code">salas e laboratórios com QR Code</span></div>
+      <div><b>80+</b><span data-en="rooms and labs with QR codes">salas e laboratórios com QR Code</span></div>
       <div><b>3</b><span data-en="access roles">perfis de acesso</span></div>
       <div><b>~20 ms</b><span data-en="for a ticket to reach the IT team">para o chamado chegar à TI</span></div>
     </div>
@@ -591,14 +591,14 @@
             <div class="scene" style="--s:0s; --d:8s;">
               <div class="abs wa a" style="--an:slideL; --at:.1s; --ad:.8s;">
                 <div class="wa-scr">
-                  <div class="wa-top"><div class="wa-av">TI</div><div><b data-en="IT Support 💬">Suporte TI 💬</b><small data-en="Ana, Carlos, Tech, +14">Ana, Carlos, Técnico, +14</small></div></div>
+                  <div class="wa-top"><div class="wa-av">TI</div><div><b data-en="IT Support 💬">Suporte TI 💬</b><small data-en="Ana, Carlos, IT tech, +14">Ana, Carlos, Técnico, +14</small></div></div>
                   <div class="wa-chat">
-                    <div class="bub a" style="--at:.5s; animation:fadeUp .5s var(--ease) calc(var(--s) + .5s) both, blurAway .7s ease calc(var(--s) + 5.2s) forwards;"><i style="color:#c2185b">Prof. Ana</i><span data-en="The computer in the corner won't turn on 😩">O computador do canto não liga 😩</span><s>10:02</s></div>
+                    <div class="bub a" style="--at:.5s; animation:fadeUp .5s var(--ease) calc(var(--s) + .5s) both, blurAway .7s ease calc(var(--s) + 5.2s) forwards;"><i style="color:#c2185b">Prof. Ana</i><span data-en="The corner computer won't turn on 😩">O computador do canto não liga 😩</span><s>10:02</s></div>
                     <div class="bub me" style="animation:fadeUp .5s var(--ease) calc(var(--s) + 1.3s) both, blurAway .7s ease calc(var(--s) + 5.3s) forwards;"><span data-en="Which room? Which computer?">Qual sala? Qual computador?</span><s>10:09</s></div>
-                    <div class="bub" style="animation:fadeUp .5s var(--ease) calc(var(--s) + 2.1s) both, blurAway .7s ease calc(var(--s) + 5.4s) forwards;"><i style="color:#c2185b">Prof. Ana</i><span data-en="The one in the corner, downstairs lab">Aquele do canto, no laboratório de baixo</span><s>10:31</s></div>
-                    <div class="bub" style="animation:fadeUp .5s var(--ease) calc(var(--s) + 2.9s) both, blurAway .7s ease calc(var(--s) + 5.5s) forwards;"><i style="color:#1565c0">Prof. Carlos</i><span data-en="Room 204 projector has no image again">Projetor da 204 sem imagem de novo</span><s>10:40</s></div>
+                    <div class="bub" style="animation:fadeUp .5s var(--ease) calc(var(--s) + 2.1s) both, blurAway .7s ease calc(var(--s) + 5.4s) forwards;"><i style="color:#c2185b">Prof. Ana</i><span data-en="The corner one, in the lab downstairs">Aquele do canto, no laboratório de baixo</span><s>10:31</s></div>
+                    <div class="bub" style="animation:fadeUp .5s var(--ease) calc(var(--s) + 2.9s) both, blurAway .7s ease calc(var(--s) + 5.5s) forwards;"><i style="color:#1565c0">Prof. Carlos</i><span data-en="Room 204's projector has no picture again">Projetor da 204 sem imagem de novo</span><s>10:40</s></div>
                     <div class="bub" style="animation:fadeUp .5s var(--ease) calc(var(--s) + 3.7s) both, blurAway .7s ease calc(var(--s) + 5.6s) forwards;"><i style="color:#c2185b">Prof. Ana</i><span data-en="Did anyone see my message?">Alguém viu minha mensagem?</span><s>11:15</s></div>
-                    <div class="bub me" style="animation:fadeUp .5s var(--ease) calc(var(--s) + 4.5s) both, blurAway .7s ease calc(var(--s) + 5.7s) forwards;"><span data-en="Was Ana's issue fixed already?">Já resolveram o da Ana?</span><s>14:50</s></div>
+                    <div class="bub me" style="animation:fadeUp .5s var(--ease) calc(var(--s) + 4.5s) both, blurAway .7s ease calc(var(--s) + 5.7s) forwards;"><span data-en="Has Ana's issue been fixed?">Já resolveram o da Ana?</span><s>14:50</s></div>
                   </div>
                 </div>
               </div>
@@ -609,9 +609,9 @@
                 <div style="display:grid; gap:14px; margin-top:12px;">
                   <span class="s-line a" style="--at:2.2s;"><span class="s-x">✕</span><span data-en="Messages that get lost">Mensagens que se perdem</span></span>
                   <span class="s-line a" style="--at:3s;"><span class="s-x">✕</span><span data-en="No history per computer">Nenhum histórico por computador</span></span>
-                  <span class="s-line a" style="--at:3.8s;"><span class="s-x">✕</span><span data-en="Managers with no numbers to decide on">Gestão sem números para decidir</span></span>
+                  <span class="s-line a" style="--at:3.8s;"><span class="s-x">✕</span><span data-en="Managers with no data to base decisions on">Gestão sem números para decidir</span></span>
                 </div>
-                <span class="a" style="--at:6.2s; font-size:21px; font-weight:800; color:var(--gold); margin-top:8px;" data-en="The feedback was lost along the way.">O feedback se perdia no caminho.</span>
+                <span class="a" style="--at:6.2s; font-size:21px; font-weight:800; color:var(--gold); margin-top:8px;" data-en="Feedback got lost along the way.">O feedback se perdia no caminho.</span>
               </div>
             </div>
 
@@ -629,7 +629,7 @@
                 <div class="label-top" data-en="IT Support · open a ticket">Suporte de TI · abrir chamado</div>
                 <svg class="qr" data-qr viewBox="0 0 25 25"></svg>
                 <b data-en="Lab 1 · Station 12">Laboratório 1 · Baia 12</b>
-                <small data-en="Point your camera to report a problem">Aponte a câmera para relatar um problema</small>
+                <small data-en="Scan with your camera to report a problem">Aponte a câmera para relatar um problema</small>
               </div>
               <div class="abs phone a" style="--an:riseIn; --at:.4s; --ad:.9s;">
                 <div class="phone-scr">
@@ -683,7 +683,7 @@
                       <div class="k"><small data-en="Average time">Tempo médio</small><b>24 min</b></div>
                     </div>
                     <div class="list">
-                      <div class="list-h"><span data-en="Open tickets">Chamados abertos</span><span style="color:var(--app-soft); font-weight:600;" data-en="updates by itself">atualiza sozinho</span></div>
+                      <div class="list-h"><span data-en="Open tickets">Chamados abertos</span><span style="color:var(--app-soft); font-weight:600;" data-en="live updates">atualiza sozinho</span></div>
                       <div class="ticket a" style="animation:expand .55s var(--ease) calc(var(--s) + 1.5s) both, glowOff 3s ease calc(var(--s) + 2.1s) both;">
                         <span class="id">#128</span>
                         <span class="grow"><b data-en="Lab 1 · Station 12">Laboratório 1 · Baia 12</b><small data-en="The monitor won't turn on, I already checked the outlet.">O monitor não liga, já testei a tomada.</small></span>
@@ -694,8 +694,8 @@
                         </span>
                         <svg class="cursor a" style="left:auto; right:52px; top:16px; --an:cur4; --at:2.9s; --ad:2.7s;" viewBox="0 0 24 24"><path d="M4 2.5l15 9.2-6.6 1.4-3.3 6.4z" fill="#fff" stroke="#0a1420" stroke-width="1.6" stroke-linejoin="round"/></svg>
                       </div>
-                      <div class="ticket"><span class="id">#127</span><span class="grow"><b data-en="Room 204">Sala 204</b><small data-en="Projector has no image">Projetor sem imagem</small></span><span class="badge b-red" data-en="High">Alta</span><span class="tk-act"><span class="emat" data-en="In progress · Bruno">Em atendimento · Bruno</span></span></div>
-                      <div class="ticket"><span class="id">#126</span><span class="grow"><b data-en="Lab 3 · Station 7">Laboratório 3 · Baia 7</b><small data-en="Software missing for class">Falta software para a aula</small></span><span class="badge b-blue" data-en="Low">Baixa</span><span class="tk-act"><span class="assumir" data-en="Take ticket">Assumir</span></span></div>
+                      <div class="ticket"><span class="id">#127</span><span class="grow"><b data-en="Room 204">Sala 204</b><small data-en="Projector shows no picture">Projetor sem imagem</small></span><span class="badge b-red" data-en="High">Alta</span><span class="tk-act"><span class="emat" data-en="In progress · Bruno">Em atendimento · Bruno</span></span></div>
+                      <div class="ticket"><span class="id">#126</span><span class="grow"><b data-en="Lab 3 · Station 7">Laboratório 3 · Baia 7</b><small data-en="Missing software for class">Falta software para a aula</small></span><span class="badge b-blue" data-en="Low">Baixa</span><span class="tk-act"><span class="assumir" data-en="Take ticket">Assumir</span></span></div>
                       <div class="ticket"><span class="id">#125</span><span class="grow"><b data-en="Lab 5 · Station 21">Laboratório 5 · Baia 21</b><small data-en="Mouse not working">Mouse não funciona</small></span><span class="badge b-orange" data-en="Medium">Média</span><span class="tk-act"><span class="assumir" data-en="Take ticket">Assumir</span></span></div>
                     </div>
                     <div class="toast a" style="animation:slideL .5s var(--ease) calc(var(--s) + 1.3s) both, fadeOut .4s ease calc(var(--s) + 4.4s) forwards;">
@@ -712,23 +712,23 @@
               <div class="abs card-w plan a" style="--at:.05s;">
                 <div class="plan-h"><b data-en="Lab 1 — Computing">Laboratório 1 — Informática</b>
                   <span class="st-chips">
-                    <span class="badge b-red a" style="animation:fadeIn .3s ease calc(var(--s) + .6s) both, fadeOut .3s ease calc(var(--s) + 2.2s) forwards;" data-en="Station 12 · problem">Baia 12 · com problema</span>
+                    <span class="badge b-red a" style="animation:fadeIn .3s ease calc(var(--s) + .6s) both, fadeOut .3s ease calc(var(--s) + 2.2s) forwards;" data-en="Station 12 · issue reported">Baia 12 · com problema</span>
                     <span class="badge b-orange a" style="animation:fadeIn .3s ease calc(var(--s) + 2.3s) both, fadeOut .3s ease calc(var(--s) + 7.5s) forwards;" data-en="Station 12 · in progress">Baia 12 · em atendimento</span>
                     <span class="badge b-green a" style="--an:fadeIn; --at:7.6s; --ad:.3s;" data-en="Station 12 · resolved">Baia 12 · resolvida</span>
                   </span>
                 </div>
-                <div class="legend"><span><i style="background:var(--ok)"></i><span data-en="Working">Funcionando</span></span><span><i style="background:var(--bad)"></i><span data-en="Problem">Com problema</span></span><span><i style="background:var(--warn)"></i><span data-en="In progress">Em atendimento</span></span><span><i style="background:#8a94a3"></i><span data-en="Maintenance">Manutenção</span></span></div>
+                <div class="legend"><span><i style="background:var(--ok)"></i><span data-en="Working">Funcionando</span></span><span><i style="background:var(--bad)"></i><span data-en="Issue">Com problema</span></span><span><i style="background:var(--warn)"></i><span data-en="In progress">Em atendimento</span></span><span><i style="background:#8a94a3"></i><span data-en="Maintenance">Manutenção</span></span></div>
                 <div class="blocks" id="plan-blocks"></div>
                 <div class="desk" data-en="Teacher's desk">Mesa do professor</div>
               </div>
               <div class="abs card-w chat a" style="--an:slideL; --at:.3s;">
-                <div class="chat-h"><b data-en="Ticket #128 · Lab 1 · Station 12">Chamado #128 · Laboratório 1 · Baia 12</b><small data-en="Prof. Ana ↔ Tech Bruno">Prof. Ana ↔ Técnico Bruno</small></div>
+                <div class="chat-h"><b data-en="Ticket #128 · Lab 1 · Station 12">Chamado #128 · Laboratório 1 · Baia 12</b><small data-en="Prof. Ana ↔ Bruno (IT)">Prof. Ana ↔ Técnico Bruno</small></div>
                 <div class="chat-b">
                   <div class="cm prof"><i>Prof. Ana</i><span data-en="The monitor won't turn on, I already checked the outlet.">O monitor não liga, já testei a tomada.</span></div>
-                  <div class="cm tec a" style="--at:2.4s;"><i data-en="Tech Bruno">Técnico Bruno</i><span data-en="On my way to station 12 👋">Estou a caminho da baia 12 👋</span></div>
+                  <div class="cm tec a" style="--at:2.4s;"><i data-en="Bruno (IT)">Técnico Bruno</i><span data-en="On my way to station 12 👋">Estou a caminho da baia 12 👋</span></div>
                   <div class="cm prof a" style="--at:3.9s;"><i>Prof. Ana</i><span data-en="Thanks! The student moved to the next seat.">Obrigada! O aluno já mudou de lugar.</span></div>
                   <div class="typing a" style="animation:fadeIn .25s ease calc(var(--s) + 5s) both, fadeOut .2s ease calc(var(--s) + 5.8s) forwards;"><span></span><span></span><span></span></div>
-                  <div class="cm tec a" style="--at:6s; margin-top:-36px;"><i data-en="Tech Bruno">Técnico Bruno</i><span data-en="It was the video cable. Replaced ✅">Era o cabo de vídeo. Trocado ✅</span></div>
+                  <div class="cm tec a" style="--at:6s; margin-top:-36px;"><i data-en="Bruno (IT)">Técnico Bruno</i><span data-en="It was the video cable. Replaced ✅">Era o cabo de vídeo. Trocado ✅</span></div>
                   <div class="sysmsg a" style="--an:popIn; --at:7.7s;"><span data-en="Ticket closed · solved in 18 min">Chamado finalizado · resolvido em 18 min</span></div>
                 </div>
                 <div class="chat-in"><span data-en="Type a message…">Escreva uma mensagem…</span><span>➤</span></div>
@@ -737,7 +737,7 @@
 
             <!-- 6 · Mapa de sala -->
             <div class="scene" style="--s:41s; --d:7s;">
-              <div class="abs card-w mh a" style="--at:.05s;"><div><b data-en="Seating map · Class 2A">Mapa de sala · Turma 2º A</b><small data-en="Lab 1 — teacher's view">Laboratório 1 — visão do professor</small></div><div class="acts"><span data-en="Import roll call (PDF)">Importar chamada (PDF)</span><span data-en="Print PDF">Imprimir PDF</span></div></div>
+              <div class="abs card-w mh a" style="--at:.05s;"><div><b data-en="Seating map · Class 2A">Mapa de sala · Turma 2º A</b><small data-en="Lab 1 — teacher's view">Laboratório 1 — visão do professor</small></div><div class="acts"><span data-en="Import class list (PDF)">Importar chamada (PDF)</span><span data-en="Print PDF">Imprimir PDF</span></div></div>
               <div class="abs card-w roster a" style="--at:.15s;"><small data-en="STUDENTS">ALUNOS</small></div>
               <div class="abs card-w room a" style="--at:.15s;"></div>
               <div id="seats"></div>
@@ -754,7 +754,7 @@
 
             <!-- 7 · Relatórios -->
             <div class="scene" style="--s:48s; --d:9s;">
-              <div class="abs rep-h a" style="--at:.05s;"><b data-en="Reports">Relatórios</b><span data-en="last period · PDF for management">último período · PDF para a gestão</span></div>
+              <div class="abs rep-h a" style="--at:.05s;"><b data-en="Reports">Relatórios</b><span data-en="previous period · PDF for management">último período · PDF para a gestão</span></div>
               <div class="abs card-w rk a" style="left:60px; --at:.2s;"><small data-en="Tickets in the period">Chamados no período</small><b data-count data-from="0" data-to="342" data-ts="48.6" data-dur="1.6">0</b></div>
               <div class="abs card-w rk a" style="left:346px; --at:.32s;"><small data-en="Resolved">Resolvidos</small><b><span data-count data-from="0" data-to="97" data-ts="48.7" data-dur="1.6">0</span>%</b></div>
               <div class="abs card-w rk a" style="left:632px; --at:.44s;"><small data-en="Average response time">Tempo médio de atendimento</small><b><span data-count data-from="0" data-to="21" data-ts="48.8" data-dur="1.6">0</span> min</b></div>
@@ -771,7 +771,7 @@
                 <div class="clabels"><span data-en="Lab 1">Lab. 1</span><span data-en="Lab 3">Lab. 3</span><span data-en="Room 204">Sala 204</span><span data-en="Lab 5">Lab. 5</span><span data-en="Room 101">Sala 101</span><span data-en="Lab 2">Lab. 2</span></div>
               </div>
               <div class="abs card-w reinc a" style="--an:slideL; --at:3.8s;">
-                <small data-en="Repeat-offender workstation">Posto reincidente</small>
+                <small data-en="Workstation with recurring issues">Posto reincidente</small>
                 <b data-en="Lab 1 · Station 12">Laboratório 1 · Baia 12</b>
                 <span data-en="tickets in the period">chamados no período</span>
                 <span class="big">7</span>
@@ -837,7 +837,7 @@
       <p class="quote" data-en="“The report no longer says just ‘there were 40 tickets’. It says which machine broke down seven times.”">“O relatório não diz apenas ‘houve 40 chamados’. Diz qual máquina deu problema sete vezes.”</p>
     </div>
     <div class="pains">
-      <div class="pain reveal"><div class="pain-ic"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 01-12.2 7.5L3 21l2-5.6A8.4 8.4 0 1121 11.5z"/><path d="M9 9l6 6M15 9l-6 6"/></svg></div><div><h3 data-en="Lost data">Dados perdidos</h3><p data-en="Messages got buried in chats, phone swaps and busy groups. There was no single record of how many tickets existed or how they ended.">Mensagens sumiam entre conversas, trocas de celular e grupos cheios. Não havia registro único de quantos chamados existiram nem de como terminaram.</p></div></div>
+      <div class="pain reveal"><div class="pain-ic"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 01-12.2 7.5L3 21l2-5.6A8.4 8.4 0 1121 11.5z"/><path d="M9 9l6 6M15 9l-6 6"/></svg></div><div><h3 data-en="Lost data">Dados perdidos</h3><p data-en="Messages got buried in private chats, lost when phones were replaced or drowned in busy groups. There was no single record of how many tickets existed or how they were resolved.">Mensagens sumiam entre conversas, trocas de celular e grupos cheios. Não havia registro único de quantos chamados existiram nem de como terminaram.</p></div></div>
       <div class="pain reveal"><div class="pain-ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/><path d="M12 8v3M12 13.5v.01"/></svg></div><div><h3 data-en="No history per computer">Sem histórico por equipamento</h3><p data-en="“The computer in the corner won't turn on” doesn't say which machine or which room. The same defect came back without anyone noticing.">“O computador do canto não liga” não diz qual máquina nem qual sala. O mesmo defeito voltava sem ninguém perceber.</p></div></div>
       <div class="pain reveal"><div class="pain-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></div><div><h3 data-en="No service metrics">Sem medida de atendimento</h3><p data-en="Nobody knew how long a ticket took, who handled it or what was still pending.">Não dava para saber quanto tempo um chamado levava, quem atendeu nem o que ficou pendente.</p></div></div>
       <div class="pain reveal"><div class="pain-ic"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/><path d="M15 5l5 5M20 5l-5 5"/></svg></div><div><h3 data-en="Managers without feedback">Gestão sem feedback</h3><p data-en="Decisions about equipment and staffing depended on memory and impressions, not on numbers.">Decisões sobre equipamentos e equipe dependiam de memória e impressão, não de números.</p></div></div>
@@ -857,8 +857,8 @@
     <div class="step"><div class="step-dot"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M21 14v7h-7"/></svg></div><span class="step-k" data-en="STEP 1">PASSO 1</span><h3 data-en="Scans the QR code">Escaneia o QR Code</h3><p data-en="Every desk and room has its own label. The camera opens the ticket form.">Cada bancada e sala tem sua etiqueta. A câmera abre o formulário do chamado.</p></div>
     <div class="step"><div class="step-dot"><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg></div><span class="step-k" data-en="STEP 2">PASSO 2</span><h3 data-en="Describes the problem">Descreve o problema</h3><p data-en="Room and computer are already filled in. Just say what happened and, if useful, attach a photo.">Sala e computador já vêm preenchidos. Basta dizer o que houve e, se ajudar, anexar uma foto.</p></div>
     <div class="step"><div class="step-dot"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 003.4 0"/></svg></div><span class="step-k" data-en="STEP 3">PASSO 3</span><h3 data-en="IT gets it instantly">A TI recebe na hora</h3><p data-en="The ticket shows up on the IT dashboard and in the notification bell, without reloading the page.">O chamado aparece no painel da TI e no sino de notificações, sem recarregar a página.</p></div>
-    <div class="step"><div class="step-dot"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><span class="step-k" data-en="STEP 4">PASSO 4</span><h3 data-en="Handled with a chat">Atendimento com chat</h3><p data-en="Requester and technician talk inside the ticket itself. Everything is recorded.">Quem pediu e quem atende conversam dentro do próprio chamado. Tudo fica registrado.</p></div>
-    <div class="step"><div class="step-dot"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><span class="step-k" data-en="STEP 5">PASSO 5</span><h3 data-en="Becomes a number">Vira número</h3><p data-en="Response time, location and recurrence go into the PDF reports for management.">Tempo de atendimento, local e reincidência entram nos relatórios em PDF para a gestão.</p></div>
+    <div class="step"><div class="step-dot"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><span class="step-k" data-en="STEP 4">PASSO 4</span><h3 data-en="Handled through chat">Atendimento com chat</h3><p data-en="Requester and technician talk inside the ticket itself. Everything is recorded.">Quem pediu e quem atende conversam dentro do próprio chamado. Tudo fica registrado.</p></div>
+    <div class="step"><div class="step-dot"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><span class="step-k" data-en="STEP 5">PASSO 5</span><h3 data-en="Becomes data">Vira número</h3><p data-en="Response time, location and recurrence go into the PDF reports for management.">Tempo de atendimento, local e reincidência entram nos relatórios em PDF para a gestão.</p></div>
   </div>
 </section>
 
@@ -900,7 +900,7 @@
             <div class="mini-body">
               <div class="fld"><label data-en="Location">Local</label><div class="qr-fill"><span data-en="Lab 1 — Computing">Laboratório 1 — Informática</span><span class="badge b-gold" style="margin-left:auto" data-en="via QR">via QR</span></div></div>
               <div class="fld"><label data-en="Workstation">Baia</label><div class="qr-fill"><span data-en="Station 12 · Row 2">Baia 12 · Fileira 2</span></div></div>
-              <div class="fld"><label data-en="Priority">Prioridade</label><div><span class="badge b-orange" data-en="Medium — gets in the way">Média — atrapalha, mas dá para seguir</span></div></div>
+              <div class="fld"><label data-en="Priority">Prioridade</label><div><span class="badge b-orange" data-en="Medium — annoying, but work can go on">Média — atrapalha, mas dá para seguir</span></div></div>
               <div class="fld"><label data-en="What is happening?">O que está acontecendo?</label><div style="min-height:44px; align-items:flex-start;"><span data-en="The monitor won't turn on, I already checked the outlet.">O monitor não liga, já testei a tomada.</span></div></div>
               <div class="mbtn" data-en="Send ticket">Enviar chamado</div>
             </div>
@@ -927,7 +927,7 @@
             <div class="mini-body">
               <div class="kpis"><div class="kpi"><small data-en="Open">Abertos</small><b>4</b></div><div class="kpi"><small data-en="In progress">Em atendimento</small><b>3</b></div></div>
               <div class="row new"><b>#128</b><span class="grow" data-en="Lab 1 · Station 12 — monitor won't turn on">Laboratório 1 · Baia 12 — monitor não liga</span><span class="badge b-gold" data-en="now">agora</span></div>
-              <div class="row"><b>#127</b><span class="grow" data-en="Room 204 — projector has no image">Sala 204 — projetor sem imagem</span><span class="badge b-orange" data-en="in progress">em atendimento</span></div>
+              <div class="row"><b>#127</b><span class="grow" data-en="Room 204 — projector shows no picture">Sala 204 — projetor sem imagem</span><span class="badge b-orange" data-en="in progress">em atendimento</span></div>
               <div class="msg in" data-en="On my way to station 12 👋">Estou a caminho da baia 12 👋</div>
               <div class="msg out" data-en="Thanks! The student moved seats.">Obrigada! O aluno já mudou de lugar.</div>
             </div>
@@ -941,8 +941,8 @@
           <h3 data-en="Every workstation, on the floor plan">Cada posto na planta</h3>
           <p data-en="Each lab has a floor plan with its workstations, colored by status. It opens from the teacher's point of view, and the plan can be rearranged by dragging — with undo and restore.">Cada laboratório tem sua planta de baias, colorida pelo estado de cada uma. Abre na visão do professor, e a planta pode ser remontada arrastando — com desfazer e restaurar.</p>
           <ul class="checks">
-            <li data-en="Working, problem, in progress or under maintenance at a glance">Funcionando, com problema, em atendimento ou em manutenção, num olhar</li>
-            <li data-en="Rotate to other points of view of the room">Giro para as outras visões da sala</li>
+            <li data-en="Working, faulty, in progress or under maintenance — at a glance">Funcionando, com problema, em atendimento ou em manutenção, num olhar</li>
+            <li data-en="Rotate to see the room from other angles">Giro para as outras visões da sala</li>
             <li data-en="Editor: drag or use the keyboard, no database work needed">Editor: arraste ou use o teclado, sem mexer no banco</li>
             <li data-en="Each change is a version: undo the last one or restore the original">Cada mudança vira versão: desfazer a última ou restaurar a original</li>
           </ul>
@@ -952,7 +952,7 @@
           <div class="mini" style="max-width:340px;">
             <div class="mini-head" data-en="Lab 1 — Computing">Laboratório 1 — Informática</div>
             <div class="mini-body">
-              <div class="legend"><span><i style="background:var(--ok)"></i><span data-en="Working">Funcionando</span></span><span><i style="background:var(--bad)"></i><span data-en="Problem">Problema</span></span><span><i style="background:var(--warn)"></i><span data-en="In progress">Atendimento</span></span><span><i style="background:#8a94a3"></i><span data-en="Maintenance">Manutenção</span></span></div>
+              <div class="legend"><span><i style="background:var(--ok)"></i><span data-en="Working">Funcionando</span></span><span><i style="background:var(--bad)"></i><span data-en="Issue">Problema</span></span><span><i style="background:var(--warn)"></i><span data-en="In progress">Atendimento</span></span><span><i style="background:#8a94a3"></i><span data-en="Maintenance">Manutenção</span></span></div>
               <div class="bays" id="mini-bays"></div>
               <div class="desk" data-en="Teacher's desk">Mesa do professor</div>
               <div style="display:flex; gap:6px; justify-content:center;"><span class="badge b-gray" data-en="↶ Undo">↶ Desfazer</span><span class="badge b-gray" data-en="⟲ Restore original">⟲ Restaurar original</span></div>
@@ -967,10 +967,10 @@
           <h3 data-en="Who sits where, in every class">Quem senta onde, em cada turma</h3>
           <p data-en="Teachers build the seating map of their class on the plan of the lab or classroom, dragging students into seats. Dropping one student onto another swaps them.">O professor monta o mapa da turma sobre a planta do laboratório ou da sala de aula, arrastando os alunos para os lugares. Soltar um aluno sobre outro troca os dois.</p>
           <ul class="checks">
-            <li data-en="Imports the whole class from the registrar's roll-call PDF">Importa a turma inteira a partir do PDF da chamada da secretaria</li>
+            <li data-en="Imports the whole class from the registrar's attendance PDF">Importa a turma inteira a partir do PDF da chamada da secretaria</li>
             <li data-en="Two people per seat when the class doesn't fit">Duas pessoas por lugar quando a turma não cabe</li>
-            <li data-en="Export and import as CSV">Exporta e importa em CSV</li>
-            <li data-en="Prints as PDF to leave in the room">Imprime em PDF para deixar na sala</li>
+            <li data-en="Exports and imports as CSV">Exporta e importa em CSV</li>
+            <li data-en="Prints as a PDF to post in the room">Imprime em PDF para deixar na sala</li>
           </ul>
           <button type="button" class="seek-btn" data-seek="41"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4v16l14-8z"/></svg><span data-en="See it in the video · 0:41">Ver no vídeo · 0:41</span></button>
         </div>
@@ -984,7 +984,7 @@
                 <div class="seat"></div><div class="seat f">Eva</div><div class="seat f">Felipe</div><div class="seat"></div>
               </div>
               <div class="desk" data-en="Teacher's desk">Mesa do professor</div>
-              <div style="display:flex; gap:6px; justify-content:center; flex-wrap:wrap;"><span class="badge b-blue" data-en="Import roll call (PDF)">Importar chamada (PDF)</span><span class="badge b-gray">CSV</span><span class="badge b-red" data-en="Print PDF">Imprimir PDF</span></div>
+              <div style="display:flex; gap:6px; justify-content:center; flex-wrap:wrap;"><span class="badge b-blue" data-en="Import class list (PDF)">Importar chamada (PDF)</span><span class="badge b-gray">CSV</span><span class="badge b-red" data-en="Print PDF">Imprimir PDF</span></div>
             </div>
           </div>
         </div>
@@ -994,23 +994,23 @@
         <div class="panel-text">
           <p class="kicker" data-en="For management">Para a gestão</p>
           <h3 data-en="Feedback that finally arrives">O feedback que finalmente chega</h3>
-          <p data-en="Period numbers in PDF: tickets by location and by technician, response time and the workstation that keeps failing. The numbers come from a single source, so two screens never disagree.">Números do período em PDF: chamados por ambiente e por técnico, tempo de atendimento e o posto que mais dá problema. Os números vêm de uma fonte única — duas telas nunca discordam.</p>
+          <p data-en="The period's numbers in PDF: tickets by location and by technician, response time and the workstation that keeps failing. Every number comes from a single source, so two screens never disagree.">Números do período em PDF: chamados por ambiente e por técnico, tempo de atendimento e o posto que mais dá problema. Os números vêm de uma fonte única — duas telas nunca discordam.</p>
           <ul class="checks">
             <li data-en="Average time split between labs and classrooms">Tempo médio separado por laboratório e por sala</li>
             <li data-en="Reopened tickets count only the time they were open">Chamado reaberto conta só o tempo em que ficou aberto</li>
             <li data-en="Test tickets are left out of every statistic">Chamados de teste ficam fora de toda estatística</li>
-            <li data-en="Repeat-offender workstation highlighted">Posto reincidente em destaque</li>
+            <li data-en="Workstation with recurring issues highlighted">Posto reincidente em destaque</li>
           </ul>
           <button type="button" class="seek-btn" data-seek="48"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4v16l14-8z"/></svg><span data-en="See it in the video · 0:48">Ver no vídeo · 0:48</span></button>
         </div>
         <div class="panel-visual">
           <div class="mini" style="max-width:330px;">
-            <div class="mini-head" data-en="Reports · last period">Relatórios · último período</div>
+            <div class="mini-head" data-en="Reports · previous period">Relatórios · último período</div>
             <div class="mini-body">
               <div class="kpis"><div class="kpi"><small data-en="Tickets">Chamados</small><b>342</b></div><div class="kpi"><small data-en="Average time">Tempo médio</small><b>21 min</b></div></div>
               <div class="bars"><span class="top" style="height:92%"></span><span style="height:66%"></span><span style="height:55%"></span><span style="height:44%"></span><span style="height:33%"></span><span style="height:21%"></span></div>
               <div class="bar-labels"><span data-en="Lab 1">Lab. 1</span><span data-en="Lab 3">Lab. 3</span><span data-en="R. 204">S. 204</span><span data-en="Lab 5">Lab. 5</span><span data-en="R. 101">S. 101</span><span data-en="Lab 2">Lab. 2</span></div>
-              <div class="alert"><b data-en="Repeat offender">Posto reincidente</b><span data-en="Lab 1 · Station 12 — 7 tickets">Laboratório 1 · Baia 12 — 7 chamados</span></div>
+              <div class="alert"><b data-en="Recurring issues">Posto reincidente</b><span data-en="Lab 1 · Station 12 — 7 tickets">Laboratório 1 · Baia 12 — 7 chamados</span></div>
               <p style="margin:0; font-size:9.5px; color:var(--app-soft); text-align:center;" data-en="Illustrative data">Dados ilustrativos</p>
             </div>
           </div>
@@ -1034,7 +1034,7 @@
             <div class="mini-body">
               <div class="item"><span class="ic">🖥️</span><span class="grow"><b data-en="Projector setup">Configurar projetor</b><small data-en="Script · everyone">Script · todos</small></span><span class="badge b-green" data-en="visible">visível</span></div>
               <div class="item"><span class="ic">📦</span><span class="grow"><b data-en="Programming IDE">IDE de programação</b><small data-en="Installer · teachers">Instalador · professores</small></span><span class="badge b-orange" data-en="restricted">restrito</span></div>
-              <div class="item"><span class="ic">🧹</span><span class="grow"><b data-en="Clean user profiles">Limpar perfis de usuário</b><small data-en="Script · IT only">Script · só TI</small></span><span class="badge b-gray" data-en="hidden">oculto</span></div>
+              <div class="item"><span class="ic">🧹</span><span class="grow"><b data-en="Clean up user profiles">Limpar perfis de usuário</b><small data-en="Script · IT only">Script · só TI</small></span><span class="badge b-gray" data-en="hidden">oculto</span></div>
             </div>
           </div>
         </div>
@@ -1077,9 +1077,9 @@
     <p data-en="Three access roles, with permission per module granted by the administrator.">Três perfis de acesso, com permissão por módulo concedida pelo administrador.</p>
   </div>
   <div class="roles">
-    <div class="role reveal"><div class="role-ic"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3 data-en="Administrator">Administrador</h3><p data-en="Runs the system and receives the numbers.">Comanda o sistema e recebe os números.</p><ul><li data-en="Users and permissions per module">Usuários e permissões por módulo</li><li data-en="Reports in PDF">Relatórios em PDF</li><li data-en="Room and lab registry">Cadastro de salas e laboratórios</li><li data-en="Backup and system status">Backup e status do sistema</li></ul></div>
-    <div class="role reveal"><div class="role-ic"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94z"/></svg></div><h3 data-en="IT">TI</h3><p data-en="Handles the tickets day to day.">Atende os chamados no dia a dia.</p><ul><li data-en="Real-time ticket queue">Fila de chamados em tempo real</li><li data-en="Takes, chats and closes tickets">Assume, conversa e finaliza</li><li data-en="Floor plans and lab editor">Plantas e editor de laboratório</li><li data-en="Publishes the catalog">Publica o catálogo</li></ul></div>
-    <div class="role reveal"><div class="role-ic"><svg viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><h3 data-en="Teacher">Professor</h3><p data-en="Reports problems and organizes the class.">Relata problemas e organiza a turma.</p><ul><li data-en="Opens tickets by QR code or screen">Abre chamados por QR Code ou pela tela</li><li data-en="Follows the ticket through the chat">Acompanha o atendimento pelo chat</li><li data-en="Seating map of each class">Mapa de sala de cada turma</li><li data-en="Scripts and software released to them">Scripts e softwares liberados para ele</li></ul></div>
+    <div class="role reveal"><div class="role-ic"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3 data-en="Administrator">Administrador</h3><p data-en="Manages the system and gets the numbers.">Comanda o sistema e recebe os números.</p><ul><li data-en="Users and permissions per module">Usuários e permissões por módulo</li><li data-en="Reports in PDF">Relatórios em PDF</li><li data-en="Room and lab records">Cadastro de salas e laboratórios</li><li data-en="Backup and system status">Backup e status do sistema</li></ul></div>
+    <div class="role reveal"><div class="role-ic"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94z"/></svg></div><h3 data-en="IT">TI</h3><p data-en="Handles the tickets day to day.">Atende os chamados no dia a dia.</p><ul><li data-en="Real-time ticket queue">Fila de chamados em tempo real</li><li data-en="Takes, discusses and closes tickets">Assume, conversa e finaliza</li><li data-en="Floor plans and lab editor">Plantas e editor de laboratório</li><li data-en="Publishes the catalog">Publica o catálogo</li></ul></div>
+    <div class="role reveal"><div class="role-ic"><svg viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><h3 data-en="Teacher">Professor</h3><p data-en="Reports problems and organizes the class.">Relata problemas e organiza a turma.</p><ul><li data-en="Opens tickets via QR code or on screen">Abre chamados por QR Code ou pela tela</li><li data-en="Follows the ticket through the chat">Acompanha o atendimento pelo chat</li><li data-en="Seating map of each class">Mapa de sala de cada turma</li><li data-en="Scripts and software made available to them">Scripts e softwares liberados para ele</li></ul></div>
   </div>
 </section>
 
@@ -1091,7 +1091,7 @@
   </div>
   <div class="compare">
     <div class="cmp-head"><div data-en="Before (WhatsApp)">Antes (WhatsApp)</div><div>SystemManagerIT</div></div>
-    <div class="cmp-row reveal"><div><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg><span data-en="Request in a loose chat, no record">Pedido em conversa solta, sem registro</span></div><div><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5"/></svg><span data-en="Every ticket is stored with author, date and status">Todo chamado gravado, com autor, data e status</span></div></div>
+    <div class="cmp-row reveal"><div><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg><span data-en="Request lost in a chat, with no record">Pedido em conversa solta, sem registro</span></div><div><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5"/></svg><span data-en="Every ticket is stored with author, date and status">Todo chamado gravado, com autor, data e status</span></div></div>
     <div class="cmp-row reveal"><div><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg><span data-en="“The computer in the corner won't turn on”">“O computador do canto não liga”</span></div><div><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5"/></svg><span data-en="The QR code identifies room, row and computer">O QR Code identifica sala, fileira e computador</span></div></div>
     <div class="cmp-row reveal"><div><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg><span data-en="History vanishes with the chat">Histórico some com a conversa</span></div><div><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5"/></svg><span data-en="Full history per workstation, for good">Histórico completo por posto de trabalho, para sempre</span></div></div>
     <div class="cmp-row reveal"><div><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg><span data-en="Nobody knows how long it took">Ninguém sabe quanto tempo levou</span></div><div><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5"/></svg><span data-en="Response time measured from start to finish">Tempo de atendimento medido do início ao fim</span></div></div>
@@ -1115,7 +1115,7 @@
       <div class="num reveal"><b>1</b><span data-en="single source for every report number">fonte única para cada número dos relatórios</span></div>
     </div>
     <div class="reveal">
-      <p class="tech-note" data-en="Developed from end to end by me: requirements gathering in the IT department, architecture, interface, automated tests and deployment.">Desenvolvido de ponta a ponta por mim: levantamento de requisitos no setor de TI, arquitetura, interface, testes automatizados e implantação.</p>
+      <p class="tech-note" data-en="Developed end to end by me: requirements gathering in the IT department, architecture, interface, automated tests and deployment.">Desenvolvido de ponta a ponta por mim: levantamento de requisitos no setor de TI, arquitetura, interface, testes automatizados e implantação.</p>
       <div class="pill-row">
         <span class="pill">Python</span><span class="pill">Flask</span><span class="pill">SQLite</span><span class="pill">Server-Sent Events</span><span class="pill">JavaScript</span><span class="pill">HTML &amp; CSS</span><span class="pill">Jinja2</span><span class="pill">ReportLab (PDF)</span><span class="pill">Chart.js</span><span class="pill">Waitress</span>
       </div>
@@ -1127,7 +1127,7 @@
   <h2><span data-en="The feedback that used to get lost">O feedback que antes se perdia</span> <em data-en="now reaches the people who decide.">agora chega a quem decide.</em></h2>
   <p data-en="SystemManagerIT is my largest project: I saw a problem in my own work routine and turned it into a system that is used every day.">O SystemManagerIT é o meu maior projeto: vi um problema na minha própria rotina de trabalho e transformei em um sistema usado todos os dias.</p>
   <div class="hero-cta">
-    <a class="btn btn-primary" href="../#projetos" data-en="Back to the résumé">Voltar ao currículo</a>
+    <a class="btn btn-primary" href="../#projetos" data-en="Back to my CV">Voltar ao currículo</a>
     <a class="btn btn-ghost" href="mailto:vitorb.oliveira14@gmail.com" data-en="Get in touch">Entrar em contato</a>
   </div>
 </div>
@@ -1249,8 +1249,8 @@
     { a:.3,  b:7.7,  pt:'Antes, os chamados chegavam pelo WhatsApp — e se perdiam no meio da conversa.', en:'Before, support tickets arrived over WhatsApp — and got lost in the conversation.' },
     { a:8.3, b:12.8, pt:'Para resolver isso, eu desenvolvi o SystemManagerIT.', en:'To solve that, I built SystemManagerIT.' },
     { a:13.3,b:16.9, pt:'O aluno ou o professor aponta o celular para o QR Code colado na bancada…', en:'A student or teacher points their phone at the QR code on the desk…' },
-    { a:16.9,b:22.7, pt:'…e o chamado já nasce amarrado àquele computador, naquela sala.', en:'…and the ticket is born already tied to that computer, in that room.' },
-    { a:23.3,b:27.4, pt:'No mesmo instante, o chamado aparece no painel da TI — sem recarregar a página.', en:'At that very moment, it shows up on the IT dashboard — no page reload.' },
+    { a:16.9,b:22.7, pt:'…e o chamado já nasce amarrado àquele computador, naquela sala.', en:'…and the ticket is created already linked to that computer, in that room.' },
+    { a:23.3,b:27.4, pt:'No mesmo instante, o chamado aparece no painel da TI — sem recarregar a página.', en:'Instantly, it shows up on the IT dashboard — no page reload needed.' },
     { a:27.4,b:30.8, pt:'O técnico assume com um clique.', en:'The technician takes it with one click.' },
     { a:31.3,b:34.6, pt:'Na planta do laboratório, cada baia mostra o seu estado.', en:'On the lab floor plan, every workstation shows its status.' },
     { a:34.6,b:38.4, pt:'Quem pediu e quem atende conversam dentro do próprio chamado.', en:'Requester and technician talk inside the ticket itself.' },
