@@ -203,7 +203,8 @@
     display:flex; flex-direction:column; gap:12px;
   }
   .card:hover{ transform:translateY(-5px); box-shadow:0 22px 40px -22px rgba(0,0,0,0.6); border-color:var(--navy-soft); }
-  .card-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .card-top{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:8px 10px; }
+  .card-top .chip{ max-width:100%; }
   .card h3{ font-size:1.06rem; color:var(--heading); font-weight:600; font-family:'Manrope',sans-serif; }
   .card p{ font-size:0.92rem; line-height:1.58; color:var(--muted); margin:0; }
   .card .pill-row{ margin-top:auto; padding-top:6px; }
