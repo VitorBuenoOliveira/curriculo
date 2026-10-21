@@ -47,10 +47,11 @@
   .lang-toggle{ display:flex; border:1px solid var(--line); font-size:.72rem; font-weight:700; letter-spacing:.04em; background:var(--surface); flex-shrink:0; }
   .lang-toggle button{ appearance:none; background:none; border:none; color:var(--muted); padding:7px 12px; cursor:pointer; font-size:inherit; font-weight:inherit; letter-spacing:inherit; transition:color .2s, background .2s; }
   .lang-toggle button.active{ color:var(--navy); background:var(--gold); }
-  @media (max-width:1000px){
+  /* 7 links não cabem numa linha só abaixo de ~1100px: descem para uma linha rolável */
+  @media (max-width:1120px){
     .nav-inner{ flex-wrap:wrap; row-gap:10px; padding:12px 16px 0; }
     .lang-toggle{ margin-left:auto; }
-    nav.links{ order:3; width:100%; margin:0 -16px; padding:0 16px 10px; overflow-x:auto; gap:18px; scrollbar-width:none; }
+    nav.links{ order:3; width:calc(100% + 32px); margin:0 -16px; padding:0 16px 10px; overflow-x:auto; gap:18px; scrollbar-width:none; }
     nav.links::-webkit-scrollbar{ display:none; }
     .brand{ display:none; }
   }
@@ -74,6 +75,7 @@
   .hero-stats b{ display:block; font-family:'Fraunces',serif; font-weight:500; font-size:1.7rem; color:var(--gold); line-height:1; }
   .hero-stats span{ display:block; font-size:.78rem; color:var(--muted); margin-top:7px; }
   @media (max-width:720px){ .hero{ padding:40px 16px 28px; } .hero-stats{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:420px){ .hero h1{ font-size:clamp(1.9rem,9vw,2.3rem); } }
 
   /* ---------------- player ---------------- */
   .player{ position:relative; background:#05090f; border:1px solid var(--line); box-shadow:0 40px 90px -40px rgba(0,0,0,.8), 0 0 0 1px rgba(211,166,86,.08); outline:none; }
@@ -289,7 +291,7 @@
 
   /* antes x depois */
   .compare{ border:1px solid var(--line); }
-  .cmp-head, .cmp-row{ display:grid; grid-template-columns:1fr 1fr; }
+  .cmp-head, .cmp-row{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
   .cmp-head div{ padding:14px 22px; font-size:.75rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; }
   .cmp-head div:first-child{ color:#f08a8a; background:rgba(214,69,69,.06); }
   .cmp-head div:last-child{ color:var(--gold); background:var(--gold-soft); }
@@ -301,7 +303,11 @@
   .cmp-row div:first-child svg{ stroke:#e06b6b; } .cmp-row div:last-child svg{ stroke:var(--gold); }
   .cmp-row.reveal{ transform:translateX(-14px); }
   .cmp-row.reveal.in{ transform:none; }
-  @media (max-width:640px){ .cmp-head div, .cmp-row div{ padding:12px 14px; font-size:.86rem; } }
+  @media (max-width:640px){
+    .cmp-head div, .cmp-row div{ padding:12px 14px; font-size:.86rem; }
+    .cmp-head div{ padding:12px 10px; font-size:.68rem; letter-spacing:.06em; overflow-wrap:anywhere; }
+    .cmp-row div{ padding:12px 10px; gap:8px; }
+  }
 
   /* bastidores */
   .tech{ display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
