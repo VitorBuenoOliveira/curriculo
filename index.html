@@ -211,11 +211,13 @@
   .card .pill{ opacity:1; transform:none; padding:5px 11px; font-size:0.76rem; }
   .card-link{ font-size:0.86rem; font-weight:600; color:var(--heading); text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
   .card-link:hover{ color:var(--gold); }
-  .card-feature{ position:relative; border-color:rgba(211,166,86,0.35); }
-  .card-feature:hover{ border-color:var(--gold); }
+  /* cartão que abre uma página: o link estica por cima do cartão inteiro */
+  .card-feature, .card-click{ position:relative; }
+  .card-feature{ border-color:rgba(211,166,86,0.35); }
+  .card-feature:hover, .card-click:hover{ border-color:var(--gold); }
   .card-stretch{ color:var(--gold); }
   .card-stretch::after{ content:''; position:absolute; inset:0; }
-  .card-feature:focus-within{ outline:2px solid var(--gold); outline-offset:3px; }
+  .card-feature:focus-within, .card-click:focus-within{ outline:2px solid var(--gold); outline-offset:3px; }
   .card-stretch:focus{ outline:none; }
 
   /* contact */
@@ -511,7 +513,7 @@
       <div class="pill-row"><span class="pill" data-en="Private repository">Repositório privado</span><span class="pill" data-en="Video tour">Tour em vídeo</span></div>
       <a class="card-link card-stretch" href="systemmanagerit/" data-en="▶ See how it works →">▶ Ver como funciona →</a>
     </div>
-    <div class="card reveal">
+    <div class="card card-click reveal">
       <div class="card-top">
         <h3>Cozmo Assistente</h3>
         <span class="chip" data-en="New">Novo</span>
