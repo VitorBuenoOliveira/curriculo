@@ -213,12 +213,12 @@
     <h1>Cozmo <em data-en="Assistant">Assistente</em></h1>
     <p class="lead" data-en="A desktop assistant built in Python that lives in a corner of the screen. It talks by voice and text, controls the computer, builds my college agenda from several platforms, reads and summarizes the screen, passes questions on to Claude and controls the temperature of my capstone project. The goal: to become an agent for my whole routine.">Um assistente de mesa feito em Python que mora num cantinho da tela. Conversa por voz e texto, mexe no computador, monta a agenda da faculdade a partir de várias plataformas, lê e resume a tela, passa perguntas pro Claude e controla a temperatura do meu projeto integrador. O objetivo: virar um agente para a minha rotina inteira.</p>
     <div class="hero-cta">
-      <a class="btn btn-primary" href="#video" data-play><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg><span data-en="Watch the demo (1 min)">Assistir à demonstração (1 min)</span></a>
+      <a class="btn btn-primary" href="#video" data-play><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg><span data-en="Watch the demo (1.5 min)">Assistir à demonstração (1 min e meio)</span></a>
       <a class="btn btn-ghost" href="#patch-notes" data-en="See the patch notes">Ver as patch notes</a>
     </div>
     <div class="hero-stats">
-      <div><b>429</b><span data-en="automated tests">testes automatizados</span></div>
-      <div><b>8</b><span data-en="versions in one month">versões em um mês</span></div>
+      <div><b>458</b><span data-en="automated tests">testes automatizados</span></div>
+      <div><b>9</b><span data-en="versions in one month">versões em um mês</span></div>
       <div><b>100%</b><span data-en="local AI, voice, OCR and face recognition">IA, voz, OCR e rosto no próprio PC</span></div>
       <div><b>6+</b><span data-en="agenda platforms (Brightspace, Classroom, Moodle…)">plataformas de agenda (Brightspace, Classroom, Moodle…)</span></div>
     </div>
@@ -240,7 +240,7 @@
     <div class="demo-side">
       <h3 data-en="Chapters">Capítulos</h3>
       <div class="chapters" id="chapters"></div>
-      <p class="demo-note" data-en="What appears in the video: the mascot in the corner of the screen, the daily briefing, voice commands, the agenda gathering three platforms, Claude mode, screen summarization and the capstone temperature control (in the simulator).">O que aparece no vídeo: o mascote no canto da tela, o resumo do dia, comandos de voz, a agenda juntando três plataformas, o modo Claude, o resumo da tela e o controle de temperatura do projeto integrador (no simulador).</p>
+      <p class="demo-note" data-en="What appears in the video: the mascot in the corner of the screen, the daily briefing, voice commands, the agenda gathering three platforms, Claude mode, screen summarization, the capstone temperature control (in the simulator) and the 3D face floating over the desktop.">O que aparece no vídeo: o mascote no canto da tela, o resumo do dia, comandos de voz, a agenda juntando três plataformas, o modo Claude, o resumo da tela, o controle de temperatura do projeto integrador (no simulador) e o rosto em 3D flutuando sobre a área de trabalho.</p>
     </div>
   </div>
 </section>
@@ -370,11 +370,26 @@
   <div class="notes" id="notes">
 
     <article class="note latest reveal">
-      <div class="note-meta"><span class="v">v0.8</span><time datetime="2026-10-22" data-en="Oct 22, 2026">22/10/2026</time><span class="tag" data-en="Latest">Atual</span></div>
+      <div class="note-meta"><span class="v">v0.9</span><time datetime="2026-10-23" data-en="Oct 23, 2026">23/10/2026</time><span class="tag" data-en="Latest">Atual</span></div>
+      <div>
+        <h3 data-en="Vocabulary from real use and more reliable face recognition">Vocabulário do uso real e reconhecimento mais confiável</h3>
+        <ul>
+          <li><b data-en="Vocabulary from real use:">Vocabulário do uso real:</b> <span data-en="phrases I actually said and Cozmo missed — “temperature mode automatic”, “cool it down a bit”, “turn on the little fan”, “how many degrees is it” — now work.">frases que eu falei de verdade e ele não entendia — “modo temperatura automático”, “esfria um pouco”, “liga o ventinho”, “quantos graus tá” — agora funcionam.</span></li>
+          <li><b data-en="“That's not it”:">“Não era isso”:</b> <span data-en="when it gets something wrong, it saves the phrase (only on the PC) to learn from in the next round of vocabulary.">quando ele entende errado, anota a frase (só no PC) para a próxima rodada de vocabulário.</span></li>
+          <li><b data-en="Tricks by voice:">Truques por voz:</b> <span data-en="“do a spin” makes the 3D robot spin on the spot, and “next skin” cycles through the looks.">“dá uma pirueta” faz o robô 3D girar na hora, e “próxima skin” passa pelos visuais.</span></li>
+          <li><b data-en="Recognizes its owner in other light:">Reconhece o dono com outra luz:</b> <span data-en="the confidence limit is now measured on photos the model hasn't seen, and typing “it's me” on the computer adds photos in the current light to the profile.">o limite de confiança agora é medido em fotos que o modelo não viu, e digitar “sou eu” no computador soma fotos com a luz do momento ao cadastro.</span></li>
+          <li><b data-en="New demo video:">Vídeo novo:</b> <span data-en="with the 3D face floating over the desktop.">com o rosto em 3D flutuando sobre a área de trabalho.</span></li>
+          <li class="fix"><span data-en="Answering your own name to “who are you?” created a visitor with the owner's face; the face skins inspired by famous characters got names of their own.">Responder o próprio nome ao “quem é você?” criava uma visita com o rosto do dono; as skins inspiradas em personagens famosos ganharam nomes próprios.</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="note reveal">
+      <div class="note-meta"><span class="v">v0.8</span><time datetime="2026-10-22" data-en="Oct 22, 2026">22/10/2026</time></div>
       <div>
         <h3 data-en="3D face and augmented reality">Rosto em 3D e realidade aumentada</h3>
         <ul>
-          <li><b data-en="Face skins:">Skins do rosto:</b> <span data-en="the same Cozmo in other looks — 3D robot, retro terminal, 8-bit pixel and more — switched in Settings or by voice (“turn into the 3D robot”).">o mesmo Cozmo em outros visuais — robô 3D, terminal retrô, pixel 8-bit e mais — trocados em Ajustes ou por voz (“vira o robô 3D”).</span></li>
+          <li><b data-en="Face skins:">Skins do rosto:</b> <span data-en="the same Cozmo in other looks — 3D robot, Bino (metal binoculars), Lumi (light visor), retro terminal and 8-bit pixel — switched in Settings or by voice (“turn into the 3D robot”).">o mesmo Cozmo em outros visuais — robô 3D, Bino (binóculos de metal), Lumi (visor de luz), terminal retrô e pixel 8-bit — trocados em Ajustes ou por voz (“vira o robô 3D”).</span></li>
           <li><b data-en="A real 3D robot:">Robô 3D de verdade:</b> <span data-en="a head with volume that turns where it looks, nods and tilts, with lighting computed on every piece, ears with a light ring, a vented back and a 360° spin when it gets excited.">uma cabeça com volume que vira para onde olha, acena e inclina, com luz calculada em cada pedaço, orelhas com anel de luz, nuca com ventilação e uma pirueta de 360° quando fica empolgado.</span></li>
           <li><b data-en="Augmented reality:">Realidade aumentada:</b> <span data-en="on Linux the mascot window became transparent pixel by pixel — no background, just the robot and its shadow floating over whatever is on screen.">no Linux a janela do mascote ficou transparente pixel a pixel — sem fundo, só o robô e a sombra flutuando por cima do que está na tela.</span></li>
           <li><b data-en="Expressions without a mouth:">Expressões sem boca:</b> <span data-en="light eyebrows, a sparkle in the eyes, blushing cheeks, heart, star and spiral eyes, a running tear and a drop of sweat.">sobrancelhas de luz, brilho nos olhos, bochechas coradas, olhos de coração, estrela e espiral, lágrima escorrendo e gota de suor.</span></li>
@@ -401,7 +416,7 @@
       </div>
     </article>
 
-    <article class="note reveal">
+    <article class="note older reveal">
       <div class="note-meta"><span class="v">v0.6</span><time datetime="2026-10-21" data-en="Oct 21, 2026">21/10/2026</time></div>
       <div>
         <h3 data-en="Claude mode, screen reading and a multi-platform agenda">Modo Claude, leitura da tela e agenda multiplataforma</h3>
@@ -492,7 +507,7 @@
   </div>
   <div class="tech">
     <div class="numbers">
-      <div class="num reveal"><b>429</b><span data-en="automated tests, each one born from a real bug">testes automatizados, cada um nascido de um bug de verdade</span></div>
+      <div class="num reveal"><b>458</b><span data-en="automated tests, each one born from a real bug">testes automatizados, cada um nascido de um bug de verdade</span></div>
       <div class="num reveal"><b>0</b><span data-en="paid services required: AI, voice and OCR are local and free">serviços pagos obrigatórios: IA, voz e OCR locais e gratuitos</span></div>
       <div class="num reveal"><b>~30 s</b><span data-en="to summarize a full page with the local AI, on the laptop CPU">para resumir uma página inteira com a IA local, no processador do notebook</span></div>
       <div class="num reveal"><b>2</b><span data-en="systems: Linux and Windows">sistemas: Linux e Windows</span></div>
@@ -530,9 +545,10 @@
     { t:33.2, pt:'Conversa com o Claude',          en:'Talking to Claude' },
     { t:46.6, pt:'Lê e resume a tela',             en:'Reads and summarizes the screen' },
     { t:56.4, pt:'Projeto integrador: temperatura', en:'Capstone: temperature control' },
-    { t:68.2, pt:'Rosto com emoções',              en:'Expressive face' }
+    { t:68.2, pt:'Rosto com emoções',              en:'Expressive face' },
+    { t:72.5, pt:'Rosto 3D em realidade aumentada', en:'3D face in augmented reality' }
   ];
-  var DURACAO = 75.4;
+  var DURACAO = 93.8;
   var video = document.getElementById('demo-video');
   var box = document.getElementById('chapters');
   var lang = 'pt';
