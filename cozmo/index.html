@@ -217,8 +217,8 @@
       <a class="btn btn-ghost" href="#patch-notes" data-en="See the patch notes">Ver as patch notes</a>
     </div>
     <div class="hero-stats">
-      <div><b>336</b><span data-en="automated tests">testes automatizados</span></div>
-      <div><b>6</b><span data-en="versions in one month">versões em um mês</span></div>
+      <div><b>429</b><span data-en="automated tests">testes automatizados</span></div>
+      <div><b>8</b><span data-en="versions in one month">versões em um mês</span></div>
       <div><b>100%</b><span data-en="local AI, voice, OCR and face recognition">IA, voz, OCR e rosto no próprio PC</span></div>
       <div><b>6+</b><span data-en="agenda platforms (Brightspace, Classroom, Moodle…)">plataformas de agenda (Brightspace, Classroom, Moodle…)</span></div>
     </div>
@@ -298,8 +298,8 @@
     <div class="feat reveal">
       <div class="feat-ic"><svg viewBox="0 0 24 24"><path d="M14 14.8V5a2 2 0 0 0-4 0v9.8a4 4 0 1 0 4 0z"/><path d="M12 11v6"/></svg></div>
       <h3 data-en="Capstone: temperature control">Projeto integrador: temperatura</h3>
-      <p data-en="ESP32 with a DS18B20 sensor and a servo as the actuator, running a PI controller with anti-windup. Cozmo shows reading, target, error and the chart, and takes orders by voice.">ESP32 com sensor DS18B20 e servo como atuador, rodando um controlador PI com anti-windup. O Cozmo mostra medida, alvo, divergência e o gráfico, e recebe ordens por voz.</p>
-      <span class="say" data-en="set the temperature to 22 degrees">deixa a temperatura em 22 graus</span>
+      <p data-en="ESP32 with a DS18B20 sensor and a cooler on a relay (or a servo with a PI controller). Cozmo shows reading, target, error and the chart, and takes orders by voice.">ESP32 com sensor DS18B20 e um cooler no relé (ou um servo com controlador PI). O Cozmo mostra medida, alvo, divergência e o gráfico, e recebe ordens por voz.</p>
+      <span class="say" data-en="Cozmo, lower the temperature">Cozmo, diminuir temperatura</span>
     </div>
     <div class="feat reveal">
       <div class="feat-ic"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5h2"/></svg></div>
@@ -370,7 +370,39 @@
   <div class="notes" id="notes">
 
     <article class="note latest reveal">
-      <div class="note-meta"><span class="v">v0.6</span><time datetime="2026-10-21" data-en="Oct 21, 2026">21/10/2026</time><span class="tag" data-en="Latest">Atual</span></div>
+      <div class="note-meta"><span class="v">v0.8</span><time datetime="2026-10-22" data-en="Oct 22, 2026">22/10/2026</time><span class="tag" data-en="Latest">Atual</span></div>
+      <div>
+        <h3 data-en="3D face and augmented reality">Rosto em 3D e realidade aumentada</h3>
+        <ul>
+          <li><b data-en="Face skins:">Skins do rosto:</b> <span data-en="the same Cozmo in other looks — 3D robot, retro terminal, 8-bit pixel and more — switched in Settings or by voice (“turn into the 3D robot”).">o mesmo Cozmo em outros visuais — robô 3D, terminal retrô, pixel 8-bit e mais — trocados em Ajustes ou por voz (“vira o robô 3D”).</span></li>
+          <li><b data-en="A real 3D robot:">Robô 3D de verdade:</b> <span data-en="a head with volume that turns where it looks, nods and tilts, with lighting computed on every piece, ears with a light ring, a vented back and a 360° spin when it gets excited.">uma cabeça com volume que vira para onde olha, acena e inclina, com luz calculada em cada pedaço, orelhas com anel de luz, nuca com ventilação e uma pirueta de 360° quando fica empolgado.</span></li>
+          <li><b data-en="Augmented reality:">Realidade aumentada:</b> <span data-en="on Linux the mascot window became transparent pixel by pixel — no background, just the robot and its shadow floating over whatever is on screen.">no Linux a janela do mascote ficou transparente pixel a pixel — sem fundo, só o robô e a sombra flutuando por cima do que está na tela.</span></li>
+          <li><b data-en="Expressions without a mouth:">Expressões sem boca:</b> <span data-en="light eyebrows, a sparkle in the eyes, blushing cheeks, heart, star and spiral eyes, a running tear and a drop of sweat.">sobrancelhas de luz, brilho nos olhos, bochechas coradas, olhos de coração, estrela e espiral, lágrima escorrendo e gota de suor.</span></li>
+          <li><b data-en="A living body:">Corpo vivo:</b> <span data-en="it crouches before jumping, its ears swing with a delay, it gets dizzy if I shake the window, leans toward the mouse when petted and, when idle, looks around, stretches, yawns and dozes off.">agacha antes de pular, as orelhas balançam atrasadas, fica tonto se eu chacoalhar a janela, inclina na direção do mouse no carinho e, parado, olha em volta, se espreguiça, boceja e cochila.</span></li>
+          <li><b data-en="Reacts to what happens:">Ligado ao que acontece:</b> <span data-en="three dots while the AI thinks, the screen switches off like an old TV when it sleeps, it sweats when the board heats up and the glass frosts over in the cold.">três pontinhos enquanto a IA pensa, a tela apaga como TV antiga quando ele dorme, ele sua quando a placa esquenta e o vidro congela no frio.</span></li>
+          <li class="fix"><span data-en="With the transparent window the classic face disappeared and the chat lost the keyboard; slow-loading tabs could stay empty.">Com a janela transparente o rosto clássico sumia e o chat ficava sem teclado; abas que carregavam devagar podiam ficar vazias.</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="note reveal">
+      <div class="note-meta"><span class="v">v0.7</span><time datetime="2026-10-21" data-en="Oct 21, 2026">21/10/2026</time></div>
+      <div>
+        <h3 data-en="Capstone with a cooler, voice on Windows and AI installed by Cozmo">Projeto integrador com cooler, voz no Windows e IA instalada pelo Cozmo</h3>
+        <ul>
+          <li><b data-en="Cooler by voice:">Cooler por voz:</b> <span data-en="new ESP32 firmware with the cooler on a relay — “Cozmo, lower the temperature” turns the cooler on right away; without Cozmo, the board stays on automatic.">firmware novo do ESP32 com o cooler no relé — “Cozmo, diminuir temperatura” liga o cooler na hora; sem o Cozmo, a placa continua no automático.</span></li>
+          <li><b data-en="Reads the class program:">Lê o programa da aula:</b> <span data-en="with the class's original firmware, it shows the temperature and the cooler state in read-only mode and explains why it can't control it.">com o firmware original da turma, mostra a temperatura e o estado do cooler em modo só leitura e explica por que não pode mandar nele.</span></li>
+          <li><b data-en="A board that doesn't vanish:">Placa que não some:</b> <span data-en="it reconnects by itself when the USB drops, warns when the board stops sending data and logs the reason for each reboot — like a power dip when the cooler turns on.">reconecta sozinho quando a USB cai, avisa quando a placa para de mandar dados e anota num diário o motivo de cada reinício — como a queda de energia quando o cooler liga.</span></li>
+          <li><b data-en="Natural voice on Windows:">Voz natural no Windows:</b> <span data-en="the neural voice (Piper) now works on Windows too.">a voz neural (Piper) agora também funciona no Windows.</span></li>
+          <li><b data-en="AI installed by Cozmo:">IA instalada pelo Cozmo:</b> <span data-en="with Ollama installed, it downloads the model itself and shows the progress — no terminal.">com o Ollama instalado, ele mesmo baixa o modelo e mostra o progresso — sem terminal.</span></li>
+          <li><b data-en="More reliable:">Mais confiável:</b> <span data-en="the camera compares several face crops before deciding who it is, and Cozmo restarts by itself if it closes because of an error.">a câmera compara vários recortes do rosto antes de decidir quem é, e o Cozmo volta sozinho se fechar por erro.</span></li>
+          <li class="fix"><span data-en="An order given in the simulator no longer reaches the real board.">Uma ordem dada no simulador não vai mais para a placa de verdade.</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="note reveal">
+      <div class="note-meta"><span class="v">v0.6</span><time datetime="2026-10-21" data-en="Oct 21, 2026">21/10/2026</time></div>
       <div>
         <h3 data-en="Claude mode, screen reading and a multi-platform agenda">Modo Claude, leitura da tela e agenda multiplataforma</h3>
         <ul>
@@ -384,7 +416,7 @@
       </div>
     </article>
 
-    <article class="note reveal">
+    <article class="note older reveal">
       <div class="note-meta"><span class="v">v0.5</span><time datetime="2026-10-20" data-en="Oct 20, 2026">20/10/2026</time></div>
       <div>
         <h3 data-en="Local AI, neural voice, Claude and owner-only commands">IA local, voz neural, Claude e comandos só do dono</h3>
@@ -400,7 +432,7 @@
       </div>
     </article>
 
-    <article class="note reveal">
+    <article class="note older reveal">
       <div class="note-meta"><span class="v">v0.4</span><time datetime="2026-10-15" data-en="Oct 15, 2026">15/10/2026</time></div>
       <div>
         <h3 data-en="Capstone project: temperature control">Projeto integrador: controle de temperatura</h3>
@@ -460,7 +492,7 @@
   </div>
   <div class="tech">
     <div class="numbers">
-      <div class="num reveal"><b>336</b><span data-en="automated tests, each one born from a real bug">testes automatizados, cada um nascido de um bug de verdade</span></div>
+      <div class="num reveal"><b>429</b><span data-en="automated tests, each one born from a real bug">testes automatizados, cada um nascido de um bug de verdade</span></div>
       <div class="num reveal"><b>0</b><span data-en="paid services required: AI, voice and OCR are local and free">serviços pagos obrigatórios: IA, voz e OCR locais e gratuitos</span></div>
       <div class="num reveal"><b>~30 s</b><span data-en="to summarize a full page with the local AI, on the laptop CPU">para resumir uma página inteira com a IA local, no processador do notebook</span></div>
       <div class="num reveal"><b>2</b><span data-en="systems: Linux and Windows">sistemas: Linux e Windows</span></div>
