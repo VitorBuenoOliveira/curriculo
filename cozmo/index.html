@@ -158,6 +158,40 @@
   .notes .note.older{ display:none; }
   .notes.all .note.older{ display:grid; }
   .notes-toggle{ margin-top:20px; }
+  /* na lista, cada novidade numa linha e no maximo quatro: o resto (e o
+     video) fica na janela da versao */
+  .notes .note{ cursor:pointer; transition:border-color .2s, background .2s; }
+  .notes .note:hover, .notes .note:focus-visible{ border-color:rgba(211,166,86,.55); background:var(--surface-2); outline:none; }
+  .notes .note li{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .notes .note li:nth-child(n+5){ display:none; }
+  .note-open{ display:inline-flex; align-items:center; gap:8px; margin-top:14px; font-size:.84rem; font-weight:700; color:var(--gold); }
+  .note-open svg{ width:16px; height:16px; }
+  .versao{ border:none; padding:0; background:transparent; width:min(1000px, 94vw); max-width:none; max-height:none; color:var(--ink); }
+  .versao::backdrop{ background:rgba(4,8,14,.8); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); }
+  .versao-box{ position:relative; display:grid; grid-template-columns:minmax(0,350px) 1fr; background:var(--surface); border:1px solid rgba(211,166,86,.35); max-height:90vh; overflow:hidden; }
+  .versao-video{ background:#05090f; display:flex; align-items:center; justify-content:center; min-height:0; }
+  .versao-video video{ display:block; width:100%; max-height:90vh; aspect-ratio:460/700; object-fit:contain; background:#05090f; }
+  .versao-texto{ padding:30px 32px 26px; overflow:auto; max-height:90vh; display:flex; flex-direction:column; }
+  .versao-topo{ display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:6px; }
+  .versao-topo .v{ font-family:'Fraunces',serif; font-size:2.2rem; color:var(--gold); line-height:1; }
+  .versao-topo time{ font-size:.82rem; color:var(--muted); font-variant-numeric:tabular-nums; }
+  .versao-texto h3{ font-family:'Manrope',sans-serif; font-size:1.2rem; font-weight:800; color:var(--heading); margin:6px 0 16px; line-height:1.35; }
+  .versao-texto ul{ margin:0; padding:0; list-style:none; display:grid; gap:10px; }
+  .versao-texto li{ position:relative; padding-left:22px; font-size:.93rem; line-height:1.62; }
+  .versao-texto li::before{ content:''; position:absolute; left:2px; top:.62em; width:8px; height:8px; border:2px solid var(--cyan); border-radius:50%; }
+  .versao-texto li.fix::before{ border-color:var(--muted); }
+  .versao-texto li b{ color:var(--heading); font-weight:700; }
+  .versao-nav{ display:flex; justify-content:space-between; gap:10px; margin-top:auto; padding-top:24px; }
+  .versao-nav .btn{ padding:9px 14px; font-size:.84rem; }
+  .versao-nav .btn[disabled]{ visibility:hidden; }
+  .versao-fechar{ position:absolute; top:10px; right:10px; z-index:2; width:38px; height:38px; display:flex; align-items:center; justify-content:center; background:rgba(5,9,15,.75); border:1px solid var(--line); color:var(--heading); cursor:pointer; font-size:1.3rem; line-height:1; }
+  .versao-fechar:hover{ border-color:var(--gold); color:var(--gold); }
+  @media (max-width:760px){
+    .versao{ width:100vw; }
+    .versao-box{ grid-template-columns:1fr; max-height:100dvh; overflow:auto; }
+    .versao-video video{ max-height:55dvh; }
+    .versao-texto{ max-height:none; overflow:visible; padding:22px 20px 20px; }
+  }
   .legend{ display:flex; gap:18px; flex-wrap:wrap; font-size:.8rem; color:var(--muted); margin:-18px 0 26px; }
   .legend span{ display:inline-flex; align-items:center; gap:8px; }
   .legend i{ width:8px; height:8px; border:2px solid var(--cyan); border-radius:50%; }
@@ -213,12 +247,12 @@
     <h1>Cozmo <em data-en="Assistant">Assistente</em></h1>
     <p class="lead" data-en="A desktop assistant built in Python that lives in a corner of the screen. It talks by voice and text, controls the computer, builds my college agenda from several platforms, reads and summarizes the screen, passes questions on to Claude and controls the temperature of my capstone project. The goal: to become an agent for my whole routine.">Um assistente de mesa feito em Python que mora num cantinho da tela. Conversa por voz e texto, mexe no computador, monta a agenda da faculdade a partir de várias plataformas, lê e resume a tela, passa perguntas pro Claude e controla a temperatura do meu projeto integrador. O objetivo: virar um agente para a minha rotina inteira.</p>
     <div class="hero-cta">
-      <a class="btn btn-primary" href="#video" data-play><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg><span data-en="Watch the demo (1.5 min)">Assistir à demonstração (1 min e meio)</span></a>
+      <a class="btn btn-primary" href="#video" data-play><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg><span data-en="Watch the demo (under 2 min)">Assistir à demonstração (menos de 2 min)</span></a>
       <a class="btn btn-ghost" href="#patch-notes" data-en="See the patch notes">Ver as patch notes</a>
     </div>
     <div class="hero-stats">
-      <div><b>458</b><span data-en="automated tests">testes automatizados</span></div>
-      <div><b>9</b><span data-en="versions in one month">versões em um mês</span></div>
+      <div><b>595</b><span data-en="automated tests">testes automatizados</span></div>
+      <div><b>10</b><span data-en="versions in five weeks">versões em cinco semanas</span></div>
       <div><b>100%</b><span data-en="local AI, voice, OCR and face recognition">IA, voz, OCR e rosto no próprio PC</span></div>
       <div><b>6+</b><span data-en="agenda platforms (Brightspace, Classroom, Moodle…)">plataformas de agenda (Brightspace, Classroom, Moodle…)</span></div>
     </div>
@@ -240,7 +274,7 @@
     <div class="demo-side">
       <h3 data-en="Chapters">Capítulos</h3>
       <div class="chapters" id="chapters"></div>
-      <p class="demo-note" data-en="What appears in the video: the mascot in the corner of the screen, the daily briefing, voice commands, the agenda gathering three platforms, Claude mode, screen summarization, the capstone temperature control (in the simulator) and the 3D face floating over the desktop.">O que aparece no vídeo: o mascote no canto da tela, o resumo do dia, comandos de voz, a agenda juntando três plataformas, o modo Claude, o resumo da tela, o controle de temperatura do projeto integrador (no simulador) e o rosto em 3D flutuando sobre a área de trabalho.</p>
+      <p class="demo-note" data-en="What appears in the video: the mascot in the corner of the screen, the daily briefing, voice commands, the agenda gathering three platforms, Claude mode, screen summarization, the capstone temperature control (in the simulator), the 3D face floating over the desktop and customization: accessories, colors and themes.">O que aparece no vídeo: o mascote no canto da tela, o resumo do dia, comandos de voz, a agenda juntando três plataformas, o modo Claude, o resumo da tela, o controle de temperatura do projeto integrador (no simulador), o rosto em 3D flutuando sobre a área de trabalho e a personalização: acessórios, cores e temas.</p>
     </div>
   </div>
 </section>
@@ -369,8 +403,26 @@
   </div>
   <div class="notes" id="notes">
 
-    <article class="note latest reveal">
-      <div class="note-meta"><span class="v">v0.9</span><time datetime="2026-10-23" data-en="Oct 23, 2026">23/10/2026</time><span class="tag" data-en="Latest">Atual</span></div>
+    <article class="note latest reveal" id="v0-10" data-video="versoes/v0.10">
+      <div class="note-meta"><span class="v">v0.10</span><time datetime="2026-10-27" data-en="Oct 27, 2026">27/10/2026</time><span class="tag" data-en="Latest">Atual</span></div>
+      <div>
+        <h3 data-en="Customization, a new interface and a Brightspace that doesn't fail silently">Personalização, interface nova e um Brightspace que não falha calado</h3>
+        <ul>
+          <li><b data-en="Accessories:">Acessórios:</b> <span data-en="glasses, sunglasses, a bow, a top hat, a crown and a bow tie, by voice (“put on the bow”) or in Settings. On the 2D faces they are drawn in LED, pixel by pixel; on the 3D robot they are real objects attached to the head that turn with it.">óculos, óculos escuros, laço, cartola, coroa e gravata-borboleta, por voz (“põe o laço”) ou em Ajustes. Nos rostos 2D são desenhados em LED, pixel a pixel; no robô 3D são objetos presos na cabeça, que viram junto com ela.</span></li>
+          <li><b data-en="The 3D robot's color:">Cor do robô 3D:</b> <span data-en="ten colors — the plastic changes, the light and the shine stay white.">dez cores — o plástico muda, a luz e o brilho continuam brancos.</span></li>
+          <li><b data-en="A new interface:">Interface nova:</b> <span data-en="icon tabs, a card for each one (news with source and time, deals with a discount badge, weather with the sky drawn, screen time in bars) and Settings in sections, with switches and a confirmation of every change.">abas de ícone, um cartão para cada uma (notícia com fonte e hora, promoção com selo de desconto, clima com o céu desenhado, tempo de tela em barras) e Ajustes em seções, com interruptores e a confirmação de cada mudança.</span></li>
+          <li><b data-en="Accessibility:">Acessibilidade:</b> <span data-en="light and dark themes, accent color, text color and size, high contrast and reduced motion — also by voice (“bigger text”, “light mode”). Text colors are only offered with 7:1 contrast.">tema claro e escuro, cor de destaque, cor e tamanho da letra, alto contraste e reduzir movimento — também por voz (“aumenta a letra”, “modo claro”). Só aparecem cores de letra com contraste de 7:1.</span></li>
+          <li><b data-en="Brightspace that doesn't fail silently:">Brightspace que não falha calado:</b> <span data-en="reads through the official API with a fallback, warns when a reading fails instead of saying “nothing due”, checks the status of each quiz, and the morning greeting waits for the reading.">leitura pela API oficial com plano B, avisa quando a leitura falha em vez de dizer “nada pendente”, confere o status de cada questionário, e o bom dia espera a leitura terminar.</span></li>
+          <li><b data-en="Each assignment, already routed:">Cada atividade já encaminhada:</b> <span data-en="“want me to open MARS?” on the Assembly list, a slide outline from Claude for a presentation, and rules I teach by voice (“when it's Computer Architecture, open MARS”).">“quer que eu abra o MARS?” na lista de Assembly, roteiro de slides pelo Claude na apresentação, e regras que eu ensino por voz (“quando for Arquitetura de Computadores, abre o MARS”).</span></li>
+          <li><b data-en="Sonnet by default, free local AI as backup:">Sonnet por padrão e IA local de reserva:</b> <span data-en="Claude uses Sonnet (lighter on the plan's limit), and the local AI takes over for free when Claude isn't available.">o Claude usa o Sonnet (gasta menos do limite), e a IA local assume de graça quando o Claude não der.</span></li>
+          <li class="fix"><span data-en="The demo video flickered (a blink fit in a single frame) — now each frame blends four instants, like a camera shutter; the stretched 3D head went past the top of the window when jumping.">O vídeo de demonstração piscava (uma piscada cabia num quadro só) — agora cada quadro mistura quatro instantes, como o obturador de uma câmera; a cabeça 3D esticada passava do teto da janela no pulo.</span></li>
+        </ul>
+        <span class="note-open"><span data-en="See everything and the video">Ver tudo e o vídeo</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+    </article>
+
+    <article class="note reveal" id="v0-9" data-video="versoes/v0.9">
+      <div class="note-meta"><span class="v">v0.9</span><time datetime="2026-10-23" data-en="Oct 23, 2026">23/10/2026</time></div>
       <div>
         <h3 data-en="Vocabulary from real use and more reliable face recognition">Vocabulário do uso real e reconhecimento mais confiável</h3>
         <ul>
@@ -381,10 +433,11 @@
           <li><b data-en="New demo video:">Vídeo novo:</b> <span data-en="with the 3D face floating over the desktop.">com o rosto em 3D flutuando sobre a área de trabalho.</span></li>
           <li class="fix"><span data-en="Answering your own name to “who are you?” created a visitor with the owner's face; the face skins inspired by famous characters got names of their own.">Responder o próprio nome ao “quem é você?” criava uma visita com o rosto do dono; as skins inspiradas em personagens famosos ganharam nomes próprios.</span></li>
         </ul>
+        <span class="note-open"><span data-en="See everything and the video">Ver tudo e o vídeo</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </div>
     </article>
 
-    <article class="note reveal">
+    <article class="note reveal" id="v0-8" data-video="versoes/v0.8">
       <div class="note-meta"><span class="v">v0.8</span><time datetime="2026-10-22" data-en="Oct 22, 2026">22/10/2026</time></div>
       <div>
         <h3 data-en="3D face and augmented reality">Rosto em 3D e realidade aumentada</h3>
@@ -397,10 +450,11 @@
           <li><b data-en="Reacts to what happens:">Ligado ao que acontece:</b> <span data-en="three dots while the AI thinks, the screen switches off like an old TV when it sleeps, it sweats when the board heats up and the glass frosts over in the cold.">três pontinhos enquanto a IA pensa, a tela apaga como TV antiga quando ele dorme, ele sua quando a placa esquenta e o vidro congela no frio.</span></li>
           <li class="fix"><span data-en="With the transparent window the classic face disappeared and the chat lost the keyboard; slow-loading tabs could stay empty.">Com a janela transparente o rosto clássico sumia e o chat ficava sem teclado; abas que carregavam devagar podiam ficar vazias.</span></li>
         </ul>
+        <span class="note-open"><span data-en="See everything and the video">Ver tudo e o vídeo</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </div>
     </article>
 
-    <article class="note reveal">
+    <article class="note reveal" id="v0-7" data-video="versoes/v0.7">
       <div class="note-meta"><span class="v">v0.7</span><time datetime="2026-10-21" data-en="Oct 21, 2026">21/10/2026</time></div>
       <div>
         <h3 data-en="Capstone with a cooler, voice on Windows and AI installed by Cozmo">Projeto integrador com cooler, voz no Windows e IA instalada pelo Cozmo</h3>
@@ -413,10 +467,11 @@
           <li><b data-en="More reliable:">Mais confiável:</b> <span data-en="the camera compares several face crops before deciding who it is, and Cozmo restarts by itself if it closes because of an error.">a câmera compara vários recortes do rosto antes de decidir quem é, e o Cozmo volta sozinho se fechar por erro.</span></li>
           <li class="fix"><span data-en="An order given in the simulator no longer reaches the real board.">Uma ordem dada no simulador não vai mais para a placa de verdade.</span></li>
         </ul>
+        <span class="note-open"><span data-en="See everything and the video">Ver tudo e o vídeo</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </div>
     </article>
 
-    <article class="note older reveal">
+    <article class="note older reveal" id="v0-6" data-video="versoes/v0.6">
       <div class="note-meta"><span class="v">v0.6</span><time datetime="2026-10-21" data-en="Oct 21, 2026">21/10/2026</time></div>
       <div>
         <h3 data-en="Claude mode, screen reading and a multi-platform agenda">Modo Claude, leitura da tela e agenda multiplataforma</h3>
@@ -428,10 +483,11 @@
           <li><b data-en="To share:">Para compartilhar:</b> <span data-en="an installation package with no personal data (checked before zipping) and a usage guide.">pacote de instalação sem nenhum dado pessoal (conferido antes de compactar) e guia de uso.</span></li>
           <li class="fix"><span data-en="The neural voice could go silent depending on the audio player; reminders like “remind me about the meeting” were saved wrong.">A voz neural podia ficar muda dependendo do tocador de áudio; lembretes como “me lembra da reunião” eram salvos errado.</span></li>
         </ul>
+        <span class="note-open"><span data-en="See everything and the video">Ver tudo e o vídeo</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </div>
     </article>
 
-    <article class="note older reveal">
+    <article class="note older reveal" id="v0-5" data-video="versoes/v0.5">
       <div class="note-meta"><span class="v">v0.5</span><time datetime="2026-10-20" data-en="Oct 20, 2026">20/10/2026</time></div>
       <div>
         <h3 data-en="Local AI, neural voice, Claude and owner-only commands">IA local, voz neural, Claude e comandos só do dono</h3>
@@ -444,10 +500,11 @@
           <li><b data-en="Phone from anywhere:">Celular de qualquer lugar:</b> <span data-en="Tailscale with HTTPS, which also unlocks the phone's microphone.">Tailscale com HTTPS, o que também libera o microfone do celular.</span></li>
           <li><b data-en="Temperature:">Temperatura:</b> <span data-en="PI controller with anti-windup, a discreet “temperature mode” and hourly weather tips (heat, dry air, rain).">controlador PI com anti-windup, “modo temperatura” discreto e avisos do clima de hora em hora (calor, ar seco, chuva).</span></li>
         </ul>
+        <span class="note-open"><span data-en="See everything and the video">Ver tudo e o vídeo</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </div>
     </article>
 
-    <article class="note older reveal">
+    <article class="note older reveal" id="v0-4" data-video="versoes/v0.4">
       <div class="note-meta"><span class="v">v0.4</span><time datetime="2026-10-15" data-en="Oct 15, 2026">15/10/2026</time></div>
       <div>
         <h3 data-en="Capstone project: temperature control">Projeto integrador: controle de temperatura</h3>
@@ -456,10 +513,11 @@
           <li><span data-en="Simulator with a first-order thermal model and the same controller, to test without the board.">Simulador com modelo térmico de primeira ordem e o mesmo controlador, para testar sem a placa.</span></li>
           <li><span data-en="Animated fire when it's hot, an ice cube when it's cold, and a chart of temperature × target × servo.">Foguinho animado no calor, cubo de gelo no frio e gráfico de temperatura × alvo × servo.</span></li>
         </ul>
+        <span class="note-open"><span data-en="See everything and the video">Ver tudo e o vídeo</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </div>
     </article>
 
-    <article class="note older reveal">
+    <article class="note older reveal" id="v0-3" data-video="versoes/v0.3">
       <div class="note-meta"><span class="v">v0.3</span><time datetime="2026-09-28" data-en="Sep 28, 2026">28/09/2026</time></div>
       <div>
         <h3 data-en="College, PC commands and “Hey, Cozmo”">Faculdade, comandos no PC e “Ei, Cozmo”</h3>
@@ -468,10 +526,11 @@
           <li><span data-en="Opens apps and sites, searches, types with a virtual keyboard (respecting the keyboard layout and accents) and triggers shortcuts, chained in one sentence.">Abre programas e sites, pesquisa, digita com teclado virtual (respeitando o layout e os acentos) e aciona atalhos, encadeados numa frase só.</span></li>
           <li><span data-en="“Hey, Cozmo”: offline wake word with Vosk.">“Ei, Cozmo”: palavra de ativação offline com o Vosk.</span></li>
         </ul>
+        <span class="note-open"><span data-en="See everything and the video">Ver tudo e o vídeo</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </div>
     </article>
 
-    <article class="note older reveal">
+    <article class="note older reveal" id="v0-2" data-video="versoes/v0.2">
       <div class="note-meta"><span class="v">v0.2</span><time datetime="2026-09-25" data-en="Sep 25, 2026">25/09/2026</time></div>
       <div>
         <h3 data-en="Linux, vision and memory">Linux, visão e memória</h3>
@@ -481,10 +540,11 @@
           <li><span data-en="Memory between sessions, time per activity and tabs for news, game deals, weather and “your day”.">Memória entre sessões, tempo por atividade e abas de notícias, promoções de jogos, clima e “seu dia”.</span></li>
           <li><span data-en="Starts conversations on its own — without becoming a nuisance.">Puxa assunto sozinho — sem virar praga.</span></li>
         </ul>
+        <span class="note-open"><span data-en="See everything and the video">Ver tudo e o vídeo</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </div>
     </article>
 
-    <article class="note older reveal">
+    <article class="note older reveal" id="v0-1" data-video="versoes/v0.1">
       <div class="note-meta"><span class="v">v0.1</span><time datetime="2026-09-22" data-en="Sep 22, 2026">22/09/2026</time></div>
       <div>
         <h3 data-en="Cozmo is born">Nasce o Cozmo</h3>
@@ -492,10 +552,25 @@
           <li><span data-en="Procedural face with emotions, mascot in the corner of the screen, sounds and voice.">Rosto procedural com emoções, mascote no canto da tela, sons e voz.</span></li>
           <li><span data-en="Phone version over the home Wi-Fi.">Versão no celular pela rede Wi-Fi.</span></li>
         </ul>
+        <span class="note-open"><span data-en="See everything and the video">Ver tudo e o vídeo</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </div>
     </article>
   </div>
   <button type="button" class="btn btn-ghost notes-toggle" id="notes-toggle" data-en="Show older versions">Ver versões anteriores</button>
+  <dialog class="versao" id="versao" aria-labelledby="versao-v">
+    <div class="versao-box">
+      <button type="button" class="versao-fechar" id="versao-fechar" aria-label="Fechar">×</button>
+      <div class="versao-video"><video id="versao-video" muted loop playsinline controls preload="none"></video></div>
+      <div class="versao-texto">
+        <div class="versao-topo"><span class="v" id="versao-v"></span><time id="versao-data"></time></div>
+        <div id="versao-notas"></div>
+        <div class="versao-nav">
+          <button type="button" class="btn btn-ghost" id="versao-ant"></button>
+          <button type="button" class="btn btn-ghost" id="versao-prox"></button>
+        </div>
+      </div>
+    </div>
+  </dialog>
 </section>
 
 <!-- ================= BASTIDORES ================= -->
@@ -507,7 +582,7 @@
   </div>
   <div class="tech">
     <div class="numbers">
-      <div class="num reveal"><b>458</b><span data-en="automated tests, each one born from a real bug">testes automatizados, cada um nascido de um bug de verdade</span></div>
+      <div class="num reveal"><b>595</b><span data-en="automated tests, each one born from a real bug">testes automatizados, cada um nascido de um bug de verdade</span></div>
       <div class="num reveal"><b>0</b><span data-en="paid services required: AI, voice and OCR are local and free">serviços pagos obrigatórios: IA, voz e OCR locais e gratuitos</span></div>
       <div class="num reveal"><b>~30 s</b><span data-en="to summarize a full page with the local AI, on the laptop CPU">para resumir uma página inteira com a IA local, no processador do notebook</span></div>
       <div class="num reveal"><b>2</b><span data-en="systems: Linux and Windows">sistemas: Linux e Windows</span></div>
@@ -546,9 +621,10 @@
     { t:46.6, pt:'Lê e resume a tela',             en:'Reads and summarizes the screen' },
     { t:56.4, pt:'Projeto integrador: temperatura', en:'Capstone: temperature control' },
     { t:68.2, pt:'Rosto com emoções',              en:'Expressive face' },
-    { t:72.5, pt:'Rosto 3D em realidade aumentada', en:'3D face in augmented reality' }
+    { t:72.5, pt:'Rosto 3D em realidade aumentada', en:'3D face in augmented reality' },
+    { t:93.8, pt:'Personalização e temas',         en:'Customization and themes' }
   ];
-  var DURACAO = 93.8;
+  var DURACAO = 108.7;
   var video = document.getElementById('demo-video');
   var box = document.getElementById('chapters');
   var lang = 'pt';
@@ -614,6 +690,68 @@
     tog.textContent = lang === 'en' ? tog.dataset.en : tog.dataset.pt;
   });
 
+  /* ---------- cada versao: tudo dela e o video, numa janela ---------- */
+  var dlg = document.getElementById('versao'), dv = document.getElementById('versao-video');
+  var artigos = [].slice.call(notes.querySelectorAll('.note'));
+  var aberta = -1;
+  function traduzir(raiz){
+    raiz.querySelectorAll('[data-en]').forEach(function(el){
+      if(el.dataset.pt === undefined) el.dataset.pt = el.textContent;
+      el.textContent = lang === 'en' ? el.dataset.en : el.dataset.pt;
+    });
+  }
+  function rotuloNav(btn, i, seta){
+    var a = artigos[i];
+    btn.disabled = !a;
+    if(a){ var v = a.querySelector('.v').textContent; btn.textContent = seta === '‹' ? '‹ ' + v : v + ' ›'; }
+  }
+  function abrirVersao(i){
+    var a = artigos[i];
+    if(!a) return;
+    aberta = i;
+    document.getElementById('versao-v').textContent = a.querySelector('.v').textContent;
+    var t = a.querySelector('time'), dt = document.getElementById('versao-data');
+    dt.setAttribute('datetime', t.getAttribute('datetime'));
+    dt.dataset.pt = t.dataset.pt || t.textContent; dt.dataset.en = t.dataset.en;
+    var corpo = document.getElementById('versao-notas');
+    corpo.innerHTML = '';
+    corpo.appendChild(a.querySelector('h3').cloneNode(true));
+    corpo.appendChild(a.querySelector('ul').cloneNode(true));
+    traduzir(dlg);
+    rotuloNav(document.getElementById('versao-ant'), i + 1, '‹');
+    rotuloNav(document.getElementById('versao-prox'), i - 1, '›');
+    var base = a.dataset.video;
+    dv.poster = base + '.jpg';
+    dv.src = base + '.webm';
+    if(!reduce){ var p = dv.play(); if(p && p.catch) p.catch(function(){}); }
+    if(!dlg.open){ dlg.showModal(); }
+    document.querySelector('.versao-texto').scrollTop = 0;
+    try { history.replaceState(null, '', '#' + a.id); } catch(e){}
+  }
+  function fecharVersao(){
+    dv.pause(); dv.removeAttribute('src'); dv.load();
+    if(dlg.open) dlg.close();
+    try { history.replaceState(null, '', location.pathname + location.search + '#patch-notes'); } catch(e){}
+    if(artigos[aberta]) artigos[aberta].focus({ preventScroll:true });
+  }
+  artigos.forEach(function(a, i){
+    a.tabIndex = 0;
+    a.setAttribute('role', 'button');
+    a.addEventListener('click', function(){ abrirVersao(i); });
+    a.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); abrirVersao(i); }
+    });
+  });
+  document.getElementById('versao-fechar').addEventListener('click', fecharVersao);
+  document.getElementById('versao-ant').addEventListener('click', function(){ abrirVersao(aberta + 1); });
+  document.getElementById('versao-prox').addEventListener('click', function(){ abrirVersao(aberta - 1); });
+  dlg.addEventListener('click', function(e){ if(e.target === dlg) fecharVersao(); });
+  dlg.addEventListener('cancel', function(e){ e.preventDefault(); fecharVersao(); });
+  dlg.addEventListener('keydown', function(e){
+    if(e.key === 'ArrowLeft' && aberta + 1 < artigos.length) abrirVersao(aberta + 1);
+    if(e.key === 'ArrowRight' && aberta > 0) abrirVersao(aberta - 1);
+  });
+
   /* ---------- idioma (mesma chave do currículo) ---------- */
   var LANG_KEY = 'cv-lang';
   try { lang = localStorage.getItem(LANG_KEY) || 'pt'; } catch(e){}
@@ -630,6 +768,7 @@
     document.documentElement.lang = l === 'en' ? 'en' : 'pt-BR';
     document.title = l === 'en' ? 'Cozmo Assistant — Project' : 'Cozmo Assistente — Projeto';
     video.setAttribute('aria-label', l === 'en' ? 'Cozmo Assistant demo video' : 'Vídeo de demonstração do Cozmo Assistente');
+    document.getElementById('versao-fechar').setAttribute('aria-label', l === 'en' ? 'Close' : 'Fechar');
     try { localStorage.setItem(LANG_KEY, l); } catch(e){}
     buildChapters();
   }
@@ -669,6 +808,12 @@
   buildChapters();
   if(lang === 'en') setLang('en');
   onScroll();
+  /* link direto pra uma versao (#v0-10) abre a janela dela */
+  var pedida = artigos.map(function(a){ return '#' + a.id; }).indexOf(location.hash);
+  if(pedida >= 0){
+    if(artigos[pedida].classList.contains('older')) tog.click();
+    abrirVersao(pedida);
+  }
 })();
 </script>
 </body>
