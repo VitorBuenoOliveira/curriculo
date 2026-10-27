@@ -1,0 +1,4 @@
+{
+ "assinado": "{\n \"abrir\": \"exe\",\n \"arquivo\": \"cozmo-v0.11.bin\",\n \"data\": \"2026-10-27\",\n \"formato\": 1,\n \"kdf\": {\n  \"iteracoes\": 600000,\n  \"nome\": \"pbkdf2-sha256\",\n  \"sal\": \"0qfcXXk2F0DvQTKIu3FDvg==\"\n },\n \"notas\": \"S0658U2kryNsz/+5oIY7PMRtT486su/UrQOAZPCRJ5cpbDc2+7oQd54keIDwWt2Y6iW8Vm5C/0SrX0pfwjXmCn5xtpmpLwd2ufHeA+q2Gh1/l3Kzl8vrQnmfIw==\",\n \"programa\": \"cozmo\",\n \"sha256\": \"ab522ef1350a8e1fce1057dbf68d486de09ab1aa4e7ebfe71a09e334e4fff9d0\",\n \"tamanho\": 73333831,\n \"vagas\": [\n  {\n   \"chave\": \"ccfww+nZ8BwNNJ2HuT7PCo1NJv7lJ20HaHMGJ2ajtV0VbZr++ol6rwxb96WVGQTx6+kBM9GaDuKA/1VU\",\n   \"id\": \"edeed4cc24f64d76\"\n  }\n ],\n \"versao\": \"v0.11\"\n}",
+ "assinatura": "oDQSBqyDvkI7a2yH4wJciOw5JK13I5MfMEF16/F2AthsUU7tHJcy5PngEynMy1qRPIdr4Kq2RvIMWWgO1ZqTBg=="
+}

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Cozmo para convidados</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500&display=swap" rel="stylesheet">
+<style>
+  /* Gerada pelo ferramentas/liberar.py. Tudo acontece neste navegador: o
+     codigo nao sai daqui, so abre a vaga do manifesto e destranca o pacote. */
+  :root{
+    --bg:#0a1420; --card:#121f31; --campo:#0b1624; --linha:rgba(255,255,255,.12);
+    --titulo:#eef3f8; --texto:#c6d2de; --fraco:#8b9bb0; --ouro:#d3a656; --sobre-ouro:#0a1420;
+    --ok:#5fd39a; --erro:#ff8a8a;
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      --bg:#f4f1ea; --card:#ffffff; --campo:#f7f5f0; --linha:rgba(10,20,32,.14);
+      --titulo:#0a1420; --texto:#2b3a4a; --fraco:#5b6878; --ouro:#8a5f12; --sobre-ouro:#ffffff;
+      --ok:#17784a; --erro:#b42323;
+    }
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; min-height:100vh; background:var(--bg); color:var(--texto); font-family:'Manrope',system-ui,sans-serif;
+        display:flex; align-items:flex-start; justify-content:center; padding:56px 16px; -webkit-font-smoothing:antialiased; }
+  main{ width:100%; max-width:520px; }
+  .marca{ color:var(--ouro); font-size:.76rem; letter-spacing:.14em; font-weight:800; text-transform:uppercase; }
+  h1{ font-family:'Fraunces',serif; font-weight:500; color:var(--titulo); font-size:clamp(2rem,7vw,2.6rem); line-height:1.08; margin:10px 0 10px; }
+  .sub{ margin:0 0 28px; line-height:1.55; }
+  .card{ background:var(--card); border:1px solid var(--linha); border-radius:16px; padding:22px; }
+  label{ display:block; font-weight:700; color:var(--titulo); font-size:.9rem; margin-bottom:8px; }
+  .linha{ display:flex; gap:10px; }
+  input{ flex:1; min-width:0; font:inherit; font-size:1.02rem; color:var(--titulo); background:var(--campo);
+         border:1px solid var(--linha); border-radius:10px; padding:12px 14px; letter-spacing:.02em; }
+  input:focus{ outline:2px solid var(--ouro); outline-offset:1px; }
+  button, .baixar{ font:inherit; font-weight:800; font-size:.95rem; border:0; border-radius:10px; padding:12px 18px; cursor:pointer;
+           background:var(--ouro); color:var(--sobre-ouro); text-decoration:none; display:inline-flex; align-items:center; gap:8px; }
+  button:disabled{ opacity:.55; cursor:progress; }
+  :focus-visible{ outline:2px solid var(--ouro); outline-offset:3px; }
+  .dica{ font-size:.82rem; color:var(--fraco); margin:10px 0 0; }
+  #situacao{ margin-top:16px; min-height:1.4em; font-size:.92rem; }
+  #situacao.erro{ color:var(--erro); font-weight:600; }
+  .barra{ height:6px; border-radius:3px; background:var(--linha); overflow:hidden; margin-top:10px; display:none; }
+  .barra i{ display:block; height:100%; width:0; background:var(--ouro); transition:width .2s; }
+  #pronto{ display:none; margin-top:22px; }
+  #pronto h2{ font-family:'Fraunces',serif; font-weight:500; color:var(--titulo); font-size:1.5rem; margin:0 0 4px; }
+  .selo{ display:inline-flex; align-items:center; gap:6px; color:var(--ok); font-weight:700; font-size:.84rem; }
+  .selo svg{ width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:2.4; }
+  ul.notas{ margin:12px 0 18px; padding-left:20px; line-height:1.55; }
+  ol.passos{ margin:18px 0 0; padding-left:20px; line-height:1.6; }
+  ol.passos b{ color:var(--titulo); }
+  code{ font-family:ui-monospace,monospace; font-size:.92em; background:var(--campo); border:1px solid var(--linha); border-radius:6px; padding:1px 6px; }
+  footer{ margin-top:28px; font-size:.78rem; color:var(--fraco); line-height:1.55; }
+  @media (max-width:420px){ .linha{ flex-direction:column; } button{ justify-content:center; } }
+</style>
+</head>
+<body>
+<main>
+  <div class="marca">Cozmo · versão de teste</div>
+  <h1>Baixar o Cozmo</h1>
+  <p class="sub">Esta página é só pra quem recebeu um código de convidado. Ele abre a versão liberada agora.</p>
+
+  <div class="card">
+    <form id="form" autocomplete="off">
+      <label for="codigo">Seu código</label>
+      <div class="linha">
+        <input id="codigo" name="codigo" placeholder="palavra-palavra-palavra-palavra" spellcheck="false"
+               autocapitalize="none" autocorrect="off" required>
+        <button id="abrir" type="submit">Abrir</button>
+      </div>
+      <p class="dica">O código não sai deste navegador: ele só destranca o arquivo aqui mesmo.</p>
+    </form>
+    <div id="situacao" role="status" aria-live="polite"></div>
+    <div class="barra" id="barra"><i></i></div>
+
+    <section id="pronto">
+      <span class="selo"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span id="selo-texto">Selo conferido</span></span>
+      <h2 id="titulo-versao"></h2>
+      <ul class="notas" id="notas"></ul>
+      <a class="baixar" id="baixar" href="#">Baixar de novo</a>
+      <ol class="passos" id="passos"></ol>
+    </section>
+  </div>
+
+  <footer>
+    Projeto pessoal em teste. © 2026 Vitor Bueno. Todos os direitos reservados: uso pessoal pra teste,
+    sem copiar, modificar, redistribuir ou descompilar.
+  </footer>
+</main>
+
+<script>
+const CHAVE_PUBLICA = "5Ru1BmUlnH/NHWNxuRfaOGvfdnPAbwZJ4D0erhEUqzg=";
+const enc = new TextEncoder();
+const de64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+const hex = b => Array.from(b, x => x.toString(16).padStart(2, "0")).join("");
+const $ = id => document.getElementById(id);
+
+class Erro extends Error { constructor(motivo){ super(motivo); this.motivo = motivo; } }
+const TEXTOS = {
+  rede: "Não consegui falar com o site. Confere a internet e tenta de novo.",
+  convite: "Esse código não abre a versão liberada. Confere com quem te mandou.",
+  selo: "O arquivo do site não tem o selo certo. Não instale; avise quem te mandou.",
+  pacote: "O arquivo baixado não confere com o selo. Não instale; tente de novo mais tarde.",
+  navegador: "Este navegador não consegue abrir com segurança. Tenta no Chrome, Edge ou Firefox atualizados.",
+};
+
+function normalizar(c){
+  const s = c.normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  return (s.match(/[a-z0-9]+/g) || []).join("-");
+}
+function situacao(texto, erro){
+  $("situacao").textContent = texto;
+  $("situacao").className = erro ? "erro" : "";
+}
+function barra(fracao){
+  $("barra").style.display = fracao == null ? "none" : "block";
+  $("barra").firstElementChild.style.width = Math.round((fracao || 0) * 100) + "%";
+}
+async function decifrar(chave, blob, aad){
+  const k = await crypto.subtle.importKey("raw", chave, "AES-GCM", false, ["decrypt"]);
+  try {
+    return new Uint8Array(await crypto.subtle.decrypt({name: "AES-GCM", iv: blob.slice(0, 12), additionalData: aad}, k, blob.slice(12)));
+  } catch (e) { throw new Erro("pacote"); }
+}
+async function conferirSelo(publicado){
+  try {
+    const k = await crypto.subtle.importKey("raw", de64(CHAVE_PUBLICA), {name: "Ed25519"}, false, ["verify"]);
+    const ok = await crypto.subtle.verify({name: "Ed25519"}, k, de64(publicado.assinatura), enc.encode(publicado.assinado));
+    if (!ok) throw new Erro("selo");
+    return true;
+  } catch (e) {
+    if (e instanceof Erro) throw e;
+    return false;                    // navegador sem Ed25519: o tamanho e o sha256 ainda conferem
+  }
+}
+async function baixar(arquivo, tamanho){
+  const r = await fetch(arquivo, {cache: "no-store"});
+  if (!r.ok || !r.body) throw new Erro("rede");
+  const leitor = r.body.getReader();
+  const dados = new Uint8Array(tamanho);
+  let lido = 0;
+  for (;;) {
+    const {done, value} = await leitor.read();
+    if (done) break;
+    if (lido + value.length > tamanho) throw new Erro("pacote");
+    dados.set(value, lido);
+    lido += value.length;
+    barra(lido / tamanho);
+    situacao("Baixando… " + Math.round(lido / tamanho * 100) + "%");
+  }
+  if (lido !== tamanho) throw new Erro("pacote");
+  return dados;
+}
+
+async function abrir(codigo){
+  if (!(window.crypto && crypto.subtle)) throw new Erro("navegador");
+  situacao("Conferindo o código…");
+  let publicado;
+  try {
+    const r = await fetch("manifesto.json", {cache: "no-store"});
+    if (!r.ok) throw new Error();
+    publicado = await r.json();
+  } catch (e) { throw new Erro("rede"); }
+  const comSelo = await conferirSelo(publicado);
+  const m = JSON.parse(publicado.assinado);
+
+  const base = await crypto.subtle.importKey("raw", enc.encode(normalizar(codigo)), "PBKDF2", false, ["deriveBits"]);
+  const bits = new Uint8Array(await crypto.subtle.deriveBits(
+    {name: "PBKDF2", hash: "SHA-256", salt: de64(m.kdf.sal), iterations: m.kdf.iteracoes}, base, 320));
+  const vaga = m.vagas.find(v => v.id === hex(bits.slice(32)));
+  if (!vaga) throw new Erro("convite");
+  const chave = await decifrar(bits.slice(0, 32), de64(vaga.chave), enc.encode("cozmo-vaga"));
+  const notas = JSON.parse(new TextDecoder().decode(
+    await decifrar(chave, de64(m.notas), enc.encode("cozmo-notas:" + m.versao))));
+
+  const dados = await baixar(m.arquivo, m.tamanho);
+  situacao("Conferindo o selo…");
+  if (hex(new Uint8Array(await crypto.subtle.digest("SHA-256", dados))) !== m.sha256) throw new Erro("pacote");
+  const zip = await decifrar(chave, dados, enc.encode("cozmo-pacote:" + m.versao));
+  return {m, notas, zip, comSelo};
+}
+
+function mostrar({m, notas, zip, comSelo}){
+  const nome = "Cozmo-" + m.versao + ".zip";
+  const link = $("baixar");
+  link.href = URL.createObjectURL(new Blob([zip], {type: "application/zip"}));
+  link.download = nome;
+  link.textContent = "Baixar " + nome + " de novo";
+  $("titulo-versao").textContent = "Cozmo " + m.versao;
+  $("selo-texto").textContent = comSelo ? "Selo conferido" : "Arquivo conferido";
+  $("notas").replaceChildren(...notas.map(n => Object.assign(document.createElement("li"), {textContent: n})));
+  const passos = m.abrir === "exe"
+    ? ["<b>Descompacte</b> o " + nome + " (botão direito → Extrair tudo).",
+       "Abra a pasta <b>Cozmo</b> e dê dois cliques em <code>Cozmo.exe</code>."]
+    : ["<b>Descompacte</b> o " + nome + " (botão direito → Extrair tudo).",
+       "No Windows, dois cliques em <code>rodar.bat</code> (precisa do Python 3.12). No Linux, <code>./rodar.sh</code>."];
+  passos.push("Na primeira vez ele pede <b>este mesmo código</b>: é com ele que chegam as versões novas. Atualizar é sempre com o seu clique.");
+  $("passos").innerHTML = passos.map(p => "<li>" + p + "</li>").join("");
+  $("pronto").style.display = "block";
+  situacao("Pronto! O download começou.");
+  barra(null);
+  link.click();
+}
+
+$("form").addEventListener("submit", async ev => {
+  ev.preventDefault();
+  const codigo = $("codigo").value;
+  if (!normalizar(codigo)) return;
+  $("abrir").disabled = true;
+  $("pronto").style.display = "none";
+  try {
+    mostrar(await abrir(codigo));
+  } catch (e) {
+    barra(null);
+    situacao(TEXTOS[e.motivo] || TEXTOS.rede, true);
+  } finally {
+    $("abrir").disabled = false;
+  }
+});
+</script>
+</body>
+</html>
